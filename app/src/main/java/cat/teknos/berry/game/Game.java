@@ -15,7 +15,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.teknos.apulidofruites.R;
+import com.teknos.berry.R;
 
 import java.util.Random;
 

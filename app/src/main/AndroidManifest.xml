@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.APulidoFruites" >
         <activity
-            android:name="com.teknos.berry.activities.GameActivity"
+            android:name="cat.teknos.berry.activities.GameActivity"
             android:exported="true" />
         <activity
-            android:name="com.teknos.berry.activities.MainActivity"
+            android:name="cat.teknos.berry.activities.MainActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

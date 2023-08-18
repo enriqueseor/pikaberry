@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
-import com.teknos.apulidofruites.R;
+import com.teknos.berry.R;
 
 import cat.teknos.berry.singleton.Singleton;
 

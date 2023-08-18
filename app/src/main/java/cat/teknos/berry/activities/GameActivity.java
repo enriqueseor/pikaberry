@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.ViewTreeObserver;
 
-import com.teknos.apulidofruites.R;
+import com.teknos.berry.R;
 
 import java.util.Timer;
 import java.util.TimerTask;

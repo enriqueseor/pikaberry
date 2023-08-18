@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.GameActivity">
+    tools:context="cat.teknos.berry.activities.GameActivity">
 
     <view
         android:id="@+id/Pantalla"
-        class="com.teknos.berry.game.Game"
+        class="cat.teknos.berry.game.Game"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
