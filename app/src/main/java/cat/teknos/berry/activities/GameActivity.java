@@ -16,7 +16,7 @@ import cat.teknos.berry.game.Game;
 public class GameActivity extends AppCompatActivity {
 
     private Game game;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +28,10 @@ public class GameActivity extends AppCompatActivity {
         obs.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                game.ancho = game.getWidth();
-                game.alto = game.getHeight();
-                game.posX=game.ancho/2;
-                game.posY=game.alto-50;
+                game.width = game.getWidth();
+                game.height = game.getHeight();
+                game.posX=game.width /2;
+                game.posY=game.height -50;
 
                 game.radio=50;
                 game.posMonedaY=50;

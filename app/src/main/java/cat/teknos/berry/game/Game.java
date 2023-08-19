@@ -9,7 +9,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.media.MediaPlayer;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -21,11 +20,8 @@ import java.util.Random;
 
 public class Game extends View {
 
-    public int ancho, alto, posX, posY, radio, posMonedaX, posMonedaY, posMonedaFalsaX, posMonedaFalsaY, puntuacion;
-    public float escala;
-    private GestureDetector gestos;
-    private RectF rectCesta, rectMoneda, rectMonedaFalsa;
-    private Random random = new Random();
+    public int width, height, posX, posY, radio, posMonedaX, posMonedaY, posMonedaFalsaX, posMonedaFalsaY, puntuacion;
+    private final Random random = new Random();
     private MediaPlayer gameloop = new MediaPlayer();
 
     public Game(Context context) {
@@ -50,11 +46,10 @@ public class Game extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_MOVE:
-                posX=(int)event.getX();
-                radio=50;
-                this.invalidate();
+        if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            posX = (int) event.getX();
+            radio = 50;
+            this.invalidate();
         }
         return true;
     }
@@ -83,34 +78,34 @@ public class Game extends View {
         puntos.setTextSize(100);
         puntos.setColor(Color.WHITE);
 
-        canvas.drawRect(new Rect(0,0,(ancho),(alto)),fondo);
+        canvas.drawRect(new Rect(0,0,(width),(height)),fondo);
 
-        rectCesta= new RectF((posX-radio),(posY-radio),(posX+radio),(posY+radio));
+        RectF rectCesta = new RectF((posX - radio), (posY - radio), (posX + radio), (posY + radio));
         canvas.drawOval(rectCesta,cesta);
 
-        if (posMonedaY>alto) {
+        if (posMonedaY> height) {
             posMonedaY=50;
-            posMonedaX= random.nextInt(ancho);
+            posMonedaX= random.nextInt(width);
         }
-        rectMoneda = new RectF((posMonedaX-radio),(posMonedaY-radio), (posMonedaX+radio),(posMonedaY+radio));
+        RectF rectMoneda = new RectF((posMonedaX - radio), (posMonedaY - radio), (posMonedaX + radio), (posMonedaY + radio));
         canvas.drawOval(rectMoneda,moneda);
 
-        if (RectF.intersects(rectCesta,rectMoneda)) {
+        if (RectF.intersects(rectCesta, rectMoneda)) {
             puntuacion += 1;
             posMonedaY = 50;
-            posMonedaX = random.nextInt(ancho);
+            posMonedaX = random.nextInt(width);
         }
 
-        if (posMonedaFalsaY>alto) {posMonedaFalsaY=50;
-            posMonedaFalsaX= random.nextInt(ancho);
+        if (posMonedaFalsaY> height) {posMonedaFalsaY=50;
+            posMonedaFalsaX= random.nextInt(width);
         }
-        rectMonedaFalsa = new RectF((posMonedaFalsaX-radio),(posMonedaFalsaY-radio), (posMonedaFalsaX+radio), (posMonedaFalsaY+radio));
+        RectF rectMonedaFalsa = new RectF((posMonedaFalsaX - radio), (posMonedaFalsaY - radio), (posMonedaFalsaX + radio), (posMonedaFalsaY + radio));
         canvas.drawOval(rectMonedaFalsa,monedaFalsa);
 
-        if (RectF.intersects(rectCesta,rectMonedaFalsa)) {
+        if (RectF.intersects(rectCesta, rectMonedaFalsa)) {
             puntuacion -= 5;
             posMonedaFalsaY=50;
-            posMonedaFalsaX= random.nextInt(ancho);
+            posMonedaFalsaX= random.nextInt(width);
         }
 
         canvas.drawText(String.valueOf(puntuacion), 150,150,puntos);
