@@ -10,8 +10,6 @@ import android.widget.RadioButton;
 
 import com.teknos.berry.R;
 
-import cat.teknos.berry.singleton.Singleton;
-
 public class MainActivity extends AppCompatActivity {
 
     EditText etName;
@@ -31,17 +29,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void play(View view) {
-        Singleton singleton = Singleton.getInstance();
-        singleton.setPlayer(etName.getText().toString());
+        int selectedDifficulty = 0;
+
         if (rbEasy.isChecked()) {
-            singleton.setDifficulty(1);
+            selectedDifficulty = 1;
         } else if (rbMedium.isChecked()){
-            singleton.setDifficulty(2);
+            selectedDifficulty = 2;
         } else if (rbHard.isChecked()) {
-            singleton.setDifficulty(3);
+            selectedDifficulty = 3;
         }
 
-        Intent i = new Intent(this, GameActivity.class);
-        startActivity(i);
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("difficulty", selectedDifficulty);
+        startActivity(intent);
     }
 }
