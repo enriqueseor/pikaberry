@@ -32,12 +32,7 @@ public class Game extends View {
         super(context, attrs);
         gameloop = MediaPlayer.create(context, R.raw.gameloop);
         gameloop.start();
-        gameloop.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                gameloop.start();
-            }
-        });
+        gameloop.setOnCompletionListener(mp -> gameloop.start());
     }
 
     public Game(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -59,55 +54,63 @@ public class Game extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        Paint fondo = new Paint();
-        Paint cesta = new Paint();
-        Paint moneda = new Paint();
+        Paint background = new Paint();
+        Paint pikachu = new Paint();
+        Paint berry = new Paint();
         Paint monedaFalsa = new Paint();
         Paint puntos = new Paint();
 
-        fondo.setColor(Color.BLACK);
-        fondo.setStyle(Paint.Style.FILL_AND_STROKE);
-        cesta.setColor(Color.YELLOW);
-        cesta.setStyle(Paint.Style.FILL_AND_STROKE);
-        moneda.setColor(Color.RED);
-        moneda.setStyle(Paint.Style.FILL_AND_STROKE);
-        monedaFalsa.setColor(Color.GREEN);
+        background.setColor(Color.BLACK);
+        background.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        pikachu.setColor(Color.YELLOW);
+        pikachu.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        berry.setColor(Color.GREEN);
+        berry.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        monedaFalsa.setColor(Color.RED);
         monedaFalsa.setStyle(Paint.Style.FILL_AND_STROKE);
 
         puntos.setTextAlign(Paint.Align.RIGHT);
         puntos.setTextSize(100);
         puntos.setColor(Color.WHITE);
 
-        canvas.drawRect(new Rect(0,0,(width),(height)),fondo);
+        canvas.drawRect(new Rect(0,0,(width),(height)),background);
 
-        RectF rectCesta = new RectF((posX - radio), (posY - radio), (posX + radio), (posY + radio));
-        canvas.drawOval(rectCesta,cesta);
+        //PIKACHU
+        RectF rectPikachu = new RectF((posX - radio), (posY - radio), (posX + radio), (posY + radio));
+        canvas.drawOval(rectPikachu,pikachu);
 
+        //BERRY
         if (posMonedaY> height) {
             posMonedaY=50;
             posMonedaX= random.nextInt(width);
         }
-        RectF rectMoneda = new RectF((posMonedaX - radio), (posMonedaY - radio), (posMonedaX + radio), (posMonedaY + radio));
-        canvas.drawOval(rectMoneda,moneda);
+        RectF rectBerry = new RectF((posMonedaX - radio), (posMonedaY - radio), (posMonedaX + radio), (posMonedaY + radio));
+        canvas.drawOval(rectBerry,berry);
 
-        if (RectF.intersects(rectCesta, rectMoneda)) {
+        if (RectF.intersects(rectPikachu, rectBerry)) {
             puntuacion += 1;
             posMonedaY = 50;
             posMonedaX = random.nextInt(width);
         }
 
+        //
         if (posMonedaFalsaY> height) {posMonedaFalsaY=50;
             posMonedaFalsaX= random.nextInt(width);
         }
+
         RectF rectMonedaFalsa = new RectF((posMonedaFalsaX - radio), (posMonedaFalsaY - radio), (posMonedaFalsaX + radio), (posMonedaFalsaY + radio));
         canvas.drawOval(rectMonedaFalsa,monedaFalsa);
 
-        if (RectF.intersects(rectCesta, rectMonedaFalsa)) {
-            puntuacion -= 5;
+        if (RectF.intersects(rectPikachu, rectMonedaFalsa)) {
+            puntuacion -= 1;
             posMonedaFalsaY=50;
             posMonedaFalsaX= random.nextInt(width);
         }
 
+        //PUNTUATION
         canvas.drawText(String.valueOf(puntuacion), 150,150,puntos);
     }
 }
