@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cat.teknos.berry.activities.MainActivity">
+    tools:context="cat.teknos.berry.activity.MainActivity">
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:text="ATRAPA-FRUITES"
+        android:text="BERRY GAME"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btnPlay"
@@ -24,11 +26,12 @@
         android:layout_height="78dp"
         android:layout_marginTop="40dp"
         android:onClick="play"
-        android:text="Jugar"
+        android:text="PLAY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rgDifficulties" />
+        app:layout_constraintTop_toBottomOf="@+id/rgDifficulty"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/etName"
@@ -36,15 +39,16 @@
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="Usuari"
+        android:hint="PLAYER"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        tools:ignore="HardcodedText" />
 
     <RadioGroup
-        android:id="@+id/rgDifficulties"
+        android:id="@+id/rgDifficulty"
         android:layout_width="208dp"
         android:layout_height="147dp"
         android:layout_marginTop="20dp"
@@ -57,19 +61,22 @@
             android:id="@+id/rbEasy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fàcil" />
+            android:text="EASY"
+            tools:ignore="HardcodedText" />
 
         <RadioButton
             android:id="@+id/rbMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mig" />
+            android:text="MEDIUM"
+            tools:ignore="HardcodedText" />
 
         <RadioButton
             android:id="@+id/rbHard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Difícil" />
+            android:text="HARD"
+            tools:ignore="HardcodedText" />
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
