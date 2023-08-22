@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
-import com.teknos.berry.R;
+import cat.teknos.berry.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -14,9 +14,9 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.teknos.berry.R;
 
 import java.util.Random;
+import cat.teknos.berry.R;
 
 public class Game extends View {
 
