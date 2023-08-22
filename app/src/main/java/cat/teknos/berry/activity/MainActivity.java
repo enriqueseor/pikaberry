@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
@@ -13,6 +13,7 @@ import com.teknos.berry.R;
 public class MainActivity extends AppCompatActivity {
 
     EditText etName;
+    Button btnPlay;
     RadioButton rbEasy;
     RadioButton rbMedium;
     RadioButton rbHard;
@@ -26,9 +27,12 @@ public class MainActivity extends AppCompatActivity {
         rbEasy = findViewById(R.id.rbEasy);
         rbMedium = findViewById(R.id.rbMedium);
         rbHard = findViewById(R.id.rbHard);
+
+        btnPlay = findViewById(R.id.btnPlay);
+        btnPlay.setOnClickListener(v -> play());
     }
 
-    public void play(View view) {
+    public void play() {
         int selectedDifficulty = 0;
 
         if (rbEasy.isChecked()) {
