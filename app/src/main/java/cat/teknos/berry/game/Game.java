@@ -32,6 +32,7 @@ public class Game extends View {
     private final Paint pointsPaint = new Paint();
 
     private Drawable pikachuDrawable;
+    private Drawable berryDrawable;
 
     public Game(Context context) {
         super(context);
@@ -50,9 +51,7 @@ public class Game extends View {
         setClickable(true);
 
         pikachuDrawable = getResources().getDrawable(R.drawable.pikachu);
-
-        berryPaint.setColor(Color.GREEN);
-        berryPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        berryDrawable = getResources().getDrawable(R.drawable.razz_berry);
 
         monedaFalsaPaint.setColor(Color.RED);
         monedaFalsaPaint.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -90,12 +89,14 @@ public class Game extends View {
         rectForPikachu.set(posX - radio, posY - radio, posX + radio, posY + radio);
 
         //BERRY
+        berryDrawable.setBounds(posBerryX - radio, posBerryY - radio, posBerryX + radio, posBerryY + radio);
+        berryDrawable.draw(canvas);
+        rectForBerry.set(posBerryX - radio, posBerryY - radio, posBerryX + radio, posBerryY + radio);
+
         if (posBerryY > height) {
             posBerryY =50;
             posBerryX = random.nextInt(width);
         }
-        rectForBerry.set(posBerryX - radio, posBerryY - radio, posBerryX + radio, posBerryY + radio);
-        canvas.drawOval(rectForBerry, berryPaint);
 
         if (RectF.intersects(rectForPikachu, rectForBerry)) {
             punctuation += 1;
