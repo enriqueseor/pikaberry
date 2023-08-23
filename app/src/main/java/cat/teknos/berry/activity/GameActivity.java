@@ -29,9 +29,9 @@ public class GameActivity extends AppCompatActivity {
             game.width = game.getWidth();
             game.height = game.getHeight();
             game.posX=game.width /2;
-            game.posY=game.height -50;
+            game.posY=game.height -100;
 
-            game.radio=50;
+            game.radio=100;
             game.posBerryY =50;
             game.posCherubiX =200;
         });

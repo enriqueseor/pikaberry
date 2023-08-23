@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
@@ -28,10 +27,11 @@ public class Game extends View {
     private final RectF rectForBerry = new RectF();
     private final RectF rectForCherubi = new RectF();
 
-    private final Paint pikachuPaint = new Paint();
     private final Paint berryPaint = new Paint();
     private final Paint monedaFalsaPaint = new Paint();
     private final Paint pointsPaint = new Paint();
+
+    private Drawable pikachuDrawable;
 
     public Game(Context context) {
         super(context);
@@ -49,8 +49,7 @@ public class Game extends View {
     private void init() {
         setClickable(true);
 
-        pikachuPaint.setColor(Color.YELLOW);
-        pikachuPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        pikachuDrawable = getResources().getDrawable(R.drawable.pikachu);
 
         berryPaint.setColor(Color.GREEN);
         berryPaint.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -71,7 +70,6 @@ public class Game extends View {
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
             posX = (int) event.getX();
-            radio = 50;
             this.invalidate();
         }
         return true;
@@ -87,8 +85,9 @@ public class Game extends View {
         backgroundDrawable.draw(canvas);
 
         //PIKACHU
+        pikachuDrawable.setBounds(posX - radio, posY - radio, posX + radio, posY + radio);
+        pikachuDrawable.draw(canvas);
         rectForPikachu.set(posX - radio, posY - radio, posX + radio, posY + radio);
-        canvas.drawOval(rectForPikachu, pikachuPaint);
 
         //BERRY
         if (posBerryY > height) {
