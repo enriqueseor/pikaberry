@@ -27,12 +27,12 @@ public class Game extends View {
     private final RectF rectForBerry = new RectF();
     private final RectF rectForCherubi = new RectF();
 
-    private final Paint berryPaint = new Paint();
-    private final Paint monedaFalsaPaint = new Paint();
     private final Paint pointsPaint = new Paint();
 
+    private Drawable backgroundDrawable;
     private Drawable pikachuDrawable;
     private Drawable berryDrawable;
+    private Drawable cherubiDrawable;
 
     public Game(Context context) {
         super(context);
@@ -50,11 +50,10 @@ public class Game extends View {
     private void init() {
         setClickable(true);
 
+        backgroundDrawable = getResources().getDrawable(R.drawable.background);
         pikachuDrawable = getResources().getDrawable(R.drawable.pikachu);
         berryDrawable = getResources().getDrawable(R.drawable.razz_berry);
-
-        monedaFalsaPaint.setColor(Color.RED);
-        monedaFalsaPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        cherubiDrawable = getResources().getDrawable(R.drawable.cherubi);
 
         pointsPaint.setTextAlign(Paint.Align.RIGHT);
         pointsPaint.setTextSize(100);
@@ -79,7 +78,6 @@ public class Game extends View {
         super.onDraw(canvas);
 
         //BACKGROUND
-        Drawable backgroundDrawable = getResources().getDrawable(R.drawable.background);
         backgroundDrawable.setBounds(0, 0, getWidth(), getHeight());
         backgroundDrawable.draw(canvas);
 
@@ -97,7 +95,6 @@ public class Game extends View {
             posBerryY =50;
             posBerryX = random.nextInt(width);
         }
-
         if (RectF.intersects(rectForPikachu, rectForBerry)) {
             punctuation += 1;
             posBerryY = 50;
@@ -105,13 +102,14 @@ public class Game extends View {
         }
 
         //CHERUBI
+        cherubiDrawable.setBounds(posCherubiX - radio, posCherubiY - radio, posCherubiX + radio, posCherubiY + radio);
+        cherubiDrawable.draw(canvas);
+        rectForCherubi.set(posCherubiX - radio, posCherubiY - radio, posCherubiX + radio, posCherubiY + radio);
+
         if (posCherubiY > height) {
             posCherubiY =50;
             posCherubiX = random.nextInt(width);
         }
-        rectForCherubi.set(posCherubiX - radio, posCherubiY - radio, posCherubiX + radio, posCherubiY + radio);
-        canvas.drawOval(rectForCherubi, monedaFalsaPaint);
-
         if (RectF.intersects(rectForPikachu, rectForCherubi)) {
             punctuation -= 1;
             posCherubiY =50;
