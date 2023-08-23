@@ -1,6 +1,5 @@
 package cat.teknos.berry.game;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -20,12 +19,24 @@ import cat.teknos.berry.R;
 
 public class Game extends View {
 
-    public int width, height, posX, posY, radio, posMonedaX, posMonedaY, posMonedaFalsaX, posMonedaFalsaY, puntuacion;
+    public int width, height, posX, posY, radio, posBerryX, posBerryY, posCherubiX, posCherubiY, punctuation;
     private final Random random = new Random();
     private MediaPlayer gameloop = new MediaPlayer();
 
+    private final Rect rectForBackground = new Rect();
+    private final RectF rectForPikachu = new RectF();
+    private final RectF rectForBerry = new RectF();
+    private final RectF rectForCherubi = new RectF();
+
+    private final Paint backgroundPaint = new Paint();
+    private final Paint pikachuPaint = new Paint();
+    private final Paint berryPaint = new Paint();
+    private final Paint monedaFalsaPaint = new Paint();
+    private final Paint pointsPaint = new Paint();
+
     public Game(Context context) {
         super(context);
+        init();
     }
 
     public Game(Context context, @Nullable AttributeSet attrs) {
@@ -33,6 +44,26 @@ public class Game extends View {
         gameloop = MediaPlayer.create(context, R.raw.gameloop);
         gameloop.start();
         gameloop.setOnCompletionListener(mp -> gameloop.start());
+        init();
+    }
+
+    private void init() {
+        setClickable(true);
+        backgroundPaint.setColor(Color.BLACK);
+        backgroundPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        pikachuPaint.setColor(Color.YELLOW);
+        pikachuPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        berryPaint.setColor(Color.GREEN);
+        berryPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        monedaFalsaPaint.setColor(Color.RED);
+        monedaFalsaPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        pointsPaint.setTextAlign(Paint.Align.RIGHT);
+        pointsPaint.setTextSize(100);
+        pointsPaint.setColor(Color.WHITE);
     }
 
     public Game(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -49,68 +80,47 @@ public class Game extends View {
         return true;
     }
 
-    @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        Paint background = new Paint();
-        Paint pikachu = new Paint();
-        Paint berry = new Paint();
-        Paint monedaFalsa = new Paint();
-        Paint puntos = new Paint();
-
-        background.setColor(Color.BLACK);
-        background.setStyle(Paint.Style.FILL_AND_STROKE);
-
-        pikachu.setColor(Color.YELLOW);
-        pikachu.setStyle(Paint.Style.FILL_AND_STROKE);
-
-        berry.setColor(Color.GREEN);
-        berry.setStyle(Paint.Style.FILL_AND_STROKE);
-
-        monedaFalsa.setColor(Color.RED);
-        monedaFalsa.setStyle(Paint.Style.FILL_AND_STROKE);
-
-        puntos.setTextAlign(Paint.Align.RIGHT);
-        puntos.setTextSize(100);
-        puntos.setColor(Color.WHITE);
-
-        canvas.drawRect(new Rect(0,0,(width),(height)),background);
+        //BACKGROUND
+        rectForBackground.set(0, 0, width, height);
+        canvas.drawRect(rectForBackground, backgroundPaint);
 
         //PIKACHU
-        RectF rectPikachu = new RectF((posX - radio), (posY - radio), (posX + radio), (posY + radio));
-        canvas.drawOval(rectPikachu,pikachu);
+        rectForPikachu.set(posX - radio, posY - radio, posX + radio, posY + radio);
+        canvas.drawOval(rectForPikachu, pikachuPaint);
 
         //BERRY
-        if (posMonedaY> height) {
-            posMonedaY=50;
-            posMonedaX= random.nextInt(width);
+        if (posBerryY > height) {
+            posBerryY =50;
+            posBerryX = random.nextInt(width);
         }
-        RectF rectBerry = new RectF((posMonedaX - radio), (posMonedaY - radio), (posMonedaX + radio), (posMonedaY + radio));
-        canvas.drawOval(rectBerry,berry);
+        rectForBerry.set(posBerryX - radio, posBerryY - radio, posBerryX + radio, posBerryY + radio);
+        canvas.drawOval(rectForBerry, berryPaint);
 
-        if (RectF.intersects(rectPikachu, rectBerry)) {
-            puntuacion += 1;
-            posMonedaY = 50;
-            posMonedaX = random.nextInt(width);
-        }
-
-        //
-        if (posMonedaFalsaY> height) {posMonedaFalsaY=50;
-            posMonedaFalsaX= random.nextInt(width);
+        if (RectF.intersects(rectForPikachu, rectForBerry)) {
+            punctuation += 1;
+            posBerryY = 50;
+            posBerryX = random.nextInt(width);
         }
 
-        RectF rectMonedaFalsa = new RectF((posMonedaFalsaX - radio), (posMonedaFalsaY - radio), (posMonedaFalsaX + radio), (posMonedaFalsaY + radio));
-        canvas.drawOval(rectMonedaFalsa,monedaFalsa);
+        //CHERUBI
+        if (posCherubiY > height) {
+            posCherubiY =50;
+            posCherubiX = random.nextInt(width);
+        }
+        rectForCherubi.set(posCherubiX - radio, posCherubiY - radio, posCherubiX + radio, posCherubiY + radio);
+        canvas.drawOval(rectForCherubi, monedaFalsaPaint);
 
-        if (RectF.intersects(rectPikachu, rectMonedaFalsa)) {
-            puntuacion -= 1;
-            posMonedaFalsaY=50;
-            posMonedaFalsaX= random.nextInt(width);
+        if (RectF.intersects(rectForPikachu, rectForCherubi)) {
+            punctuation -= 1;
+            posCherubiY =50;
+            posCherubiX = random.nextInt(width);
         }
 
-        //PUNTUATION
-        canvas.drawText(String.valueOf(puntuacion), 150,150,puntos);
+        //PUNCTUATION
+        canvas.drawText(String.valueOf(punctuation), 150,150, pointsPaint);
     }
 }

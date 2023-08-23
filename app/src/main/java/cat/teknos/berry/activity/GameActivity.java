@@ -32,8 +32,8 @@ public class GameActivity extends AppCompatActivity {
             game.posY=game.height -50;
 
             game.radio=50;
-            game.posMonedaY=50;
-            game.posMonedaFalsaX=200;
+            game.posBerryY =50;
+            game.posCherubiX =200;
         });
 
         Timer timer = new Timer();
@@ -41,8 +41,8 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void run() {
                 handler.post(() -> {
-                    game.posMonedaY+=10;
-                    game.posMonedaFalsaY+=10;
+                    game.posBerryY +=10;
+                    game.posCherubiY +=10;
                     game.invalidate();
                 });
             }
