@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -23,12 +24,10 @@ public class Game extends View {
     private final Random random = new Random();
     private MediaPlayer gameloop = new MediaPlayer();
 
-    private final Rect rectForBackground = new Rect();
     private final RectF rectForPikachu = new RectF();
     private final RectF rectForBerry = new RectF();
     private final RectF rectForCherubi = new RectF();
 
-    private final Paint backgroundPaint = new Paint();
     private final Paint pikachuPaint = new Paint();
     private final Paint berryPaint = new Paint();
     private final Paint monedaFalsaPaint = new Paint();
@@ -49,8 +48,6 @@ public class Game extends View {
 
     private void init() {
         setClickable(true);
-        backgroundPaint.setColor(Color.BLACK);
-        backgroundPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
         pikachuPaint.setColor(Color.YELLOW);
         pikachuPaint.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -85,8 +82,9 @@ public class Game extends View {
         super.onDraw(canvas);
 
         //BACKGROUND
-        rectForBackground.set(0, 0, width, height);
-        canvas.drawRect(rectForBackground, backgroundPaint);
+        Drawable backgroundDrawable = getResources().getDrawable(R.drawable.background);
+        backgroundDrawable.setBounds(0, 0, getWidth(), getHeight());
+        backgroundDrawable.draw(canvas);
 
         //PIKACHU
         rectForPikachu.set(posX - radio, posY - radio, posX + radio, posY + radio);
