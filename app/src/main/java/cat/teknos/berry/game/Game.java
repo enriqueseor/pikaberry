@@ -20,6 +20,7 @@ import cat.teknos.berry.R;
 public class Game extends View {
 
     public int width, height, posX, posY, radio, posBerryX, posBerryY, posCherubiX, posCherubiY, punctuation;
+    private int currentBerryType = 0;
     private final Random random = new Random();
     private MediaPlayer gameloop = new MediaPlayer();
 
@@ -31,7 +32,7 @@ public class Game extends View {
 
     private Drawable backgroundDrawable;
     private Drawable pikachuDrawable;
-    private Drawable berryDrawable;
+    private Drawable[] berryDrawable;
     private Drawable cherubiDrawable;
 
     public Game(Context context) {
@@ -52,7 +53,10 @@ public class Game extends View {
 
         backgroundDrawable = getResources().getDrawable(R.drawable.background);
         pikachuDrawable = getResources().getDrawable(R.drawable.pikachu);
-        berryDrawable = getResources().getDrawable(R.drawable.razz_berry);
+        berryDrawable = new Drawable[3];
+        berryDrawable[0] = getResources().getDrawable(R.drawable.razz_berry);
+        berryDrawable[1] = getResources().getDrawable(R.drawable.nanap_berry);
+        berryDrawable[2] = getResources().getDrawable(R.drawable.pinap_berry);
         cherubiDrawable = getResources().getDrawable(R.drawable.cherubi);
 
         pointsPaint.setTextAlign(Paint.Align.RIGHT);
@@ -87,36 +91,43 @@ public class Game extends View {
         rectForPikachu.set(posX - radio, posY - radio, posX + radio, posY + radio);
 
         //BERRY
-        berryDrawable.setBounds(posBerryX - radio, posBerryY - radio, posBerryX + radio, posBerryY + radio);
-        berryDrawable.draw(canvas);
+        berryDrawable[currentBerryType].setBounds(posBerryX - radio, posBerryY - radio, posBerryX + radio, posBerryY + radio);
+        berryDrawable[currentBerryType].draw(canvas);
         rectForBerry.set(posBerryX - radio, posBerryY - radio, posBerryX + radio, posBerryY + radio);
+        updateBerry();
 
+        //CHERUBI
+        cherubiDrawable.setBounds(posCherubiX - radio, posCherubiY - radio, posCherubiX + radio, posCherubiY + radio);
+        cherubiDrawable.draw(canvas);
+        rectForCherubi.set(posCherubiX - radio, posCherubiY - radio, posCherubiX + radio, posCherubiY + radio);
+        updateCherubi();
+
+        //PUNCTUATION
+        canvas.drawText(String.valueOf(punctuation), 150,150, pointsPaint);
+    }
+
+    private void updateBerry() {
         if (posBerryY > height) {
-            posBerryY =50;
+            posBerryY = 50;
             posBerryX = random.nextInt(width);
         }
         if (RectF.intersects(rectForPikachu, rectForBerry)) {
             punctuation += 1;
             posBerryY = 50;
             posBerryX = random.nextInt(width);
+            currentBerryType = random.nextInt(3);
         }
+    }
 
-        //CHERUBI
-        cherubiDrawable.setBounds(posCherubiX - radio, posCherubiY - radio, posCherubiX + radio, posCherubiY + radio);
-        cherubiDrawable.draw(canvas);
-        rectForCherubi.set(posCherubiX - radio, posCherubiY - radio, posCherubiX + radio, posCherubiY + radio);
-
+    private void updateCherubi() {
         if (posCherubiY > height) {
-            posCherubiY =50;
+            posCherubiY = 50;
             posCherubiX = random.nextInt(width);
         }
         if (RectF.intersects(rectForPikachu, rectForCherubi)) {
             punctuation -= 1;
-            posCherubiY =50;
+            posCherubiY = 50;
             posCherubiX = random.nextInt(width);
         }
-
-        //PUNCTUATION
-        canvas.drawText(String.valueOf(punctuation), 150,150, pointsPaint);
     }
 }
