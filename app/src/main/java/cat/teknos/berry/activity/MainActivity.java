@@ -33,18 +33,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void play() {
-        int selectedDifficulty = 0;
-
+        int level = 0;
         if (rbEasy.isChecked()) {
-            selectedDifficulty = 1;
+            level = 1;
         } else if (rbMedium.isChecked()){
-            selectedDifficulty = 2;
+            level = 2;
         } else if (rbHard.isChecked()) {
-            selectedDifficulty = 3;
+            level = 3;
         }
 
         Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra("difficulty", selectedDifficulty);
+        intent.putExtra("level", level);
         startActivity(intent);
     }
 }
