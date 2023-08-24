@@ -22,7 +22,7 @@ public class Game extends View {
     public int width, height, posX, posY, radio, posBerryX, posBerryY, posCherubiX, posCherubiY, punctuation;
     private int currentBerryType = 0;
     private final Random random = new Random();
-    private MediaPlayer gameloop = new MediaPlayer();
+    private MediaPlayer gameloop;
 
     private final RectF rectForPikachu = new RectF();
     private final RectF rectForBerry = new RectF();
@@ -35,13 +35,9 @@ public class Game extends View {
     private Drawable[] berryDrawable;
     private Drawable cherubiDrawable;
 
-    public Game(Context context) {
-        super(context);
-        init();
-    }
-
     public Game(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        gameloop = new MediaPlayer();
         gameloop = MediaPlayer.create(context, R.raw.gameloop);
         gameloop.start();
         gameloop.setOnCompletionListener(mp -> gameloop.start());
@@ -62,10 +58,6 @@ public class Game extends View {
         pointsPaint.setTextAlign(Paint.Align.RIGHT);
         pointsPaint.setTextSize(100);
         pointsPaint.setColor(Color.WHITE);
-    }
-
-    public Game(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
     }
 
     @Override
