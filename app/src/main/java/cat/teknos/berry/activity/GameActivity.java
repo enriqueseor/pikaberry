@@ -33,7 +33,7 @@ public class GameActivity extends AppCompatActivity {
 
             game.radio=100;
             game.posBerryY =50;
-            game.posCherubiX =200;
+            game.posPokemonX =200;
         });
 
         Timer timer = new Timer();
@@ -42,7 +42,7 @@ public class GameActivity extends AppCompatActivity {
             public void run() {
                 handler.post(() -> {
                     game.posBerryY +=10;
-                    game.posCherubiY +=10;
+                    game.posPokemonY +=10;
                     game.invalidate();
                 });
             }

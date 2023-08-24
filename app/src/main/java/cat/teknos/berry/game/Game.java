@@ -19,29 +19,42 @@ import cat.teknos.berry.R;
 
 public class Game extends View {
 
-    public int width, height, posX, posY, radio, posBerryX, posBerryY, posCherubiX, posCherubiY, punctuation;
+    public int width, height;
+    public int radio, punctuation;
+    public int posX, posY, posBerryX, posBerryY, posPokemonX, posPokemonY;
     private int currentBerryType = 0;
+
     private final Random random = new Random();
     private MediaPlayer gameloop;
 
     private final RectF rectForPikachu = new RectF();
     private final RectF rectForBerry = new RectF();
-    private final RectF rectForCherubi = new RectF();
+    private final RectF rectForPokemon = new RectF();
 
     private final Paint pointsPaint = new Paint();
 
     private Drawable backgroundDrawable;
     private Drawable pikachuDrawable;
+
     private Drawable[] berryDrawable;
-    private Drawable cherubiDrawable;
+    private Drawable pokemonDrawable;
 
     public Game(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         gameloop = new MediaPlayer();
-        gameloop = MediaPlayer.create(context, R.raw.gameloop);
+        gameloop = MediaPlayer.create(context, R.raw.route_101);
         gameloop.start();
         gameloop.setOnCompletionListener(mp -> gameloop.start());
         init();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (gameloop != null) {
+            gameloop.release();
+            gameloop = null;
+        }
     }
 
     private void init() {
@@ -53,12 +66,14 @@ public class Game extends View {
         berryDrawable[0] = getResources().getDrawable(R.drawable.razz_berry);
         berryDrawable[1] = getResources().getDrawable(R.drawable.nanap_berry);
         berryDrawable[2] = getResources().getDrawable(R.drawable.pinap_berry);
-        cherubiDrawable = getResources().getDrawable(R.drawable.cherubi);
+        pokemonDrawable = getResources().getDrawable(R.drawable.cherubi);
 
         pointsPaint.setTextAlign(Paint.Align.RIGHT);
         pointsPaint.setTextSize(100);
         pointsPaint.setColor(Color.WHITE);
     }
+
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -89,9 +104,9 @@ public class Game extends View {
         updateBerry();
 
         //CHERUBI
-        cherubiDrawable.setBounds(posCherubiX - radio, posCherubiY - radio, posCherubiX + radio, posCherubiY + radio);
-        cherubiDrawable.draw(canvas);
-        rectForCherubi.set(posCherubiX - radio, posCherubiY - radio, posCherubiX + radio, posCherubiY + radio);
+        pokemonDrawable.setBounds(posPokemonX - radio, posPokemonY - radio, posPokemonX + radio, posPokemonY + radio);
+        pokemonDrawable.draw(canvas);
+        rectForPokemon.set(posPokemonX - radio, posPokemonY - radio, posPokemonX + radio, posPokemonY + radio);
         updateCherubi();
 
         //PUNCTUATION
@@ -112,14 +127,14 @@ public class Game extends View {
     }
 
     private void updateCherubi() {
-        if (posCherubiY > height) {
-            posCherubiY = 50;
-            posCherubiX = random.nextInt(width);
+        if (posPokemonY > height) {
+            posPokemonY = 50;
+            posPokemonX = random.nextInt(width);
         }
-        if (RectF.intersects(rectForPikachu, rectForCherubi)) {
+        if (RectF.intersects(rectForPikachu, rectForPokemon)) {
             punctuation -= 1;
-            posCherubiY = 50;
-            posCherubiX = random.nextInt(width);
+            posPokemonY = 50;
+            posPokemonX = random.nextInt(width);
         }
     }
 }
