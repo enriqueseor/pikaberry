@@ -30,66 +30,54 @@
             android:id="@+id/right"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="22dp"
-            android:layout_marginBottom="22dp"
+            android:layout_marginStart="22dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tvSeparator"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/berry" />
 
         <ImageView
-            android:id="@+id/wrong"
+            android:id="@+id/live1"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginTop="22dp"
-            android:layout_marginEnd="28dp"
-            android:layout_marginBottom="22dp"
+            android:layout_marginEnd="22dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/tvSeparator"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/lives" />
+
+        <ImageView
+            android:id="@+id/live2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/live1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/lives" />
+
+        <ImageView
+            android:id="@+id/live3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/live2"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/lives" />
 
         <TextView
-            android:id="@+id/tvSeparator"
-            android:layout_width="29dp"
-            android:layout_height="69dp"
-            android:text=":"
-            android:textAlignment="center"
-            android:textSize="50sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
-
-        <TextView
             android:id="@+id/points"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="60dp"
             android:text="0"
             android:textAlignment="center"
             android:textSize="50sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tvSeparator"
+            app:layout_constraintEnd_toStartOf="@+id/live3"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/right"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5" />
 
-        <TextView
-            android:id="@+id/lives"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3"
-            android:textAlignment="center"
-            android:textSize="50sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tvSeparator"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
