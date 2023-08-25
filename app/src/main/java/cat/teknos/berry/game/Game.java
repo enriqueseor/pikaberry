@@ -2,8 +2,6 @@ package cat.teknos.berry.game;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
@@ -19,8 +17,7 @@ import cat.teknos.berry.R;
 
 public class Game extends View {
 
-    public int width, height;
-    public int radio, punctuation;
+    public int width, height, radio;
     public int posPikachuX, posPikachuY, posBerryX, posBerryY, posPokemonX, posPokemonY;
     private int currentBerryType = 0;
 
@@ -31,11 +28,8 @@ public class Game extends View {
     private final RectF rectForBerry = new RectF();
     private final RectF rectForPokemon = new RectF();
 
-    private final Paint pointsPaint = new Paint();
-
     private Drawable backgroundDrawable;
     private Drawable pikachuDrawable;
-
     private Drawable[] berryDrawable;
     private Drawable pokemonDrawable;
 
@@ -67,10 +61,6 @@ public class Game extends View {
         berryDrawable[1] = getResources().getDrawable(R.drawable.nanap_berry);
         berryDrawable[2] = getResources().getDrawable(R.drawable.pinap_berry);
         pokemonDrawable = getResources().getDrawable(R.drawable.cherubi);
-
-        pointsPaint.setTextAlign(Paint.Align.RIGHT);
-        pointsPaint.setTextSize(100);
-        pointsPaint.setColor(Color.WHITE);
     }
 
     @Override
@@ -100,17 +90,14 @@ public class Game extends View {
         berryDrawable[currentBerryType].draw(canvas);
         rectForBerry.set(posBerryX - radio, posBerryY - radio, posBerryX + radio, posBerryY + radio);
         newBerry();
-        colideBerry();
+        onBerryCollected();
 
-        //CHERUBI
+        //POKEMON
         pokemonDrawable.setBounds(posPokemonX - radio, posPokemonY - radio, posPokemonX + radio, posPokemonY + radio);
         pokemonDrawable.draw(canvas);
         rectForPokemon.set(posPokemonX - radio, posPokemonY - radio, posPokemonX + radio, posPokemonY + radio);
         newPokemon();
-        colidePokemon();
-
-        //PUNCTUATION
-        canvas.drawText(String.valueOf(punctuation), 150,150, pointsPaint);
+        onPokemonCollision();
     }
 
     private void newBerry(){
@@ -120,9 +107,8 @@ public class Game extends View {
         }
     }
 
-    private void colideBerry() {
+    private void onBerryCollected() {
         if (RectF.intersects(rectForPikachu, rectForBerry)) {
-            punctuation += 1;
             posBerryY = 50;
             posBerryX = random.nextInt(width);
             currentBerryType = random.nextInt(3);
@@ -135,9 +121,9 @@ public class Game extends View {
             posPokemonX = random.nextInt(width);
         }
     }
-    private void colidePokemon() {
+
+    private void onPokemonCollision() {
         if (RectF.intersects(rectForPikachu, rectForPokemon)) {
-            punctuation -= 1;
             posPokemonY = 50;
             posPokemonX = random.nextInt(width);
         }

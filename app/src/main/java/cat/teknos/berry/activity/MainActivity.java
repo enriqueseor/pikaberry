@@ -14,9 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText etName;
     Button btnPlay;
-    RadioButton rbEasy;
-    RadioButton rbMedium;
-    RadioButton rbHard;
+    RadioButton rbEasy, rbMedium, rbHard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
