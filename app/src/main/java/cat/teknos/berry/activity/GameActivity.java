@@ -27,7 +27,7 @@ public class GameActivity extends AppCompatActivity {
         game = findViewById(R.id.Screen);
 
         Intent intent = getIntent();
-        level = intent.getIntExtra("level", 1);
+        level = intent.getIntExtra("level", 2);
 
         obs();
         timer();

@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void play() {
-        int level = 0;
+        int level = 2;
         if (rbEasy.isChecked()) {
             level = 1;
         } else if (rbMedium.isChecked()){
