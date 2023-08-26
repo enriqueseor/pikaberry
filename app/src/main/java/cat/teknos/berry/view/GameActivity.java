@@ -1,4 +1,4 @@
-package cat.teknos.berry.activity;
+package cat.teknos.berry.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +13,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import cat.teknos.berry.R;
-import cat.teknos.berry.game.Game;
+import cat.teknos.berry.presenter.Game;
 
 public class GameActivity extends AppCompatActivity {
 

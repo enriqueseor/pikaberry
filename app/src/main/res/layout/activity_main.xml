@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cat.teknos.berry.activity.MainActivity">
+    tools:context="cat.teknos.berry.view.MainActivity">
 
     <TextView
         android:id="@+id/tvTitle"

@@ -1,4 +1,4 @@
-package cat.teknos.berry.activity;
+package cat.teknos.berry.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 

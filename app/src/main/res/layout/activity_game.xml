@@ -5,11 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cat.teknos.berry.activity.GameActivity">
+    tools:context="cat.teknos.berry.view.GameActivity">
 
     <view
         android:id="@+id/Screen"
-        class="cat.teknos.berry.game.Game"
+        class="cat.teknos.berry.presenter.Game"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
