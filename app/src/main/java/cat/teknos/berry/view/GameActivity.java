@@ -13,6 +13,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import cat.teknos.berry.R;
+import cat.teknos.berry.model.PlaylistManager;
 import cat.teknos.berry.presenter.Game;
 
 public class GameActivity extends AppCompatActivity {
@@ -21,6 +22,7 @@ public class GameActivity extends AppCompatActivity {
     private Game game;
     private final Handler handler = new Handler();
     private final Random random = new Random();
+    private PlaylistManager playlistManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +33,27 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = getIntent();
         level = intent.getIntExtra("level", 2);
 
+        int[] songResources = {
+                R.raw.route_101,
+                R.raw.route_104,
+                R.raw.route_110,
+                R.raw.route_113,
+                R.raw.route_119,
+                R.raw.route_120,
+        };
+        playlistManager = new PlaylistManager(this, songResources);
+        playlistManager.start();
+
         obs();
         timer();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (playlistManager != null) {
+            playlistManager.release();
+        }
     }
 
     private void obs(){

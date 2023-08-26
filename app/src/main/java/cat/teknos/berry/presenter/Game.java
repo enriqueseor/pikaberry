@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 
 import java.util.Random;
-import cat.teknos.berry.model.PlaylistManager;
 import cat.teknos.berry.R;
 
 public class Game extends View {
@@ -35,16 +34,6 @@ public class Game extends View {
 
     public Game(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        int[] songResources = {
-                R.raw.route_101,
-                R.raw.route_104,
-                R.raw.route_110,
-                R.raw.route_113,
-                R.raw.route_119,
-                R.raw.route_120,
-        };
-        PlaylistManager playlistManager = new PlaylistManager(context, songResources);
-        playlistManager.start();
         init();
     }
 

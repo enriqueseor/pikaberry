@@ -24,6 +24,14 @@ public class PlaylistManager implements MediaPlayer.OnCompletionListener {
         playCurrentSong();
     }
 
+    public void release() {
+        for (MediaPlayer mediaPlayer : playlist) {
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+            }
+        }
+    }
+
     private void playCurrentSong() {
         if (currentSongIndex >= 0 && currentSongIndex < playlist.length) {
             MediaPlayer currentSong = playlist[currentSongIndex];
