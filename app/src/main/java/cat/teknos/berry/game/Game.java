@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 
 
 import java.util.Random;
@@ -53,14 +54,13 @@ public class Game extends View {
 
     private void init() {
         setClickable(true);
-
-        backgroundDrawable = getResources().getDrawable(R.drawable.background);
-        pikachuDrawable = getResources().getDrawable(R.drawable.pikachu);
+        backgroundDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.background, null);
+        pikachuDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.pikachu, null);
         berryDrawable = new Drawable[3];
-        berryDrawable[0] = getResources().getDrawable(R.drawable.razz_berry);
-        berryDrawable[1] = getResources().getDrawable(R.drawable.nanap_berry);
-        berryDrawable[2] = getResources().getDrawable(R.drawable.pinap_berry);
-        pokemonDrawable = getResources().getDrawable(R.drawable.cherubi);
+        berryDrawable[0] = ResourcesCompat.getDrawable(getResources(), R.drawable.razz_berry, null);
+        berryDrawable[1] = ResourcesCompat.getDrawable(getResources(), R.drawable.nanap_berry, null);
+        berryDrawable[2] = ResourcesCompat.getDrawable(getResources(), R.drawable.pinap_berry, null);
+        pokemonDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.cherubi, null);
     }
 
     @Override
