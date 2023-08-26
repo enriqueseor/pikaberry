@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.ViewTreeObserver;
 
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,6 +20,7 @@ public class GameActivity extends AppCompatActivity {
     private int level;
     private Game game;
     private final Handler handler = new Handler();
+    private final Random random = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,7 @@ public class GameActivity extends AppCompatActivity {
 
             game.radio = 100;
             game.posBerryY = 50;
-            game.posPokemonX = 200;
+            game.posPokemonX = random.nextInt(game.width);
         });
     }
 
