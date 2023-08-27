@@ -11,12 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Berry" >
         <activity
-            android:name="cat.teknos.berry.view.GameActivity"
+            android:name="cat.teknos.berry.view.activity.GameActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="cat.teknos.berry.view.MainActivity"
+            android:name="cat.teknos.berry.view.activity.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" >

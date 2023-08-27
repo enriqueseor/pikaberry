@@ -12,9 +12,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 
 import java.util.Random;
+
+import cat.teknos.berry.view.util.GameEventListener;
 import cat.teknos.berry.R;
 
-public class Game extends View {
+public class GamePresenter extends View {
 
     public int width, height, radio;
     public int posPikachuX, posPikachuY, posBerryX, posBerryY, posPokemonX, posPokemonY;
@@ -32,7 +34,7 @@ public class Game extends View {
 
     private Drawable[] berriesDrawable;
 
-    public Game(Context context, @Nullable AttributeSet attrs) {
+    public GamePresenter(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -85,6 +87,12 @@ public class Game extends View {
         onPokemonCollision();
     }
 
+    private GameEventListener gameEventListener;
+
+    public void setGameEventListener(GameEventListener listener) {
+        this.gameEventListener = listener;
+    }
+
     private void newBerry(){
         if (posBerryY > height) {
             posBerryY = 50;
@@ -97,6 +105,9 @@ public class Game extends View {
             posBerryY = 50;
             posBerryX = random.nextInt(width);
             currentBerryType = random.nextInt(3);
+            if (gameEventListener != null) {
+                gameEventListener.onBerryCollected();
+            }
         }
     }
 

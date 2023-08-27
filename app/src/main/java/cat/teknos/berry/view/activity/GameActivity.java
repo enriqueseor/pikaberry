@@ -1,4 +1,4 @@
-package cat.teknos.berry.view;
+package cat.teknos.berry.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,20 +6,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.ViewTreeObserver;
+import android.widget.TextView;
 
 
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cat.teknos.berry.view.util.GameEventListener;
 import cat.teknos.berry.R;
 import cat.teknos.berry.model.PlaylistManager;
-import cat.teknos.berry.presenter.Game;
+import cat.teknos.berry.presenter.GamePresenter;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements GameEventListener {
 
     private int level;
-    private Game game;
+    private GamePresenter game;
     private final Handler handler = new Handler();
     private final Random random = new Random();
     private PlaylistManager playlistManager;
@@ -29,6 +31,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         game = findViewById(R.id.Screen);
+        game.setGameEventListener(this);
 
         Intent intent = getIntent();
         level = intent.getIntExtra("level", 2);
@@ -46,6 +49,16 @@ public class GameActivity extends AppCompatActivity {
 
         obs();
         timer();
+    }
+
+    @Override
+    public void onBerryCollected() {
+        runOnUiThread(() -> {
+            TextView textView = findViewById(R.id.points);
+            int currentValue = Integer.parseInt(textView.getText().toString());
+            int newValue = currentValue + 1;
+            textView.setText(String.valueOf(newValue));
+        });
     }
 
     @Override
