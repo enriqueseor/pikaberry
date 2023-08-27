@@ -34,39 +34,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/berry" />
-
-        <ImageView
-            android:id="@+id/live1"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginEnd="22dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/lives" />
-
-        <ImageView
-            android:id="@+id/live2"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/live1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/lives" />
-
-        <ImageView
-            android:id="@+id/live3"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/live2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/lives" />
+            app:srcCompat="@drawable/berry"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/points"
-            android:layout_width="30dp"
+            android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:text="0"
             android:textAlignment="center"
@@ -77,6 +50,37 @@
             app:layout_constraintStart_toEndOf="@+id/right"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5" />
+
+        <ImageView
+            android:id="@+id/live1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="22dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/lives"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/live2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/live1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/lives"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/live3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/live2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/lives"
+            tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
