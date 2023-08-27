@@ -7,9 +7,8 @@
     android:layout_height="match_parent"
     tools:context="cat.teknos.berry.view.activity.GameActivity">
 
-    <view
+    <cat.teknos.berry.presenter.GamePresenter
         android:id="@+id/Screen"
-        class="cat.teknos.berry.presenter.GamePresenter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"

@@ -40,7 +40,6 @@ public class GamePresenter extends View {
     }
 
     private void init() {
-        setClickable(true);
         backgroundDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.background, null);
         pikachuDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.pikachu, null);
         berriesDrawable = new Drawable[3];
@@ -48,6 +47,21 @@ public class GamePresenter extends View {
         berriesDrawable[1] = ResourcesCompat.getDrawable(getResources(), R.drawable.nanap_berry, null);
         berriesDrawable[2] = ResourcesCompat.getDrawable(getResources(), R.drawable.pinap_berry, null);
         pokemonDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.cherubi, null);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+        width = w;
+        height = h;
+
+        posPikachuX = width / 2;
+        posPikachuY = height - 100;
+
+        radio = 100;
+        posBerryY = 50;
+        posPokemonX = random.nextInt(width);
     }
 
     @Override

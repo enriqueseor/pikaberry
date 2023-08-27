@@ -9,7 +9,6 @@ import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,7 +22,6 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     private int level;
     private GamePresenter game;
     private final Handler handler = new Handler();
-    private final Random random = new Random();
     private PlaylistManager playlistManager;
 
     @Override
@@ -36,17 +34,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         Intent intent = getIntent();
         level = intent.getIntExtra("level", 2);
 
-        int[] songResources = {
-                R.raw.route_101,
-                R.raw.route_104,
-                R.raw.route_110,
-                R.raw.route_113,
-                R.raw.route_119,
-                R.raw.route_120,
-        };
-        playlistManager = new PlaylistManager(this, songResources);
-        playlistManager.start();
-
+        playList();
         obs();
         timer();
     }
@@ -69,18 +57,22 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         }
     }
 
+    private void playList(){
+        int[] songResources = {
+                R.raw.route_101,
+                R.raw.route_104,
+                R.raw.route_110,
+                R.raw.route_113,
+                R.raw.route_119,
+                R.raw.route_120,
+        };
+        playlistManager = new PlaylistManager(this, songResources);
+        playlistManager.start();
+    }
+
     private void obs(){
         ViewTreeObserver obs = game.getViewTreeObserver();
         obs.addOnGlobalLayoutListener(() -> {
-            game.width = game.getWidth();
-            game.height = game.getHeight();
-
-            game.posPikachuX = game.width / 2;
-            game.posPikachuY = game.height - 100;
-
-            game.radio = 100;
-            game.posBerryY = 50;
-            game.posPokemonX = random.nextInt(game.width);
         });
     }
 
