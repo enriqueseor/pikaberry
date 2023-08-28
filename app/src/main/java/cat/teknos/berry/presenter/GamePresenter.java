@@ -107,7 +107,7 @@ public class GamePresenter extends View {
         this.gameEventListener = listener;
     }
 
-    private void newBerry(){
+    private void newBerry() {
         if (posBerryY > height) {
             posBerryY = 50;
             posBerryX = random.nextInt(width);
@@ -136,6 +136,9 @@ public class GamePresenter extends View {
         if (RectF.intersects(rectForPikachu, rectForRock)) {
             posRockY = 50;
             posRockX = random.nextInt(width);
+            if (gameEventListener != null) {
+                gameEventListener.onRockCollision();
+            }
         }
     }
 }

@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -23,6 +25,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     private GamePresenter game;
     private final Handler handler = new Handler();
     private PlaylistManager playlistManager;
+    private ImageView live1, live2, live3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,10 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
 
         Intent intent = getIntent();
         level = intent.getIntExtra("level", 2);
+
+        live1 = findViewById(R.id.live1);
+        live2 = findViewById(R.id.live2);
+        live3 = findViewById(R.id.live3);
 
         playList();
         obs();
@@ -47,6 +54,17 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
             int newValue = currentValue + 1;
             textView.setText(String.valueOf(newValue));
         });
+    }
+
+    @Override
+    public void onRockCollision() {
+        if (live3.getVisibility() == View.VISIBLE) {
+            live3.setVisibility(View.INVISIBLE);
+        } else if (live2.getVisibility() == View.VISIBLE) {
+            live2.setVisibility(View.INVISIBLE);
+        } else if (live1.getVisibility() == View.VISIBLE) {
+            live1.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
