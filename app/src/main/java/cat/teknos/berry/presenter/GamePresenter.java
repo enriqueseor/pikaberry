@@ -19,14 +19,14 @@ import cat.teknos.berry.R;
 public class GamePresenter extends View {
 
     public int width, height, radio;
-    public int posPikachuX, posPikachuY, posBerryX, posBerryY, posPokemonX, posPokemonY;
+    public int posPikachuX, posPikachuY, posBerryX, posBerryY, posRockX, posRockY;
     private int currentBerryType = 0;
 
     private final Random random = new Random();
 
     private final RectF rectForPikachu = new RectF();
     private final RectF rectForBerry = new RectF();
-    private final RectF rectForPokemon = new RectF();
+    private final RectF rectForRock = new RectF();
 
     private Drawable backgroundDrawable;
     private Drawable pikachuDrawable;
@@ -46,7 +46,7 @@ public class GamePresenter extends View {
         berriesDrawable[0] = ResourcesCompat.getDrawable(getResources(), R.drawable.razz_berry, null);
         berriesDrawable[1] = ResourcesCompat.getDrawable(getResources(), R.drawable.nanap_berry, null);
         berriesDrawable[2] = ResourcesCompat.getDrawable(getResources(), R.drawable.pinap_berry, null);
-        pokemonDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.cherubi, null);
+        pokemonDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.rock, null);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class GamePresenter extends View {
 
         radio = 100;
         posBerryY = 50;
-        posPokemonX = random.nextInt(width);
+        posRockX = random.nextInt(width);
     }
 
     @Override
@@ -94,11 +94,11 @@ public class GamePresenter extends View {
         onBerryCollected();
 
         //POKEMON
-        pokemonDrawable.setBounds(posPokemonX - radio, posPokemonY - radio, posPokemonX + radio, posPokemonY + radio);
+        pokemonDrawable.setBounds(posRockX - radio, posRockY - radio, posRockX + radio, posRockY + radio);
         pokemonDrawable.draw(canvas);
-        rectForPokemon.set(posPokemonX - radio, posPokemonY - radio, posPokemonX + radio, posPokemonY + radio);
-        newPokemon();
-        onPokemonCollision();
+        rectForRock.set(posRockX - radio, posRockY - radio, posRockX + radio, posRockY + radio);
+        newRock();
+        onRockCollision();
     }
 
     private GameEventListener gameEventListener;
@@ -125,17 +125,17 @@ public class GamePresenter extends View {
         }
     }
 
-    private void newPokemon() {
-        if (posPokemonY > height) {
-            posPokemonY = 50;
-            posPokemonX = random.nextInt(width);
+    private void newRock() {
+        if (posRockY > height) {
+            posRockY = 50;
+            posRockX = random.nextInt(width);
         }
     }
 
-    private void onPokemonCollision() {
-        if (RectF.intersects(rectForPikachu, rectForPokemon)) {
-            posPokemonY = 50;
-            posPokemonX = random.nextInt(width);
+    private void onRockCollision() {
+        if (RectF.intersects(rectForPikachu, rectForRock)) {
+            posRockY = 50;
+            posRockX = random.nextInt(width);
         }
     }
 }

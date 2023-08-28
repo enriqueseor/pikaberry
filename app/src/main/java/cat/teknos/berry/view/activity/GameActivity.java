@@ -83,7 +83,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
             public void run() {
                 handler.post(() -> {
                     game.posBerryY += level * 10;
-                    game.posPokemonY += level * 10;
+                    game.posRockY += level * 10;
                     game.invalidate();
                 });
             }
