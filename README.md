@@ -24,10 +24,7 @@ Welcome to Berry Game! This is a simple and fun game where players collect berri
 To play Berry Game on your local machine, follow these steps:
 
 1. Clone this repository: `git clone https://github.com/enriqueseor/berry-game.git`
-2. Open the project in Unity Hub.
-3. Select the appropriate Unity version (recommended: Unity 20XX.X.XfX).
-4. Open the `MainScene` scene located in the `Scenes` folder.
-5. Press the Play button in Unity to start the game.
+2. Open the project in Android Studio.
 
 ## Gameplay
 
