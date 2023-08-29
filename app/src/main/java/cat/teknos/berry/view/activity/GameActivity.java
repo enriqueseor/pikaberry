@@ -63,7 +63,8 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         } else if (live2.getVisibility() == View.VISIBLE) {
             live2.setVisibility(View.INVISIBLE);
         } else if (live1.getVisibility() == View.VISIBLE) {
-            live1.setVisibility(View.INVISIBLE);
+            Intent intent = new Intent(this, ResultsActivity.class);
+            startActivity(intent);
         }
     }
 
