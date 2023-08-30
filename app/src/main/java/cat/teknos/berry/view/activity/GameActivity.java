@@ -78,14 +78,6 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        Intent intent = new Intent(this, ResultsActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (playlistManager != null) {
