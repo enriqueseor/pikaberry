@@ -21,7 +21,7 @@ import cat.teknos.berry.presenter.GamePresenter;
 
 public class GameActivity extends AppCompatActivity implements GameEventListener {
 
-    private int level;
+    private int level, currentValue;
     private GamePresenter game;
     private final Handler handler = new Handler();
     private PlaylistManager playlistManager;
@@ -50,7 +50,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     public void onBerryCollected() {
         runOnUiThread(() -> {
             TextView textView = findViewById(R.id.points);
-            int currentValue = Integer.parseInt(textView.getText().toString());
+            currentValue = Integer.parseInt(textView.getText().toString());
             int newValue = currentValue + 1;
             textView.setText(String.valueOf(newValue));
         });
@@ -63,9 +63,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         } else if (live2.getVisibility() == View.VISIBLE) {
             live2.setVisibility(View.INVISIBLE);
         } else if (live1.getVisibility() == View.VISIBLE) {
-            Intent intent = new Intent(this, ResultsActivity.class);
-            startActivity(intent);
-            finish();
+            onGameFinished();
         }
     }
 
@@ -83,6 +81,14 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         if (playlistManager != null) {
             playlistManager.release();
         }
+    }
+
+    private void onGameFinished(){
+        Intent intent = new Intent(this, ResultsActivity.class);
+        intent.putExtra("playerScore", currentValue);
+        intent.putExtra("playerName", getIntent().getStringExtra("playerName"));
+        startActivity(intent);
+        finish();
     }
 
     private void playList(){

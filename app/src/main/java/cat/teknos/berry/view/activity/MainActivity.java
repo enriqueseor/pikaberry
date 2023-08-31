@@ -34,14 +34,18 @@ public class MainActivity extends AppCompatActivity {
         int level = 2;
         if (rbEasy.isChecked()) {
             level = 1;
-        } else if (rbMedium.isChecked()){
-            level = 2;
         } else if (rbHard.isChecked()) {
             level = 3;
         }
 
+        String playerName = etName.getText().toString();
+        if (playerName.isEmpty()) {
+            playerName = "PLAYER";
+        }
+
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("level", level);
+        intent.putExtra("playerName", playerName);
         startActivity(intent);
     }
 }
