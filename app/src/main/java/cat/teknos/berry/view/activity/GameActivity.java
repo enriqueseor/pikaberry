@@ -3,6 +3,7 @@ package cat.teknos.berry.view.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -26,6 +27,8 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     private final Handler handler = new Handler();
     private PlaylistManager playlistManager;
     private ImageView live1, live2, live3;
+    private MediaPlayer mediaPlayer;
+    private int currentSoundResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,9 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         live2 = findViewById(R.id.live2);
         live3 = findViewById(R.id.live3);
 
+        mediaPlayer = MediaPlayer.create(this, R.raw.berry_collected);
+        currentSoundResource = R.raw.berry_collected;
+
         playList();
         obs();
         timer();
@@ -53,6 +59,12 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
             currentValue = Integer.parseInt(textView.getText().toString());
             int newValue = currentValue + 1;
             textView.setText(String.valueOf(newValue));
+            if (currentSoundResource != R.raw.berry_collected) {
+                mediaPlayer.reset(); // Reset the MediaPlayer if the sound resource has changed
+                mediaPlayer = MediaPlayer.create(this, R.raw.berry_collected);
+                currentSoundResource = R.raw.berry_collected;
+            }
+            mediaPlayer.start();
         });
     }
 
@@ -65,6 +77,12 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         } else if (live1.getVisibility() == View.VISIBLE) {
             onGameFinished();
         }
+        if (currentSoundResource != R.raw.rock_collision) {
+            mediaPlayer.reset(); // Reset the MediaPlayer if the sound resource has changed
+            mediaPlayer = MediaPlayer.create(this, R.raw.rock_collision);
+            currentSoundResource = R.raw.rock_collision;
+        }
+        mediaPlayer.start();
     }
 
     @Override
@@ -80,6 +98,9 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         super.onDestroy();
         if (playlistManager != null) {
             playlistManager.release();
+        }
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
         }
     }
 

@@ -16,6 +16,8 @@ public class PlaylistManager implements MediaPlayer.OnCompletionListener {
 
         for (int i = 0; i < songResources.length; i++) {
             playlist[i] = MediaPlayer.create(context, songResources[i]);
+            float volume = 0.5f;
+            playlist[i].setVolume(volume, volume);
             playlist[i].setOnCompletionListener(this);
         }
     }
