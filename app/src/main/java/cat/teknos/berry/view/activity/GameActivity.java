@@ -2,7 +2,9 @@ package cat.teknos.berry.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,6 +31,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     private ImageView live1, live2, live3;
     private MediaPlayer mediaPlayer;
     private int currentSoundResource;
+    private String playerName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
 
         Intent intent = getIntent();
         level = intent.getIntExtra("level", 2);
+        playerName = getIntent().getStringExtra("playerName");
 
         live1 = findViewById(R.id.live1);
         live2 = findViewById(R.id.live2);
@@ -88,9 +92,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     @Override
     protected void onPause() {
         super.onPause();
-        Intent intent = new Intent(this, ResultsActivity.class);
-        startActivity(intent);
-        finish();
+        onGameFinished();
     }
 
     @Override
@@ -106,8 +108,8 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
 
     private void onGameFinished(){
         Intent intent = new Intent(this, ResultsActivity.class);
-        intent.putExtra("playerScore", currentValue);
-        intent.putExtra("playerName", getIntent().getStringExtra("playerName"));
+        intent.putExtra("playerScore", currentValue + 1);
+        intent.putExtra("playerName", playerName);
         startActivity(intent);
         finish();
     }
