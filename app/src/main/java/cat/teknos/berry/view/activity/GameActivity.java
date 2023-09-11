@@ -22,7 +22,7 @@ import cat.teknos.berry.presenter.GamePresenter;
 
 public class GameActivity extends AppCompatActivity implements GameEventListener {
 
-    private int level, currentSoundResource, currentValue;
+    private int level, currentSoundResource, newValue;
     private GamePresenter game;
     private final Handler handler = new Handler();
     private PlaylistManager playlistManager;
@@ -66,7 +66,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     public void onBerryCollected() {
         runOnUiThread(() -> {
             TextView textView = findViewById(R.id.points);
-            int newValue = Integer.parseInt(textView.getText().toString()) + 1;
+            newValue = Integer.parseInt(textView.getText().toString()) + 1;
             textView.setText(String.valueOf(newValue));
             playSound(R.raw.berry_collected);
         });
@@ -103,7 +103,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
 
     private void onGameFinished(){
         Intent intent = new Intent(this, ResultsActivity.class);
-        intent.putExtra("playerScore", currentValue + 1);
+        intent.putExtra("playerScore", newValue);
         intent.putExtra("playerName", playerName);
         startActivity(intent);
         finish();
