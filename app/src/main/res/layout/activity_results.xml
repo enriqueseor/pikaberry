@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     tools:context=".view.activity.ResultsActivity">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/backgroundImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/berry_basket"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:background="@drawable/shape"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/resultImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="100dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/berry"
             android:importantForAccessibility="no" />
@@ -28,7 +46,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:text="Congratulations!"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold"
             tools:ignore="HardcodedText" />
@@ -40,7 +58,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:text="You've completed the game!"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />
 
@@ -52,7 +70,7 @@
             android:layout_marginTop="24dp"
             android:text="YOUR SCORE"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textSize="28sp"
             tools:ignore="HardcodedText" />
 
@@ -64,9 +82,9 @@
             android:textSize="28sp"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             tools:ignore="HardcodedText" />
 
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
