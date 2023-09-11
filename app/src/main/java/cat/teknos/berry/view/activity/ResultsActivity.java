@@ -31,11 +31,9 @@ public class ResultsActivity extends AppCompatActivity {
         if (playerName != null) {
             playerName = "PLAYER";
         }
-
         score = String.valueOf(playerScore).length();
 
         yourScore();
-        scoreTable();
     }
 
     public void onBackPressed() {
@@ -45,25 +43,5 @@ public class ResultsActivity extends AppCompatActivity {
 
     private void yourScore(){
         score = playerScore;
-    }
-
-    private void scoreTable(){
-        TableLayout scoreTable = findViewById(R.id.scoreTable);
-
-        TableRow row = new TableRow(this);
-
-        TextView nameTextView = new TextView(this);
-        nameTextView.setText(playerName);
-        nameTextView.setPadding(10, 0, 10, 0);
-        nameTextView.setGravity(Gravity.CENTER);
-        row.addView(nameTextView);
-
-        TextView scoreTextView = new TextView(this);
-        scoreTextView.setText(String.valueOf(playerScore));
-        scoreTextView.setPadding(10, 0, 10, 0);
-        scoreTextView.setGravity(Gravity.CENTER);
-        row.addView(scoreTextView);
-
-        scoreTable.addView(row);
     }
 }
