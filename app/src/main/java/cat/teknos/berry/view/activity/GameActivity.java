@@ -2,9 +2,7 @@ package cat.teknos.berry.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,13 +22,12 @@ import cat.teknos.berry.presenter.GamePresenter;
 
 public class GameActivity extends AppCompatActivity implements GameEventListener {
 
-    private int level, currentValue;
+    private int level, currentSoundResource, currentValue;
     private GamePresenter game;
     private final Handler handler = new Handler();
     private PlaylistManager playlistManager;
     private ImageView live1, live2, live3;
     private MediaPlayer mediaPlayer;
-    private int currentSoundResource;
     private String playerName;
 
     @Override
@@ -56,19 +53,22 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         timer();
     }
 
+    private void playSound(int soundResource) {
+        if (currentSoundResource != soundResource) {
+            mediaPlayer.reset();
+            mediaPlayer = MediaPlayer.create(this, soundResource);
+            currentSoundResource = soundResource;
+        }
+        mediaPlayer.start();
+    }
+
     @Override
     public void onBerryCollected() {
         runOnUiThread(() -> {
             TextView textView = findViewById(R.id.points);
-            currentValue = Integer.parseInt(textView.getText().toString());
-            int newValue = currentValue + 1;
+            int newValue = Integer.parseInt(textView.getText().toString()) + 1;
             textView.setText(String.valueOf(newValue));
-            if (currentSoundResource != R.raw.berry_collected) {
-                mediaPlayer.reset(); // Reset the MediaPlayer if the sound resource has changed
-                mediaPlayer = MediaPlayer.create(this, R.raw.berry_collected);
-                currentSoundResource = R.raw.berry_collected;
-            }
-            mediaPlayer.start();
+            playSound(R.raw.berry_collected);
         });
     }
 
@@ -81,12 +81,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         } else if (live1.getVisibility() == View.VISIBLE) {
             onGameFinished();
         }
-        if (currentSoundResource != R.raw.rock_collision) {
-            mediaPlayer.reset(); // Reset the MediaPlayer if the sound resource has changed
-            mediaPlayer = MediaPlayer.create(this, R.raw.rock_collision);
-            currentSoundResource = R.raw.rock_collision;
-        }
-        mediaPlayer.start();
+        playSound(R.raw.rock_collision);
     }
 
     @Override
