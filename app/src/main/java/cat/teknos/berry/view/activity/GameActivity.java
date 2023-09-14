@@ -31,6 +31,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     private String playerName;
     private int numLives = 3;
     private final int maxLives = 3;
+    private boolean isHeartTimerRunning = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         playList();
         obs();
         timer();
+        heartTimer();
     }
 
     private void playSound(int soundResource) {
@@ -89,11 +91,12 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
 
     public void onHeartCollected() {
         runOnUiThread(() -> {
-            if (numLives <= maxLives) {
+            if (numLives < maxLives) {
                 numLives++;
                 updateLifeIconsVisibility();
             }
         });
+        playSound(R.raw.heart_collected);
     }
 
     private void updateLifeIconsVisibility() {
@@ -158,5 +161,21 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
                 });
             }
         },0, 20);
+    }
+
+    private void heartTimer() {
+        if (!isHeartTimerRunning) {
+            isHeartTimerRunning = true;
+            Timer heartTimer = new Timer();
+            heartTimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(() -> {
+                        game.posHeartY += level * 10;
+                        game.invalidate();
+                    });
+                }
+            }, 0, 20);
+        }
     }
 }

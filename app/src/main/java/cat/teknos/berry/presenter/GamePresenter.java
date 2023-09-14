@@ -12,8 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import cat.teknos.berry.view.util.GameEventListener;
 import cat.teknos.berry.R;
@@ -40,9 +38,6 @@ public class GamePresenter extends View {
     private Drawable heartDrawable;
 
     private Drawable[] berriesDrawable;
-
-    private final Timer heartTimer = new Timer();
-    private boolean isHeartTimerRunning = false;
 
     public GamePresenter(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -73,8 +68,6 @@ public class GamePresenter extends View {
         radio = 100;
         posBerryY = 50;
         posRockX = random.nextInt(width);
-
-        startHeartTimer();
     }
 
     @Override
@@ -168,21 +161,10 @@ public class GamePresenter extends View {
         }
     }
 
-    private void startHeartTimer() {
-        if (!isHeartTimerRunning) {
-            isHeartTimerRunning = true;
-            heartTimer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    newHeart();
-                    postInvalidate();
-                }
-            }, 0, 10000);
-        }
-    }
-
     public void onHeartCollected() {
         if (RectF.intersects(rectForPikachu, rectForHeart)) {
+            posHeartY = 50;
+            posHeartX = random.nextInt(width);
             if (gameEventListener != null) {
                 gameEventListener.onHeartCollected();
             }
