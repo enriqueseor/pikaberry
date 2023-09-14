@@ -60,7 +60,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/lives"
+            app:srcCompat="@drawable/heart"
             tools:ignore="ContentDescription" />
 
         <ImageView
@@ -70,7 +70,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/live1"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/lives"
+            app:srcCompat="@drawable/heart"
             tools:ignore="ContentDescription" />
 
         <ImageView
@@ -80,7 +80,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/live2"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/lives"
+            app:srcCompat="@drawable/heart"
             tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

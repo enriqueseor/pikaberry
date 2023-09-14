@@ -29,6 +29,8 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     private ImageView live1, live2, live3;
     private MediaPlayer mediaPlayer;
     private String playerName;
+    private int numLives = 3;
+    private final int maxLives = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,14 +76,30 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
 
     @Override
     public void onRockCollision() {
-        if (live3.getVisibility() == View.VISIBLE) {
-            live3.setVisibility(View.INVISIBLE);
-        } else if (live2.getVisibility() == View.VISIBLE) {
-            live2.setVisibility(View.INVISIBLE);
-        } else if (live1.getVisibility() == View.VISIBLE) {
+        if (numLives > 0) {
+            numLives--;
+            updateLifeIconsVisibility();
+            playSound(R.raw.rock_collision);
+        }
+        if (numLives == 0) {
             onGameFinished();
         }
         playSound(R.raw.rock_collision);
+    }
+
+    public void onHeartCollected() {
+        runOnUiThread(() -> {
+            if (numLives <= maxLives) {
+                numLives++;
+                updateLifeIconsVisibility();
+            }
+        });
+    }
+
+    private void updateLifeIconsVisibility() {
+        live1.setVisibility(numLives >= 1 ? View.VISIBLE : View.INVISIBLE);
+        live2.setVisibility(numLives >= 2 ? View.VISIBLE : View.INVISIBLE);
+        live3.setVisibility(numLives == 3 ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override

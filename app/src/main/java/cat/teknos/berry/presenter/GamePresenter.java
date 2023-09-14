@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cat.teknos.berry.view.util.GameEventListener;
 import cat.teknos.berry.R;
@@ -19,7 +21,10 @@ import cat.teknos.berry.R;
 public class GamePresenter extends View {
 
     public int width, height, radio;
-    public int posPikachuX, posPikachuY, posBerryX, posBerryY, posRockX, posRockY;
+    public int posPikachuX, posPikachuY;
+    public int posBerryX, posBerryY;
+    public int posRockX, posRockY;
+    public int posHeartX, posHeartY;
     private int currentBerryType = 0;
 
     private final Random random = new Random();
@@ -27,12 +32,17 @@ public class GamePresenter extends View {
     private final RectF rectForPikachu = new RectF();
     private final RectF rectForBerry = new RectF();
     private final RectF rectForRock = new RectF();
+    private final RectF rectForHeart = new RectF();
 
     private Drawable backgroundDrawable;
     private Drawable pikachuDrawable;
-    private Drawable pokemonDrawable;
+    private Drawable rockDrawable;
+    private Drawable heartDrawable;
 
     private Drawable[] berriesDrawable;
+
+    private final Timer heartTimer = new Timer();
+    private boolean isHeartTimerRunning = false;
 
     public GamePresenter(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -46,7 +56,8 @@ public class GamePresenter extends View {
         berriesDrawable[0] = ResourcesCompat.getDrawable(getResources(), R.drawable.razz_berry, null);
         berriesDrawable[1] = ResourcesCompat.getDrawable(getResources(), R.drawable.nanap_berry, null);
         berriesDrawable[2] = ResourcesCompat.getDrawable(getResources(), R.drawable.pinap_berry, null);
-        pokemonDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.rock, null);
+        rockDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.rock, null);
+        heartDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.heart, null);
     }
 
     @Override
@@ -62,6 +73,8 @@ public class GamePresenter extends View {
         radio = 100;
         posBerryY = 50;
         posRockX = random.nextInt(width);
+
+        startHeartTimer();
     }
 
     @Override
@@ -94,11 +107,17 @@ public class GamePresenter extends View {
         onBerryCollected();
 
         //POKEMON
-        pokemonDrawable.setBounds(posRockX - radio, posRockY - radio, posRockX + radio, posRockY + radio);
-        pokemonDrawable.draw(canvas);
+        rockDrawable.setBounds(posRockX - radio, posRockY - radio, posRockX + radio, posRockY + radio);
+        rockDrawable.draw(canvas);
         rectForRock.set(posRockX - radio, posRockY - radio, posRockX + radio, posRockY + radio);
         newRock();
         onRockCollision();
+
+        heartDrawable.setBounds(posHeartX - radio, posHeartY - radio, posHeartX + radio, posHeartY + radio);
+        heartDrawable.draw(canvas);
+        rectForHeart.set(posHeartX - radio, posHeartY - radio, posHeartX + radio, posHeartY + radio);
+        newHeart();
+        onHeartCollected();
     }
 
     private GameEventListener gameEventListener;
@@ -138,6 +157,34 @@ public class GamePresenter extends View {
             posRockX = random.nextInt(width);
             if (gameEventListener != null) {
                 gameEventListener.onRockCollision();
+            }
+        }
+    }
+
+    private void newHeart() {
+        if (posHeartY > height) {
+            posHeartY = 50;
+            posHeartX = random.nextInt(width);
+        }
+    }
+
+    private void startHeartTimer() {
+        if (!isHeartTimerRunning) {
+            isHeartTimerRunning = true;
+            heartTimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    newHeart();
+                    postInvalidate();
+                }
+            }, 0, 10000);
+        }
+    }
+
+    public void onHeartCollected() {
+        if (RectF.intersects(rectForPikachu, rectForHeart)) {
+            if (gameEventListener != null) {
+                gameEventListener.onHeartCollected();
             }
         }
     }
