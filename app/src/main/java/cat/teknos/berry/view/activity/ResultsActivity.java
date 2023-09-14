@@ -36,7 +36,7 @@ public class ResultsActivity extends AppCompatActivity {
     }
 
     private void yourScore() {
-        String resultText = playerName + " " + playerScore;
+        String resultText = "PLAYER: " + playerName + "\nSCORE: " + playerScore;
         resultTextView.setText(resultText);
     }
 }

@@ -63,23 +63,12 @@
             tools:ignore="HardcodedText" />
 
         <TextView
-            android:id="@+id/yourScore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="24dp"
-            android:text="YOUR SCORE"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:textSize="28sp"
-            tools:ignore="HardcodedText" />
-
-        <TextView
             android:id="@+id/resultTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PLAYER 0"
-            android:textSize="28sp"
+            android:text="PLAYER: PLAYER \n SCORE: 0"
+            android:textAlignment="center"
+            android:textSize="24sp"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:textColor="@android:color/white"

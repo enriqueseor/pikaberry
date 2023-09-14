@@ -1,6 +1,7 @@
 # Berry Game
 
-Welcome to Berry Game! This is a simple and fun game where players collect berries and avoid obstacles. The game is built using [Android](https://www.android.com/) and is a great example of a casual game for mobile devices.
+Welcome to Berry Game! This is a simple and fun game where players collect berries and avoid obstacles. 
+The game is built using [Android](https://www.android.com/) and is a great example of a casual game for mobile devices.
 
 ![MainActivity_BerryGame](https://github.com/enriqueseor/berry-game/assets/101838134/905fd757-0e5e-49ad-b1a9-b8ebfabb3fe9)
 
@@ -25,10 +26,11 @@ To play Berry Game on your local machine, follow these steps:
 
 1. Clone this repository: `git clone https://github.com/enriqueseor/berry-game.git`
 2. Open the project in Android Studio.
+3. Build and Run the project.
 
 ## Gameplay
 
-- Use the **left** and **right** arrows or touch controls to move your character.
+- Touch the screen to move your character.
 - Collect as many berries as you can to earn points.
 - Avoid colliding with obstacles, as they will reduce your health.
 - The game ends when your health reaches zero.
@@ -47,4 +49,4 @@ Contributions are welcome! If you'd like to contribute to Berry Game, please fol
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE.txt). See the [LICENSE.txt](LICENSE.txt) file for details.
+This project is licensed under the [MIT License](LICENSE).
