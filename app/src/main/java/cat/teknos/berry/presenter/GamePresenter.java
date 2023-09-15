@@ -2,6 +2,7 @@ package cat.teknos.berry.presenter;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -45,7 +46,7 @@ public class GamePresenter extends View {
     }
 
     private void init() {
-        backgroundDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.background, null);
+        backgroundDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.background_emerald, null);
         pikachuDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.pikachu, null);
         berriesDrawable = new Drawable[3];
         berriesDrawable[0] = ResourcesCompat.getDrawable(getResources(), R.drawable.razz_berry, null);
@@ -85,7 +86,31 @@ public class GamePresenter extends View {
         super.onDraw(canvas);
 
         //BACKGROUND
-        backgroundDrawable.setBounds(0, 0, getWidth(), getHeight());
+        int srcLeft = 0;
+        int srcTop = 0;
+        int srcRight = backgroundDrawable.getIntrinsicWidth();
+        int srcBottom = backgroundDrawable.getIntrinsicHeight();
+
+        int canvasWidth = getWidth();
+        int canvasHeight = getHeight();
+
+        float aspectRatio = (float) canvasWidth / canvasHeight;
+        float imageAspectRatio = (float) srcRight / srcBottom;
+
+        if (aspectRatio > imageAspectRatio) {
+            int newHeight = (int) (canvasWidth / imageAspectRatio);
+            int topOffset = (canvasHeight - newHeight) / 2;
+            srcTop += topOffset;
+            srcBottom = srcTop + newHeight;
+        } else {
+            int newWidth = (int) (canvasHeight * imageAspectRatio);
+            int leftOffset = (canvasWidth - newWidth) / 2;
+            srcLeft += leftOffset;
+            srcRight = srcLeft + newWidth;
+        }
+
+        Rect srcRect = new Rect(srcLeft, srcTop, srcRight, srcBottom);
+        backgroundDrawable.setBounds(srcRect);
         backgroundDrawable.draw(canvas);
 
         //PIKACHU
