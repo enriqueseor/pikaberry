@@ -25,8 +25,12 @@ public class GamePresenter extends View {
     public int posRockX, posRockY;
     public int posHeartX, posHeartY;
     private int currentBerryType = 0;
+    int canvasWidth, canvasHeight;
+    float aspectRatio, imageAspectRatio;
 
     private final Random random = new Random();
+
+    Rect srcRect = new Rect();
 
     private final RectF rectForPikachu = new RectF();
     private final RectF rectForBerry = new RectF();
@@ -39,6 +43,8 @@ public class GamePresenter extends View {
     private Drawable heartDrawable;
 
     private Drawable[] berriesDrawable;
+
+    private GameEventListener gameEventListener;
 
     public GamePresenter(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -91,11 +97,11 @@ public class GamePresenter extends View {
         int srcRight = backgroundDrawable.getIntrinsicWidth();
         int srcBottom = backgroundDrawable.getIntrinsicHeight();
 
-        int canvasWidth = getWidth();
-        int canvasHeight = getHeight();
+        canvasWidth = getWidth();
+        canvasHeight = getHeight();
 
-        float aspectRatio = (float) canvasWidth / canvasHeight;
-        float imageAspectRatio = (float) srcRight / srcBottom;
+        aspectRatio = (float) canvasWidth / canvasHeight;
+        imageAspectRatio = (float) srcRight / srcBottom;
 
         if (aspectRatio > imageAspectRatio) {
             int newHeight = (int) (canvasWidth / imageAspectRatio);
@@ -109,7 +115,7 @@ public class GamePresenter extends View {
             srcRight = srcLeft + newWidth;
         }
 
-        Rect srcRect = new Rect(srcLeft, srcTop, srcRight, srcBottom);
+        srcRect.set(srcLeft, srcTop, srcRight, srcBottom);
         backgroundDrawable.setBounds(srcRect);
         backgroundDrawable.draw(canvas);
 
@@ -135,11 +141,8 @@ public class GamePresenter extends View {
         heartDrawable.setBounds(posHeartX - radio, posHeartY - radio, posHeartX + radio, posHeartY + radio);
         heartDrawable.draw(canvas);
         rectForHeart.set(posHeartX - radio, posHeartY - radio, posHeartX + radio, posHeartY + radio);
-        newHeart();
         onHeartCollected();
     }
-
-    private GameEventListener gameEventListener;
 
     public void setGameEventListener(GameEventListener listener) {
         this.gameEventListener = listener;
@@ -180,17 +183,8 @@ public class GamePresenter extends View {
         }
     }
 
-    private void newHeart() {
-        if (posHeartY > height) {
-            posHeartY = 50;
-            posHeartX = random.nextInt(width);
-        }
-    }
-
     public void onHeartCollected() {
         if (RectF.intersects(rectForPikachu, rectForHeart)) {
-            posHeartY = 50;
-            posHeartX = random.nextInt(width);
             if (gameEventListener != null) {
                 gameEventListener.onHeartCollected();
             }
