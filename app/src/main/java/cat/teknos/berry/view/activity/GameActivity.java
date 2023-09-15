@@ -59,7 +59,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
 
     private void playSound(int soundResource) {
         if (currentSoundResource != soundResource) {
-            mediaPlayer.reset();
+            mediaPlayer.release();
             mediaPlayer = MediaPlayer.create(this, soundResource);
             currentSoundResource = soundResource;
         }
@@ -108,12 +108,17 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     @Override
     protected void onPause() {
         super.onPause();
+        mediaPlayerRelease();
         onGameFinished();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mediaPlayerRelease();
+    }
+
+    private void mediaPlayerRelease(){
         if (playlistManager != null) {
             playlistManager.release();
         }
