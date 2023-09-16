@@ -75,7 +75,6 @@ public class GamePresenter extends View {
         radio = 100;
         posBerryX = random.nextInt(width);
         posRockX = random.nextInt(width);
-        posHeartX = random.nextInt(width);
     }
 
     @Override
@@ -92,6 +91,38 @@ public class GamePresenter extends View {
         super.onDraw(canvas);
 
         //BACKGROUND
+        drawBackgroundWithAspectRatio(canvas);
+
+        //PIKACHU
+        pikachuDrawable.setBounds(posPikachuX - radio, posPikachuY - radio, posPikachuX + radio, posPikachuY + radio);
+        pikachuDrawable.draw(canvas);
+        rectForPikachu.set(posPikachuX - radio, posPikachuY - radio, posPikachuX + radio, posPikachuY + radio);
+
+        //BERRY
+        berriesDrawable[currentBerryType].setBounds(posBerryX - radio, posBerryY - radio, posBerryX + radio, posBerryY + radio);
+        berriesDrawable[currentBerryType].draw(canvas);
+        rectForBerry.set(posBerryX - radio, posBerryY - radio, posBerryX + radio, posBerryY + radio);
+        newBerry();
+        onBerryCollected();
+
+        //POKEMON
+        rockDrawable.setBounds(posRockX - radio, posRockY - radio, posRockX + radio, posRockY + radio);
+        rockDrawable.draw(canvas);
+        rectForRock.set(posRockX - radio, posRockY - radio, posRockX + radio, posRockY + radio);
+        newRock();
+        onRockCollision();
+
+        heartDrawable.setBounds(posHeartX - radio, posHeartY - radio, posHeartX + radio, posHeartY + radio);
+        heartDrawable.draw(canvas);
+        rectForHeart.set(posHeartX - radio, posHeartY - radio, posHeartX + radio, posHeartY + radio);
+        onHeartCollected();
+    }
+
+    private void drawBackgroundWithAspectRatio(Canvas canvas) {
+        if (backgroundDrawable == null) {
+            return;
+        }
+
         int srcLeft = 0;
         int srcTop = 0;
         int srcRight = backgroundDrawable.getIntrinsicWidth();
@@ -118,30 +149,6 @@ public class GamePresenter extends View {
         srcRect.set(srcLeft, srcTop, srcRight, srcBottom);
         backgroundDrawable.setBounds(srcRect);
         backgroundDrawable.draw(canvas);
-
-        //PIKACHU
-        pikachuDrawable.setBounds(posPikachuX - radio, posPikachuY - radio, posPikachuX + radio, posPikachuY + radio);
-        pikachuDrawable.draw(canvas);
-        rectForPikachu.set(posPikachuX - radio, posPikachuY - radio, posPikachuX + radio, posPikachuY + radio);
-
-        //BERRY
-        berriesDrawable[currentBerryType].setBounds(posBerryX - radio, posBerryY - radio, posBerryX + radio, posBerryY + radio);
-        berriesDrawable[currentBerryType].draw(canvas);
-        rectForBerry.set(posBerryX - radio, posBerryY - radio, posBerryX + radio, posBerryY + radio);
-        newBerry();
-        onBerryCollected();
-
-        //POKEMON
-        rockDrawable.setBounds(posRockX - radio, posRockY - radio, posRockX + radio, posRockY + radio);
-        rockDrawable.draw(canvas);
-        rectForRock.set(posRockX - radio, posRockY - radio, posRockX + radio, posRockY + radio);
-        newRock();
-        onRockCollision();
-
-        heartDrawable.setBounds(posHeartX - radio, posHeartY - radio, posHeartX + radio, posHeartY + radio);
-        heartDrawable.draw(canvas);
-        rectForHeart.set(posHeartX - radio, posHeartY - radio, posHeartX + radio, posHeartY + radio);
-        onHeartCollected();
     }
 
     public void setGameEventListener(GameEventListener listener) {
