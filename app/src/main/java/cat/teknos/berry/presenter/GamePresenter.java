@@ -75,6 +75,7 @@ public class GamePresenter extends View {
         radio = 100;
         posBerryX = random.nextInt(width);
         posRockX = random.nextInt(width);
+        posHeartX = random.nextInt(width);
     }
 
     @Override
@@ -115,6 +116,7 @@ public class GamePresenter extends View {
         heartDrawable.setBounds(posHeartX - radio, posHeartY - radio, posHeartX + radio, posHeartY + radio);
         heartDrawable.draw(canvas);
         rectForHeart.set(posHeartX - radio, posHeartY - radio, posHeartX + radio, posHeartY + radio);
+        newHeart();
         onHeartCollected();
     }
 
@@ -190,8 +192,17 @@ public class GamePresenter extends View {
         }
     }
 
+    private void newHeart() {
+        if (posHeartY > height) {
+            posHeartY = 50;
+            posHeartX = random.nextInt(width);
+        }
+    }
+
     public void onHeartCollected() {
         if (RectF.intersects(rectForPikachu, rectForHeart)) {
+            posHeartY = 50;
+            posHeartX = random.nextInt(width);
             if (gameEventListener != null) {
                 gameEventListener.onHeartCollected();
             }

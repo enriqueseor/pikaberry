@@ -54,7 +54,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         playList();
         obs();
         timer();
-        heartTimer();
+        delayedHeartTimer();
     }
 
     private void playSound(int soundResource) {
@@ -166,6 +166,11 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
                 });
             }
         },0, 20);
+    }
+
+    private void delayedHeartTimer() {
+        final Handler handler = new Handler();
+        handler.postDelayed(this::heartTimer, 10000);
     }
 
     private void heartTimer() {
