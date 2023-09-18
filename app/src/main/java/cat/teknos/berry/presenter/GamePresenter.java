@@ -19,19 +19,16 @@ import cat.teknos.berry.R;
 
 public class GamePresenter extends View {
 
-    public int width, height, radio;
+    public int width, height, radius;
     public int posPikachuX, posPikachuY;
     public int posBerryX, posBerryY;
     public int posRockX, posRockY;
     public int posHeartX, posHeartY;
-    private int currentBerryType = 0;
+    private int berryType = 0;
     int canvasWidth, canvasHeight;
     float aspectRatio, imageAspectRatio;
 
-    private final Random random = new Random();
-
-    Rect srcRect = new Rect();
-
+    public Rect srcRect = new Rect();
     private final RectF rectForPikachu = new RectF();
     private final RectF rectForBerry = new RectF();
     private final RectF rectForRock = new RectF();
@@ -41,10 +38,10 @@ public class GamePresenter extends View {
     private Drawable pikachuDrawable;
     private Drawable rockDrawable;
     private Drawable heartDrawable;
-
     private Drawable[] berriesDrawable;
 
     private GameEventListener gameEventListener;
+    private final Random random = new Random();
 
     public GamePresenter(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -72,7 +69,7 @@ public class GamePresenter extends View {
         posPikachuX = width / 2;
         posPikachuY = height - 100;
 
-        radio = 100;
+        radius = 100;
         posBerryX = random.nextInt(width);
         posRockX = random.nextInt(width);
         posHeartX = random.nextInt(width);
@@ -95,27 +92,27 @@ public class GamePresenter extends View {
         drawBackgroundWithAspectRatio(canvas);
 
         //PIKACHU
-        pikachuDrawable.setBounds(posPikachuX - radio, posPikachuY - radio, posPikachuX + radio, posPikachuY + radio);
+        pikachuDrawable.setBounds(posPikachuX - radius, posPikachuY - radius, posPikachuX + radius, posPikachuY + radius);
         pikachuDrawable.draw(canvas);
-        rectForPikachu.set(posPikachuX - radio, posPikachuY - radio, posPikachuX + radio, posPikachuY + radio);
+        rectForPikachu.set(posPikachuX - radius, posPikachuY - radius, posPikachuX + radius, posPikachuY + radius);
 
         //BERRY
-        berriesDrawable[currentBerryType].setBounds(posBerryX - radio, posBerryY - radio, posBerryX + radio, posBerryY + radio);
-        berriesDrawable[currentBerryType].draw(canvas);
-        rectForBerry.set(posBerryX - radio, posBerryY - radio, posBerryX + radio, posBerryY + radio);
+        berriesDrawable[berryType].setBounds(posBerryX - radius, posBerryY - radius, posBerryX + radius, posBerryY + radius);
+        berriesDrawable[berryType].draw(canvas);
+        rectForBerry.set(posBerryX - radius, posBerryY - radius, posBerryX + radius, posBerryY + radius);
         newBerry();
         onBerryCollected();
 
         //POKEMON
-        rockDrawable.setBounds(posRockX - radio, posRockY - radio, posRockX + radio, posRockY + radio);
+        rockDrawable.setBounds(posRockX - radius, posRockY - radius, posRockX + radius, posRockY + radius);
         rockDrawable.draw(canvas);
-        rectForRock.set(posRockX - radio, posRockY - radio, posRockX + radio, posRockY + radio);
+        rectForRock.set(posRockX - radius, posRockY - radius, posRockX + radius, posRockY + radius);
         newRock();
         onRockCollision();
 
-        heartDrawable.setBounds(posHeartX - radio, posHeartY - radio, posHeartX + radio, posHeartY + radio);
+        heartDrawable.setBounds(posHeartX - radius, posHeartY - radius, posHeartX + radius, posHeartY + radius);
         heartDrawable.draw(canvas);
-        rectForHeart.set(posHeartX - radio, posHeartY - radio, posHeartX + radio, posHeartY + radio);
+        rectForHeart.set(posHeartX - radius, posHeartY - radius, posHeartX + radius, posHeartY + radius);
         newHeart();
         onHeartCollected();
     }
@@ -168,7 +165,7 @@ public class GamePresenter extends View {
         if (RectF.intersects(rectForPikachu, rectForBerry)) {
             posBerryY = 50;
             posBerryX = random.nextInt(width);
-            currentBerryType = random.nextInt(3);
+            berryType = random.nextInt(3);
             if (gameEventListener != null) {
                 gameEventListener.onBerryCollected();
             }

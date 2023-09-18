@@ -31,7 +31,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     private String playerName;
     private int numLives = 3;
     private final int maxLives = 3;
-    private boolean isHeartTimerRunning = false;
+    private Timer heartTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +97,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
             }
         });
         playSound(R.raw.heart_collected);
+        stopHeartTimer();
     }
 
     private void updateLifeIconsVisibility() {
@@ -168,24 +169,34 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         },0, 20);
     }
 
-    private void delayedHeartTimer() {
-        final Handler handler = new Handler();
-        handler.postDelayed(this::heartTimer, 10000);
+    private void startHeartTimer() {
+        if (heartTimer != null) {
+            heartTimer.cancel();
+        }
+        heartTimer = new Timer();
+        heartTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(() -> {
+                    game.posHeartY += level * 10;
+                    game.invalidate();
+                });
+            }
+        }, 0, 20);
     }
 
-    private void heartTimer() {
-        if (!isHeartTimerRunning) {
-            isHeartTimerRunning = true;
-            Timer heartTimer = new Timer();
-            heartTimer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    handler.post(() -> {
-                        game.posHeartY += level * 10;
-                        game.invalidate();
-                    });
-                }
-            }, 0, 20);
+    private void stopHeartTimer() {
+        if (heartTimer != null) {
+            heartTimer.cancel();
+            heartTimer = null;
         }
+    }
+
+    private void delayedHeartTimer() {
+        final Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            startHeartTimer();
+            delayedHeartTimer();
+        }, 10000);
     }
 }
