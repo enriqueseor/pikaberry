@@ -23,7 +23,7 @@ import cat.teknos.berry.view.util.OnBerryCollectedListener;
 
 public class GameActivity extends AppCompatActivity implements GameEventListener, OnBerryCollectedListener {
 
-    private int level, SoundResource, berryPoints;
+    private int level, SoundResource, score;
     private GamePresenter game;
     private final Handler handler = new Handler();
     private PlaylistManager playlistManager;
@@ -72,7 +72,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     public void onBerryCollected(int berryType) {
         runOnUiThread(() -> {
             TextView textView = findViewById(R.id.points);
-            this.berryPoints = 0;
+            int berryPoints = 0;
             switch (berryType) {
                 case 0:
                     berryPoints = 1;
@@ -90,9 +90,9 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
                     berryPoints = 10;
                     break;
             }
-            int currentPoints = Integer.parseInt(textView.getText().toString());
-            int newPoints = currentPoints + berryPoints;
-            textView.setText(String.valueOf(newPoints));
+            int points = Integer.parseInt(textView.getText().toString());
+            score = points + berryPoints;
+            textView.setText(String.valueOf(score));
             playSound(R.raw.berry_collected);
         });
     }
@@ -158,7 +158,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
 
     private void onGameFinished(){
         Intent intent = new Intent(this, ResultsActivity.class);
-        intent.putExtra("playerScore", berryPoints);
+        intent.putExtra("playerScore", score);
         intent.putExtra("playerName", playerName);
         startActivity(intent);
         finish();
