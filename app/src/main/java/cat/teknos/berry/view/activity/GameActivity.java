@@ -19,10 +19,11 @@ import cat.teknos.berry.view.util.GameEventListener;
 import cat.teknos.berry.R;
 import cat.teknos.berry.model.PlaylistManager;
 import cat.teknos.berry.presenter.GamePresenter;
+import cat.teknos.berry.view.util.OnBerryCollectedListener;
 
-public class GameActivity extends AppCompatActivity implements GameEventListener {
+public class GameActivity extends AppCompatActivity implements GameEventListener, OnBerryCollectedListener {
 
-    private int level, SoundResource, newValue;
+    private int level, SoundResource, berryPoints;
     private GamePresenter game;
     private final Handler handler = new Handler();
     private PlaylistManager playlistManager;
@@ -39,6 +40,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         setContentView(R.layout.activity_game);
         game = findViewById(R.id.Screen);
         game.setGameEventListener(this);
+        game.setOnBerryCollectedListener(this);
 
         Intent intent = getIntent();
         level = intent.getIntExtra("level", 2);
@@ -67,11 +69,30 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     }
 
     @Override
-    public void onBerryCollected() {
+    public void onBerryCollected(int berryType) {
         runOnUiThread(() -> {
             TextView textView = findViewById(R.id.points);
-            newValue = Integer.parseInt(textView.getText().toString()) + 1;
-            textView.setText(String.valueOf(newValue));
+            this.berryPoints = 0;
+            switch (berryType) {
+                case 0:
+                    berryPoints = 1;
+                    break;
+                case 1:
+                    berryPoints = 2;
+                    break;
+                case 2:
+                    berryPoints = 3;
+                    break;
+                case 3:
+                    berryPoints = 5;
+                    break;
+                case 4:
+                    berryPoints = 10;
+                    break;
+            }
+            int currentPoints = Integer.parseInt(textView.getText().toString());
+            int newPoints = currentPoints + berryPoints;
+            textView.setText(String.valueOf(newPoints));
             playSound(R.raw.berry_collected);
         });
     }
@@ -137,7 +158,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
 
     private void onGameFinished(){
         Intent intent = new Intent(this, ResultsActivity.class);
-        intent.putExtra("playerScore", newValue);
+        intent.putExtra("playerScore", berryPoints);
         intent.putExtra("playerName", playerName);
         startActivity(intent);
         finish();
@@ -176,7 +197,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         },0, 20);
     }
 
-    private void startHeartTimer() {
+    private void heartTimer() {
         if (heartTimer != null) {
             heartTimer.cancel();
         }
@@ -195,7 +216,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     private void delayedHeartTimer() {
         final Handler handler = new Handler();
         handler.postDelayed(() -> {
-            startHeartTimer();
+            heartTimer();
             delayedHeartTimer();
         }, 10000);
     }

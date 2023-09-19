@@ -16,6 +16,7 @@ import java.util.Random;
 
 import cat.teknos.berry.view.util.GameEventListener;
 import cat.teknos.berry.R;
+import cat.teknos.berry.view.util.OnBerryCollectedListener;
 
 public class GamePresenter extends View {
 
@@ -51,10 +52,12 @@ public class GamePresenter extends View {
     private void init() {
         backgroundDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.background_emerald, null);
         pikachuDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.pikachu, null);
-        berriesDrawable = new Drawable[3];
+        berriesDrawable = new Drawable[5];
         berriesDrawable[0] = ResourcesCompat.getDrawable(getResources(), R.drawable.razz_berry, null);
         berriesDrawable[1] = ResourcesCompat.getDrawable(getResources(), R.drawable.nanap_berry, null);
         berriesDrawable[2] = ResourcesCompat.getDrawable(getResources(), R.drawable.pinap_berry, null);
+        berriesDrawable[3] = ResourcesCompat.getDrawable(getResources(), R.drawable.pinap_berry_silver, null);
+        berriesDrawable[4] = ResourcesCompat.getDrawable(getResources(), R.drawable.razz_berry_golden, null);
         rockDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.rock, null);
         heartDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.heart, null);
     }
@@ -161,13 +164,19 @@ public class GamePresenter extends View {
         }
     }
 
+    private OnBerryCollectedListener onBerryCollectedListener;
+
+    public void setOnBerryCollectedListener(OnBerryCollectedListener listener) {
+        this.onBerryCollectedListener = listener;
+    }
+
     private void onBerryCollected() {
         if (RectF.intersects(rectForPikachu, rectForBerry)) {
             posBerryY = 50;
             posBerryX = random.nextInt(width);
-            berryType = random.nextInt(3);
-            if (gameEventListener != null) {
-                gameEventListener.onBerryCollected();
+            berryType = random.nextInt(4);
+            if (onBerryCollectedListener != null) {
+                onBerryCollectedListener.onBerryCollected(berryType);
             }
         }
     }
