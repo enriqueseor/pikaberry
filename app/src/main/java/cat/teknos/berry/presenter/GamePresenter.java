@@ -42,6 +42,7 @@ public class GamePresenter extends View {
     private Drawable[] berriesDrawable;
 
     private GameEventListener gameEventListener;
+    private OnBerryCollectedListener onBerryCollectedListener;
     private final Random random = new Random();
 
     public GamePresenter(Context context, @Nullable AttributeSet attrs) {
@@ -53,9 +54,9 @@ public class GamePresenter extends View {
         backgroundDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.background_emerald, null);
         pikachuDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.pikachu, null);
         berriesDrawable = new Drawable[5];
-        berriesDrawable[0] = ResourcesCompat.getDrawable(getResources(), R.drawable.razz_berry, null);
+        berriesDrawable[0] = ResourcesCompat.getDrawable(getResources(), R.drawable.pinap_berry, null);
         berriesDrawable[1] = ResourcesCompat.getDrawable(getResources(), R.drawable.nanap_berry, null);
-        berriesDrawable[2] = ResourcesCompat.getDrawable(getResources(), R.drawable.pinap_berry, null);
+        berriesDrawable[2] = ResourcesCompat.getDrawable(getResources(), R.drawable.razz_berry, null);
         berriesDrawable[3] = ResourcesCompat.getDrawable(getResources(), R.drawable.pinap_berry_silver, null);
         berriesDrawable[4] = ResourcesCompat.getDrawable(getResources(), R.drawable.razz_berry_golden, null);
         rockDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.rock, null);
@@ -156,6 +157,9 @@ public class GamePresenter extends View {
     public void setGameEventListener(GameEventListener listener) {
         this.gameEventListener = listener;
     }
+    public void setOnBerryCollectedListener(OnBerryCollectedListener listener) {
+        this.onBerryCollectedListener = listener;
+    }
 
     private void newBerry() {
         if (posBerryY > height) {
@@ -164,20 +168,14 @@ public class GamePresenter extends View {
         }
     }
 
-    private OnBerryCollectedListener onBerryCollectedListener;
-
-    public void setOnBerryCollectedListener(OnBerryCollectedListener listener) {
-        this.onBerryCollectedListener = listener;
-    }
-
     private void onBerryCollected() {
         if (RectF.intersects(rectForPikachu, rectForBerry)) {
             posBerryY = 50;
             posBerryX = random.nextInt(width);
-            berryType = random.nextInt(4);
             if (onBerryCollectedListener != null) {
                 onBerryCollectedListener.onBerryCollected(berryType);
             }
+            berryType = random.nextInt(5);
         }
     }
 
