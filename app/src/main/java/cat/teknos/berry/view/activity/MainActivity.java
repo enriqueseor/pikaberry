@@ -12,9 +12,8 @@ import cat.teknos.berry.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText etName;
-    Button btnPlay;
-    RadioButton rbEasy, rbMedium, rbHard;
+    private EditText etName;
+    private RadioButton rbEasy, rbHard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
         etName = findViewById(R.id.etName);
         rbEasy = findViewById(R.id.rbEasy);
-        rbMedium = findViewById(R.id.rbMedium);
         rbHard = findViewById(R.id.rbHard);
 
-        btnPlay = findViewById(R.id.btnPlay);
+        Button btnPlay = findViewById(R.id.btnPlay);
         btnPlay.setOnClickListener(v -> play());
     }
 

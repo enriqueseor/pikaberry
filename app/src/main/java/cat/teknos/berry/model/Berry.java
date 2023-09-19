@@ -1,6 +1,7 @@
 package cat.teknos.berry.model;
 
 public class Berry {
+
     private int x, y;
     private int type;
 

@@ -10,9 +10,9 @@ import cat.teknos.berry.R;
 
 public class ResultsActivity extends AppCompatActivity {
 
-    String playerName;
-    int playerScore;
-    TextView resultTextView;
+    private String playerName;
+    private int playerScore;
+    private TextView resultTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

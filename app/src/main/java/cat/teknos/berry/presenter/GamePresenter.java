@@ -25,7 +25,7 @@ public class GamePresenter extends View {
     public int posRockX, posRockY;
     public int posHeartX, posHeartY;
     private int berryType = 0;
-    int canvasWidth, canvasHeight;
+    protected int canvasWidth, canvasHeight;
     float aspectRatio, imageAspectRatio;
 
     public Rect srcRect = new Rect();

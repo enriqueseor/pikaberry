@@ -1,6 +1,7 @@
 package cat.teknos.berry.model;
 
 public class Rock {
+
     private int x, y;
     private int type;
 

@@ -22,7 +22,7 @@ import cat.teknos.berry.presenter.GamePresenter;
 
 public class GameActivity extends AppCompatActivity implements GameEventListener {
 
-    private int level, currentSoundResource, newValue;
+    private int level, SoundResource, newValue;
     private GamePresenter game;
     private final Handler handler = new Handler();
     private PlaylistManager playlistManager;
@@ -49,7 +49,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         live3 = findViewById(R.id.live3);
 
         mediaPlayer = MediaPlayer.create(this, R.raw.berry_collected);
-        currentSoundResource = R.raw.berry_collected;
+        SoundResource = R.raw.berry_collected;
 
         playList();
         obs();
@@ -58,10 +58,10 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     }
 
     private void playSound(int soundResource) {
-        if (currentSoundResource != soundResource) {
+        if (SoundResource != soundResource) {
             mediaPlayer.release();
             mediaPlayer = MediaPlayer.create(this, soundResource);
-            currentSoundResource = soundResource;
+            SoundResource = soundResource;
         }
         mediaPlayer.start();
     }
@@ -98,6 +98,13 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         });
         playSound(R.raw.heart_collected);
         stopHeartTimer();
+    }
+
+    private void stopHeartTimer() {
+        if (heartTimer != null) {
+            heartTimer.cancel();
+            heartTimer = null;
+        }
     }
 
     private void updateLifeIconsVisibility() {
@@ -183,13 +190,6 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
                 });
             }
         }, 0, 20);
-    }
-
-    private void stopHeartTimer() {
-        if (heartTimer != null) {
-            heartTimer.cancel();
-            heartTimer = null;
-        }
     }
 
     private void delayedHeartTimer() {

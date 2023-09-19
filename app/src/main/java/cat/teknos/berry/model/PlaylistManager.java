@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 
 public class PlaylistManager implements MediaPlayer.OnCompletionListener {
+
     private MediaPlayer[] playlist;
     private int currentSongIndex = 0;
 
