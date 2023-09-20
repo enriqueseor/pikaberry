@@ -165,6 +165,7 @@ public class GamePresenter extends View {
         if (posBerryY > height) {
             posBerryY = 50;
             posBerryX = random.nextInt(width);
+            berryType = random.nextInt(5);
         }
     }
 
