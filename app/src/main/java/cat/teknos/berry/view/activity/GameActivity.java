@@ -1,10 +1,9 @@
 package cat.teknos.berry.view.activity;
 
-import static cat.teknos.berry.view.util.SoundUtil.mediaPlayer;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -21,19 +20,19 @@ import cat.teknos.berry.R;
 import cat.teknos.berry.model.PlaylistManager;
 import cat.teknos.berry.presenter.GamePresenter;
 import cat.teknos.berry.view.util.OnBerryCollectedListener;
-import cat.teknos.berry.view.util.SoundUtil;
 
 public class GameActivity extends AppCompatActivity implements GameEventListener, OnBerryCollectedListener {
 
-    private int level, score;
+    private int level, soundResource, score;
+    private int numLives = 3;
+    private final int maxLives = 3;
     private GamePresenter game;
     private final Handler handler = new Handler();
     private PlaylistManager playlistManager;
     private ImageView live1, live2, live3;
     private String playerName;
-    private int numLives = 3;
-    private final int maxLives = 3;
     private Timer heartTimer;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +50,24 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         live2 = findViewById(R.id.live2);
         live3 = findViewById(R.id.live3);
 
-        SoundUtil.playSound(this, R.raw.berry_collected);
+        mediaPlayer = MediaPlayer.create(this, R.raw.berry_collected);
+        soundResource = R.raw.berry_collected;
 
         playList();
         obs();
         timer();
         delayedHeartTimer();
     }
+
+    private void playSound(int soundResource) {
+        if (this.soundResource != soundResource) {
+            mediaPlayer.release();
+            mediaPlayer = MediaPlayer.create(this, soundResource);
+            this.soundResource = soundResource;
+        }
+        mediaPlayer.start();
+    }
+
 
     @Override
     public void onBerryCollected(int berryType) {
@@ -84,7 +94,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
             int points = Integer.parseInt(textView.getText().toString());
             score = points + berryPoints;
             textView.setText(String.valueOf(score));
-            SoundUtil.playSound(this, R.raw.berry_collected);
+            playSound(R.raw.berry_collected);
         });
     }
 
@@ -93,12 +103,14 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         if (numLives > 0) {
             numLives--;
             updateLifeIconsVisibility();
-            SoundUtil.playSound(this, R.raw.rock_collision);
+            playSound(R.raw.rock_collision);
         }
         if (numLives == 0) {
             onGameFinished();
         }
-        SoundUtil.playSound(this, R.raw.rock_collision);
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+        }
     }
 
     @Override
@@ -113,7 +125,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
                 updateLifeIconsVisibility();
             }
         });
-        SoundUtil.playSound(this, R.raw.heart_collected);
+        playSound(R.raw.heart_collected);
         stopHeartTimer();
     }
 
@@ -147,7 +159,9 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         if (playlistManager != null) {
             playlistManager.release();
         }
-        SoundUtil.releasePlaySound(mediaPlayer);
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+        }
     }
 
     private void onGameFinished(){
