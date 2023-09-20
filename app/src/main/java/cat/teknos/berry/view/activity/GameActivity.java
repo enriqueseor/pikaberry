@@ -5,7 +5,6 @@ import static cat.teknos.berry.view.util.SoundUtil.mediaPlayer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -102,6 +101,11 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         SoundUtil.playSound(this, R.raw.rock_collision);
     }
 
+    @Override
+    public void onNewHeartGenerated() {
+        stopHeartTimer();
+    }
+
     public void onHeartCollected() {
         runOnUiThread(() -> {
             if (numLives < maxLives) {
@@ -129,17 +133,17 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     @Override
     protected void onPause() {
         super.onPause();
-        mediaPlayerRelease();
+        mediaPlayersRelease();
         onGameFinished();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mediaPlayerRelease();
+        mediaPlayersRelease();
     }
 
-    private void mediaPlayerRelease(){
+    private void mediaPlayersRelease(){
         if (playlistManager != null) {
             playlistManager.release();
         }

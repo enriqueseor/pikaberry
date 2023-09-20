@@ -117,7 +117,7 @@ public class GamePresenter extends View {
         heartDrawable.setBounds(posHeartX - radius, posHeartY - radius, posHeartX + radius, posHeartY + radius);
         heartDrawable.draw(canvas);
         rectForHeart.set(posHeartX - radius, posHeartY - radius, posHeartX + radius, posHeartY + radius);
-        newHeart();
+        onNewHeartGenerated();
         onHeartCollected();
     }
 
@@ -197,10 +197,13 @@ public class GamePresenter extends View {
         }
     }
 
-    private void newHeart() {
+    private void onNewHeartGenerated() {
         if (posHeartY > height) {
             posHeartY = 0;
             posHeartX = random.nextInt(width);
+            if (gameEventListener != null) {
+                gameEventListener.onNewHeartGenerated();
+            }
         }
     }
 
