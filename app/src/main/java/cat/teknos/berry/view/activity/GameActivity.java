@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -223,9 +224,11 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
 
     private void delayedHeartTimer() {
         final Handler handler = new Handler();
+        Random random = new Random();
+        int randomDelay = random.nextInt(30000) + 30000;
         handler.postDelayed(() -> {
             heartTimer();
             delayedHeartTimer();
-        }, 10000);
+        }, randomDelay);
     }
 }
