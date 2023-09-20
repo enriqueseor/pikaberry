@@ -1,5 +1,7 @@
 package cat.teknos.berry.view.activity;
 
+import static cat.teknos.berry.view.util.SoundUtil.mediaPlayer;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -20,15 +22,15 @@ import cat.teknos.berry.R;
 import cat.teknos.berry.model.PlaylistManager;
 import cat.teknos.berry.presenter.GamePresenter;
 import cat.teknos.berry.view.util.OnBerryCollectedListener;
+import cat.teknos.berry.view.util.SoundUtil;
 
 public class GameActivity extends AppCompatActivity implements GameEventListener, OnBerryCollectedListener {
 
-    private int level, SoundResource, score;
+    private int level, score;
     private GamePresenter game;
     private final Handler handler = new Handler();
     private PlaylistManager playlistManager;
     private ImageView live1, live2, live3;
-    private MediaPlayer mediaPlayer;
     private String playerName;
     private int numLives = 3;
     private final int maxLives = 3;
@@ -50,22 +52,12 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         live2 = findViewById(R.id.live2);
         live3 = findViewById(R.id.live3);
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.berry_collected);
-        SoundResource = R.raw.berry_collected;
+        SoundUtil.playSound(this, R.raw.berry_collected);
 
         playList();
         obs();
         timer();
         delayedHeartTimer();
-    }
-
-    private void playSound(int soundResource) {
-        if (SoundResource != soundResource) {
-            mediaPlayer.release();
-            mediaPlayer = MediaPlayer.create(this, soundResource);
-            SoundResource = soundResource;
-        }
-        mediaPlayer.start();
     }
 
     @Override
@@ -93,7 +85,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
             int points = Integer.parseInt(textView.getText().toString());
             score = points + berryPoints;
             textView.setText(String.valueOf(score));
-            playSound(R.raw.berry_collected);
+            SoundUtil.playSound(this, R.raw.berry_collected);
         });
     }
 
@@ -102,12 +94,12 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         if (numLives > 0) {
             numLives--;
             updateLifeIconsVisibility();
-            playSound(R.raw.rock_collision);
+            SoundUtil.playSound(this, R.raw.rock_collision);
         }
         if (numLives == 0) {
             onGameFinished();
         }
-        playSound(R.raw.rock_collision);
+        SoundUtil.playSound(this, R.raw.rock_collision);
     }
 
     public void onHeartCollected() {
@@ -117,7 +109,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
                 updateLifeIconsVisibility();
             }
         });
-        playSound(R.raw.heart_collected);
+        SoundUtil.playSound(this, R.raw.heart_collected);
         stopHeartTimer();
     }
 
@@ -151,9 +143,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         if (playlistManager != null) {
             playlistManager.release();
         }
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-        }
+        SoundUtil.releasePlaySound(mediaPlayer);
     }
 
     private void onGameFinished(){
