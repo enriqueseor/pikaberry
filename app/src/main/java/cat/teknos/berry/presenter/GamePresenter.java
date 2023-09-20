@@ -163,7 +163,7 @@ public class GamePresenter extends View {
 
     private void newBerry() {
         if (posBerryY > height) {
-            posBerryY = 50;
+            posBerryY = 0;
             posBerryX = random.nextInt(width);
             berryType = random.nextInt(5);
         }
@@ -171,7 +171,7 @@ public class GamePresenter extends View {
 
     private void onBerryCollected() {
         if (RectF.intersects(rectForPikachu, rectForBerry)) {
-            posBerryY = 50;
+            posBerryY = 0;
             posBerryX = random.nextInt(width);
             if (onBerryCollectedListener != null) {
                 onBerryCollectedListener.onBerryCollected(berryType);
@@ -182,14 +182,14 @@ public class GamePresenter extends View {
 
     private void newRock() {
         if (posRockY > height) {
-            posRockY = 50;
+            posRockY = 0;
             posRockX = random.nextInt(width);
         }
     }
 
     private void onRockCollision() {
         if (RectF.intersects(rectForPikachu, rectForRock)) {
-            posRockY = 50;
+            posRockY = 0;
             posRockX = random.nextInt(width);
             if (gameEventListener != null) {
                 gameEventListener.onRockCollision();
@@ -199,14 +199,14 @@ public class GamePresenter extends View {
 
     private void newHeart() {
         if (posHeartY > height) {
-            posHeartY = 50;
+            posHeartY = 0;
             posHeartX = random.nextInt(width);
         }
     }
 
     public void onHeartCollected() {
         if (RectF.intersects(rectForPikachu, rectForHeart)) {
-            posHeartY = 50;
+            posHeartY = 0;
             posHeartX = random.nextInt(width);
             if (gameEventListener != null) {
                 gameEventListener.onHeartCollected();
