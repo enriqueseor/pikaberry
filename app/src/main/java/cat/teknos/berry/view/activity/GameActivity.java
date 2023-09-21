@@ -109,9 +109,6 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
         if (numLives == 0) {
             onGameFinished();
         }
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-        }
     }
 
     @Override

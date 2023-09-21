@@ -54,9 +54,9 @@ public class GamePresenter extends View {
         backgroundDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.background_emerald, null);
         pikachuDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.pikachu, null);
         berriesDrawable = new Drawable[5];
-        berriesDrawable[0] = ResourcesCompat.getDrawable(getResources(), R.drawable.pinap_berry, null);
-        berriesDrawable[1] = ResourcesCompat.getDrawable(getResources(), R.drawable.nanap_berry, null);
-        berriesDrawable[2] = ResourcesCompat.getDrawable(getResources(), R.drawable.razz_berry, null);
+        berriesDrawable[0] = ResourcesCompat.getDrawable(getResources(), R.drawable.razz_berry, null);
+        berriesDrawable[1] = ResourcesCompat.getDrawable(getResources(), R.drawable.pinap_berry, null);
+        berriesDrawable[2] = ResourcesCompat.getDrawable(getResources(), R.drawable.nanap_berry, null);
         berriesDrawable[3] = ResourcesCompat.getDrawable(getResources(), R.drawable.pinap_berry_silver, null);
         berriesDrawable[4] = ResourcesCompat.getDrawable(getResources(), R.drawable.razz_berry_golden, null);
         rockDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.rock, null);
@@ -161,11 +161,24 @@ public class GamePresenter extends View {
         this.onBerryCollectedListener = listener;
     }
 
+    private int customRandomBerryType() {
+        double[] probabilities = {0.45, 0.25, 0.15, 0.10, 0.05};
+        double rand = random.nextDouble();
+        double cumulativeProbability = 0.0;
+        for (int i = 0; i < probabilities.length; i++) {
+            cumulativeProbability += probabilities[i];
+            if (rand <= cumulativeProbability) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
     private void newBerry() {
         if (posBerryY > height) {
             posBerryY = 0;
             posBerryX = random.nextInt(width);
-            berryType = random.nextInt(5);
+            berryType = customRandomBerryType();
         }
     }
 
@@ -176,7 +189,7 @@ public class GamePresenter extends View {
             if (onBerryCollectedListener != null) {
                 onBerryCollectedListener.onBerryCollected(berryType);
             }
-            berryType = random.nextInt(5);
+            berryType = customRandomBerryType();
         }
     }
 
