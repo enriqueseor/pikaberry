@@ -17,15 +17,14 @@ The game is built using [Android](https://www.android.com/).
 
 - Collect berries to earn points. 
 
-There are five types of berries in the game, each with its unique appearance and point value: 
-    1. **Razz Berry:** This common berry gives you **1 points**. ![razz_berry](images/razz_berry.png) 
-    2. **Pinap Berry:** A slightly rarer berry that awards **2 points**. ![pinap_berry](images/pinap_berry.png) 
-    3. **Nanap Berry:** A rare and delicious berry worth **3 points**. ![nanap_berry](images/nanap_berry.png) 
-    4. **Silver Pinap Berry:** A very rare berry that grants you 5 points. ![pinap_berry_silver](images/pinap_berry_silver.png) 
-    5. **Golden Razz Berry:** The ultra-rare, golden berry that yields a whopping 10 points. ![razz_berry_golden](images/razz_berry_golden.png) 
+There are five types of berries in the game, each with its unique appearance and point value: <br>
+    1. **Razz Berry:** This common berry gives you **1 points**. ![razz_berry](images/razz_berry.png) <br>
+    2. **Pinap Berry:** A slightly rarer berry that awards **2 points**. ![pinap_berry](images/pinap_berry.png) <br>
+    3. **Nanap Berry:** A rare and delicious berry worth **3 points**. ![nanap_berry](images/nanap_berry.png) <br>
+    4. **Silver Pinap Berry:** A very rare berry that grants you 5 points. ![pinap_berry_silver](images/pinap_berry_silver.png) <br>
+    5. **Golden Razz Berry:** The ultra-rare, golden berry that yields a whopping 10 points. ![razz_berry_golden](images/razz_berry_golden.png)
 
-- Avoid rocks (Geodude) to stay alive.
-![Geodude](images/Geodude.png)
+- Avoid rocks (Geodude) to stay alive. ![Geodude](images/Geodude.png)
 
 ## Getting Started
 
