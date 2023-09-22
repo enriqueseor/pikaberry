@@ -7,6 +7,13 @@
     android:layout_height="match_parent"
     tools:context="cat.teknos.berry.view.activity.GameActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/background_emerald"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
     <cat.teknos.berry.presenter.GamePresenter
         android:id="@+id/Screen"
         android:layout_width="match_parent"

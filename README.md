@@ -21,8 +21,8 @@ There are five types of berries in the game, each with its unique appearance and
     1. **Razz Berry:** This common berry gives you **1 points**. <br> ![razz_berry](images/razz_berry.png) <br>
     2. **Pinap Berry:** A slightly rarer berry that awards **2 points**. <br>![pinap_berry](images/pinap_berry.png) <br>
     3. **Nanap Berry:** A rare and delicious berry worth **3 points**. <br>![nanap_berry](images/nanap_berry.png) <br>
-    4. **Silver Pinap Berry:** A very rare berry that grants you 5 points. <br>![pinap_berry_silver](images/pinap_berry_silver.png) <br>
-    5. **Golden Razz Berry:** The ultra-rare, golden berry that yields a whopping 10 points. <br>![razz_berry_golden](images/razz_berry_golden.png)
+    4. **Silver Pinap Berry:** A very rare berry that grants you **5 points**. <br>![pinap_berry_silver](images/pinap_berry_silver.png) <br>
+    5. **Golden Razz Berry:** The ultra-rare, golden berry that yields a whopping **10 points**. <br>![razz_berry_golden](images/razz_berry_golden.png)
 
 - Avoid rocks (Geodude) to stay alive. <br>![Geodude](images/Geodude.png)
 

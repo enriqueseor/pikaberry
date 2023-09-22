@@ -2,7 +2,6 @@ package cat.teknos.berry.presenter;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -26,16 +25,12 @@ public class GamePresenter extends View {
     public int posRockX, posRockY;
     public int posHeartX, posHeartY;
     private int berryType = 0;
-    protected int canvasWidth, canvasHeight;
-    float aspectRatio, imageAspectRatio;
 
-    public Rect srcRect = new Rect();
     private final RectF rectForPikachu = new RectF();
     private final RectF rectForBerry = new RectF();
     private final RectF rectForRock = new RectF();
     private final RectF rectForHeart = new RectF();
 
-    private Drawable backgroundDrawable;
     private Drawable pikachuDrawable;
     private Drawable rockDrawable;
     private Drawable heartDrawable;
@@ -51,7 +46,6 @@ public class GamePresenter extends View {
     }
 
     private void init() {
-        backgroundDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.background_emerald, null);
         pikachuDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.pikachu, null);
         berriesDrawable = new Drawable[5];
         berriesDrawable[0] = ResourcesCompat.getDrawable(getResources(), R.drawable.razz_berry, null);
@@ -92,9 +86,6 @@ public class GamePresenter extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        //BACKGROUND
-        drawBackgroundWithAspectRatio(canvas);
-
         //PIKACHU
         pikachuDrawable.setBounds(posPikachuX - radius, posPikachuY - radius, posPikachuX + radius, posPikachuY + radius);
         pikachuDrawable.draw(canvas);
@@ -107,51 +98,19 @@ public class GamePresenter extends View {
         newBerry();
         onBerryCollected();
 
-        //POKEMON
+        //ROCK
         rockDrawable.setBounds(posRockX - radius, posRockY - radius, posRockX + radius, posRockY + radius);
         rockDrawable.draw(canvas);
         rectForRock.set(posRockX - radius, posRockY - radius, posRockX + radius, posRockY + radius);
         newRock();
         onRockCollision();
 
+        //HEART
         heartDrawable.setBounds(posHeartX - radius, posHeartY - radius, posHeartX + radius, posHeartY + radius);
         heartDrawable.draw(canvas);
         rectForHeart.set(posHeartX - radius, posHeartY - radius, posHeartX + radius, posHeartY + radius);
         onNewHeartGenerated();
         onHeartCollected();
-    }
-
-    private void drawBackgroundWithAspectRatio(Canvas canvas) {
-        if (backgroundDrawable == null) {
-            return;
-        }
-
-        int srcLeft = 0;
-        int srcTop = 0;
-        int srcRight = backgroundDrawable.getIntrinsicWidth();
-        int srcBottom = backgroundDrawable.getIntrinsicHeight();
-
-        canvasWidth = getWidth();
-        canvasHeight = getHeight();
-
-        aspectRatio = (float) canvasWidth / canvasHeight;
-        imageAspectRatio = (float) srcRight / srcBottom;
-
-        if (aspectRatio > imageAspectRatio) {
-            int newHeight = (int) (canvasWidth / imageAspectRatio);
-            int topOffset = (canvasHeight - newHeight) / 2;
-            srcTop += topOffset;
-            srcBottom = srcTop + newHeight;
-        } else {
-            int newWidth = (int) (canvasHeight * imageAspectRatio);
-            int leftOffset = (canvasWidth - newWidth) / 2;
-            srcLeft += leftOffset;
-            srcRight = srcLeft + newWidth;
-        }
-
-        srcRect.set(srcLeft, srcTop, srcRight, srcBottom);
-        backgroundDrawable.setBounds(srcRect);
-        backgroundDrawable.draw(canvas);
     }
 
     public void setGameEventListener(GameEventListener listener) {
