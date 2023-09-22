@@ -15,10 +15,17 @@ The game is built using [Android](https://www.android.com/).
 
 ## Features
 
-- Collect berries to earn points.
-- Avoid obstacles to stay alive.
-- Simple and intuitive controls.
-- Beautiful and engaging visuals.
+- Collect berries to earn points. 
+
+There are five types of berries in the game, each with its unique appearance and point value:
+    1. **Razz Berry:** This common berry gives you **1 points**. ![razz_berry](images/razz_berry.png)
+    2. **Pinap Berry:** A slightly rarer berry that awards **2 points**. ![pinap_berry](images/pinap_berry.png)
+    3. **Nanap Berry:** A rare and delicious berry worth **3 points**. ![nanap_berry](images/nanap_berry.png)
+    4. **Silver Pinap Berry:** A very rare berry that grants you 5 points. ![pinap_berry_silver](images/pinap_berry_silver.png)
+    5. **Golden Razz Berry:** The ultra-rare, golden berry that yields a whopping 10 points. ![razz_berry_golden](images/razz_berry_golden.png)
+
+- Avoid rocks (Geodude) to stay alive.
+![Geodude](images/Geodude.png)
 
 ## Getting Started
 
@@ -26,27 +33,23 @@ To play Berry Game on your local machine, follow these steps:
 
 1. Clone this repository: `git clone https://github.com/enriqueseor/berry-game.git`
 2. Open the project in Android Studio.
-3. Build and Run the project.
+3. Select a virtual or physical device tu run the app
+4. Build and Run the project.
 
 ## Gameplay
 
 - Touch the screen to move your character.
 - Collect as many berries as you can to earn points.
+- There are five types of berries in the game, and each type gives you a different number of points. The rarer the berry, the more points it awards.
+- Collect hearts to gain extra lives and extend your gameplay.
 - Avoid colliding with obstacles, as they will reduce your health.
 - The game ends when your health reaches zero.
 
 ![GameActivity](images/GameActivity.png)
+
+- You have also a Results screen to see your punctuation and your player name.
+
 ![ResultsActivity](images/ResultsActivity.png)
-
-## Contributing
-
-Contributions are welcome! If you'd like to contribute to Berry Game, please follow these steps:
-
-1. Fork this repository.
-2. Create a new branch: `git checkout -b feature/your-feature-name`.
-3. Make your changes and commit them: `git commit -am 'Add new feature'`.
-4. Push to the branch: `git push origin feature/your-feature-name`.
-5. Create a pull request.
 
 ## License
 
