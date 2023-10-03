@@ -78,8 +78,17 @@ public class GamePresenter extends View {
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
             posPikachuX = (int) event.getX();
             this.invalidate();
+        }else if (event.getAction() == MotionEvent.ACTION_UP) {
+            posPikachuX = (int) event.getX();
+            this.invalidate();
+            performClick();
         }
         return true;
+    }
+
+    @Override
+    public boolean performClick() {
+        return super.performClick();
     }
 
     @Override
