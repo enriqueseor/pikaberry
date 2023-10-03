@@ -35,7 +35,7 @@
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="BERRY GAME"
+            android:text="@string/berry_game"
             android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="34sp"
@@ -43,14 +43,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="HardcodedText" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="50dp"
             android:background="#80FFFFFF"
             android:ems="10"
             android:hint="PLAYER"
@@ -65,7 +63,7 @@
             android:id="@+id/rgDifficulty"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="5dp"
             android:background="#80FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -76,35 +74,31 @@
                 android:id="@+id/rbEasy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="EASY"
-                tools:ignore="HardcodedText" />
+                android:text="@string/easy" />
 
             <RadioButton
                 android:id="@+id/rbMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="MEDIUM"
-                tools:ignore="HardcodedText" />
+                android:text="@string/medium" />
 
             <RadioButton
                 android:id="@+id/rbHard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="HARD"
-                tools:ignore="HardcodedText" />
+                android:text="@string/hard" />
         </RadioGroup>
 
         <Button
             android:id="@+id/btnPlay"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginTop="50dp"
-            android:text="PLAY"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/play"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rgDifficulty"
-            tools:ignore="HardcodedText" />
+            app:layout_constraintTop_toBottomOf="@+id/rgDifficulty" />
 
     </LinearLayout>
 
