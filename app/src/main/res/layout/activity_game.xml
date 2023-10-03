@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/background_emerald"
+        app:srcCompat="@drawable/background_forest_game"
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription" />
 
