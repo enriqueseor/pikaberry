@@ -27,6 +27,17 @@ public class PlaylistManager implements MediaPlayer.OnCompletionListener {
         playCurrentSong();
     }
 
+    public void pause() { pauseCurrentSong(); }
+
+    private void pauseCurrentSong() {
+        if (currentSongIndex >= 0 && currentSongIndex < playlist.length) {
+            MediaPlayer currentSong = playlist[currentSongIndex];
+            if (currentSong != null && currentSong.isPlaying()) {
+                currentSong.pause();
+            }
+        }
+    }
+
     public void release() {
         for (MediaPlayer mediaPlayer : playlist) {
             if (mediaPlayer != null) {

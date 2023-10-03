@@ -143,17 +143,22 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     @Override
     protected void onPause() {
         super.onPause();
-        mediaPlayersRelease();
-        onGameFinished();
+        if (playlistManager != null) {
+            playlistManager.pause();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (playlistManager != null) {
+            playlistManager.start();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mediaPlayersRelease();
-    }
-
-    private void mediaPlayersRelease(){
         if (playlistManager != null) {
             playlistManager.release();
         }
