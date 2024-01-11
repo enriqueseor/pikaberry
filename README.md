@@ -3,14 +3,13 @@
 Welcome to Berry Game! This is a simple and fun game where players collect berries and avoid obstacles. 
 The game is built using [Android](https://www.android.com/).
 
-![MainActivity](images/MainActivity.png)
+<img src="resources/MainActivity.png" width="288" height="640"  alt="MAIN_ACTIVITY"/>
 
 ## Table of Contents
 
 - [Features](#features)
 - [Getting Started](#getting-started)
 - [Gameplay](#gameplay)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Features
@@ -18,13 +17,13 @@ The game is built using [Android](https://www.android.com/).
 - Collect berries to earn points. 
 
 There are five types of berries in the game, each with its unique appearance and point value: <br>
-    1. **Razz Berry:** This common berry gives you **1 points**. <br> ![razz_berry](images/razz_berry.png) <br>
-    2. **Pinap Berry:** A slightly rarer berry that awards **2 points**. <br>![pinap_berry](images/pinap_berry.png) <br>
-    3. **Nanap Berry:** A rare and delicious berry worth **3 points**. <br>![nanap_berry](images/nanap_berry.png) <br>
-    4. **Silver Pinap Berry:** A very rare berry that grants you **5 points**. <br>![pinap_berry_silver](images/pinap_berry_silver.png) <br>
-    5. **Golden Razz Berry:** The ultra-rare, golden berry that yields a whopping **10 points**. <br>![razz_berry_golden](images/razz_berry_golden.png)
+    1. **Razz Berry:** This common berry gives you **1 points**. <br> ![razz_berry](resources/razz_berry.png) <br>
+    2. **Pinap Berry:** A slightly rarer berry that awards **2 points**. <br>![pinap_berry](resources/pinap_berry.png) <br>
+    3. **Nanap Berry:** A rare and delicious berry worth **3 points**. <br>![nanap_berry](resources/nanap_berry.png) <br>
+    4. **Silver Pinap Berry:** A very rare berry that grants you **5 points**. <br>![pinap_berry_silver](resources/pinap_berry_silver.png) <br>
+    5. **Golden Razz Berry:** The ultra-rare, golden berry that yields a whopping **10 points**. <br>![razz_berry_golden](resources/razz_berry_golden.png)
 
-- Avoid rocks (Geodude) to stay alive. <br>![Geodude](images/Geodude.png)
+- Avoid rocks (Geodude) to stay alive. <br>![Geodude](resources/Geodude.png)
 
 ## Getting Started
 
@@ -44,11 +43,11 @@ To play Berry Game on your local machine, follow these steps:
 - Avoid colliding with obstacles, as they will reduce your health.
 - The game ends when your health reaches zero.
 
-![GameActivity](images/GameActivity.png)
+<img src="resources/GameActivity.png" width="288" height="640"  alt="GAME_ACTIVITY"/> <br>
 
 - You have also a Results screen to see your punctuation and your player name.
 
-![ResultsActivity](images/ResultsActivity.png)
+<img src="resources/ResultsActivity.png" width="288" height="640"  alt="RESULTS_ACTIVITY"/> <br>
 
 ## License
 
