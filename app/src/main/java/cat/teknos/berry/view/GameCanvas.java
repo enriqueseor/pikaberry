@@ -1,4 +1,4 @@
-package cat.teknos.berry.presenter;
+package cat.teknos.berry.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -17,7 +17,7 @@ import cat.teknos.berry.view.util.GameEventListener;
 import cat.teknos.berry.R;
 import cat.teknos.berry.view.util.OnBerryCollectedListener;
 
-public class GamePresenter extends View {
+public class GameCanvas extends View {
 
     public int width, height, radius;
     public int posPikachuX, posPikachuY;
@@ -40,7 +40,7 @@ public class GamePresenter extends View {
     private OnBerryCollectedListener onBerryCollectedListener;
     private final Random random = new Random();
 
-    public GamePresenter(Context context, @Nullable AttributeSet attrs) {
+    public GameCanvas(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }

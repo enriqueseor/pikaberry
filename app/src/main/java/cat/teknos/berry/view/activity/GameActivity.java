@@ -19,7 +19,7 @@ import java.util.TimerTask;
 import cat.teknos.berry.view.util.GameEventListener;
 import cat.teknos.berry.R;
 import cat.teknos.berry.model.PlaylistManager;
-import cat.teknos.berry.presenter.GamePresenter;
+import cat.teknos.berry.view.GameCanvas;
 import cat.teknos.berry.view.util.OnBerryCollectedListener;
 
 public class GameActivity extends AppCompatActivity implements GameEventListener, OnBerryCollectedListener {
@@ -27,7 +27,7 @@ public class GameActivity extends AppCompatActivity implements GameEventListener
     private int level, soundResource, score;
     private int numLives = 3;
     private final int maxLives = 3;
-    private GamePresenter game;
+    private GameCanvas game;
     private final Handler handler = new Handler();
     private PlaylistManager playlistManager;
     private ImageView live1, live2, live3;
