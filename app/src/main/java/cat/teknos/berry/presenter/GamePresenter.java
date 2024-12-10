@@ -130,7 +130,7 @@ public class GamePresenter extends View {
     }
 
     private int customRandomBerryType() {
-        double[] probabilities = {0.45, 0.25, 0.15, 0.10, 0.05};
+        double[] probabilities = {0.60, 0.20, 0.10, 0.050, 0.025};
         double rand = random.nextDouble();
         double cumulativeProbability = 0.0;
         for (int i = 0; i < probabilities.length; i++) {
