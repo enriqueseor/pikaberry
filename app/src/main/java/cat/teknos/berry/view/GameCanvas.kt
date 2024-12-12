@@ -26,11 +26,18 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
     var posRockY: Int = 0
     private var posHeartX: Int = 0
     var posHeartY: Int = 0
-    private var berryType = 0
+
+    private var level: Int = 2
 
     private val rectForPikachu = RectF()
-    private val rectForBerry = RectF()
-    private val rectForRock = RectF()
+
+    private val berriesPositions = mutableListOf<Pair<Int, Int>>()
+    private val berriesTypes = mutableListOf<Int>()
+    private val rectsForBerries = mutableListOf<RectF>()
+
+    private val rocksPositions = mutableListOf<Pair<Int, Int>>()
+    private val rectsForRocks = mutableListOf<RectF>()
+
     private val rectForHeart = RectF()
 
     private var pikachuDrawable: Drawable? = null
@@ -52,20 +59,11 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
         berriesDrawable[0] = ResourcesCompat.getDrawable(resources, R.drawable.razz_berry, null)
         berriesDrawable[1] = ResourcesCompat.getDrawable(resources, R.drawable.pinap_berry, null)
         berriesDrawable[2] = ResourcesCompat.getDrawable(resources, R.drawable.nanap_berry, null)
-        berriesDrawable[3] =
-            ResourcesCompat.getDrawable(resources, R.drawable.pinap_berry_silver, null)
-        berriesDrawable[4] =
-            ResourcesCompat.getDrawable(resources, R.drawable.razz_berry_golden, null)
+        berriesDrawable[3] = ResourcesCompat.getDrawable(resources, R.drawable.pinap_berry_silver, null)
+        berriesDrawable[4] = ResourcesCompat.getDrawable(resources, R.drawable.razz_berry_golden, null)
         rockDrawable = ResourcesCompat.getDrawable(resources, R.drawable.rock, null)
         heartDrawable = ResourcesCompat.getDrawable(resources, R.drawable.heart, null)
     }
-
-    private val berriesPositions = mutableListOf<Pair<Int, Int>>()
-    private val berriesTypes = mutableListOf<Int>()
-    private val rectsForBerries = mutableListOf<RectF>()
-
-    private val rocksPositions = mutableListOf<Pair<Int, Int>>()
-    private val rectsForRocks = mutableListOf<RectF>()
 
     private fun initObjects() {
         for (i in 0 until 3) { // 3 berries
@@ -125,7 +123,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
         rectForPikachu[(posPikachuX - radius).toFloat(), (posPikachuY - radius).toFloat(), (posPikachuX + radius).toFloat()] =
             (posPikachuY + radius).toFloat()
 
-        // Dibujar y actualizar berries
+        // BERRIES
         for (i in berriesPositions.indices) {
             val (x, y) = berriesPositions[i]
             berriesDrawable[berriesTypes[i]]!!.setBounds(
@@ -145,7 +143,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
             checkBerryCollision(i)
         }
 
-        // Dibujar y actualizar rocas
+        // ROCKS
         for (i in rocksPositions.indices) {
             val (x, y) = rocksPositions[i]
             rockDrawable!!.setBounds(
@@ -179,18 +177,21 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
         onHeartCollected()
     }
 
-    // Actualizar posiciones de berries
+    fun setDifficultyLevel(level: Int) {
+        this.level = level
+    }
+
     private fun updateBerry(index: Int) {
         val (x, y) = berriesPositions[index]
+        val speed = 10 * level
         if (y > canvasHeight) {
             berriesPositions[index] = Pair(random.nextInt(canvasWidth), 0)
             berriesTypes[index] = customRandomBerryType()
         } else {
-            berriesPositions[index] = Pair(x, y + 10) // Velocidad de caída
+            berriesPositions[index] = Pair(x, y + speed)
         }
     }
 
-    // Verificar colisiones con berries
     private fun checkBerryCollision(index: Int) {
         if (RectF.intersects(rectForPikachu, rectsForBerries[index])) {
             berriesPositions[index] = Pair(random.nextInt(canvasWidth), 0)
@@ -199,17 +200,16 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
         }
     }
 
-    // Actualizar posiciones de rocas
     private fun updateRock(index: Int) {
         val (x, y) = rocksPositions[index]
+        val speed = 10 * level
         if (y > canvasHeight) {
             rocksPositions[index] = Pair(random.nextInt(canvasWidth), 0)
         } else {
-            rocksPositions[index] = Pair(x, y + 10) // Velocidad de caída
+            rocksPositions[index] = Pair(x, y + speed)
         }
     }
 
-    // Verificar colisiones con rocas
     private fun checkRockCollision(index: Int) {
         if (RectF.intersects(rectForPikachu, rectsForRocks[index])) {
             rocksPositions[index] = Pair(random.nextInt(canvasWidth), 0)
@@ -236,42 +236,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
             }
         }
         return 0
-    }
-
-    private fun newBerry() {
-        if (posBerryY > canvasHeight) {
-            posBerryY = 0
-            posBerryX = random.nextInt(canvasWidth)
-            berryType = customRandomBerryType()
-        }
-    }
-
-    private fun onBerryCollected() {
-        if (RectF.intersects(rectForPikachu, rectForBerry)) {
-            posBerryY = 0
-            posBerryX = random.nextInt(canvasWidth)
-            if (onBerryCollectedListener != null) {
-                onBerryCollectedListener!!.onBerryCollected(berryType)
-            }
-            berryType = customRandomBerryType()
-        }
-    }
-
-    private fun newRock() {
-        if (posRockY > canvasHeight) {
-            posRockY = 0
-            posRockX = random.nextInt(canvasWidth)
-        }
-    }
-
-    private fun onRockCollision() {
-        if (RectF.intersects(rectForPikachu, rectForRock)) {
-            posRockY = 0
-            posRockX = random.nextInt(canvasWidth)
-            if (gameEventListener != null) {
-                gameEventListener!!.onRockCollision()
-            }
-        }
     }
 
     private fun onNewHeartGenerated() {

@@ -42,6 +42,7 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
 
         val intent = intent
         level = intent.getIntExtra("level", 2)
+        game?.setDifficultyLevel(level)
         playerName = getIntent().getStringExtra("playerName")
 
         live1 = findViewById(R.id.live1)
