@@ -194,9 +194,10 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
 
     private fun checkBerryCollision(index: Int) {
         if (RectF.intersects(rectForPikachu, rectsForBerries[index])) {
+            val berryType = berriesTypes[index]
             berriesPositions[index] = Pair(random.nextInt(canvasWidth), 0)
             berriesTypes[index] = customRandomBerryType()
-            onBerryCollectedListener?.onBerryCollected(berriesTypes[index])
+            onBerryCollectedListener?.onBerryCollected(berryType)
         }
     }
 
