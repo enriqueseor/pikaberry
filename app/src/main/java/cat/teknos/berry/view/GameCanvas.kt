@@ -66,15 +66,27 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
     }
 
     private fun initObjects() {
-        for (i in 0 until 3) { // 3 berries
-            berriesPositions.add(Pair(random.nextInt(canvasWidth), 0))
+        val berryHeights = generateUniqueNegativeHeights(3)
+        for (i in 0 until 3) {
+            berriesPositions.add(Pair(random.nextInt(canvasWidth), berryHeights[i]))
             berriesTypes.add(customRandomBerryType())
             rectsForBerries.add(RectF())
         }
-        for (i in 0 until 3) { // 3 rocas
-            rocksPositions.add(Pair(random.nextInt(canvasWidth), 0))
+
+        val rockHeights = generateUniqueNegativeHeights(3)
+        for (i in 0 until 3) {
+            rocksPositions.add(Pair(random.nextInt(canvasWidth), rockHeights[i]))
             rectsForRocks.add(RectF())
         }
+    }
+
+    private fun generateUniqueNegativeHeights(count: Int): List<Int> {
+        val uniqueHeights = mutableSetOf<Int>()
+        while (uniqueHeights.size < count) {
+            val randomHeight = -random.nextInt(1500)
+            uniqueHeights.add(randomHeight)
+        }
+        return uniqueHeights.toList()
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldW: Int, oldH: Int) {
