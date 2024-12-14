@@ -210,7 +210,7 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
     private fun delayedHeartTimer() {
         val handler = Handler(Looper.getMainLooper())
         val random = Random()
-        val randomDelay = random.nextInt(15000) + 30000
+        val randomDelay = random.nextInt(15000) + 25000
         handler.postDelayed({
             heartTimer()
             delayedHeartTimer()

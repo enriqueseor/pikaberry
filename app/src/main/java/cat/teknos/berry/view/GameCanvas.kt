@@ -253,7 +253,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
 
     private fun onNewHeartGenerated() {
         if (posHeartY > canvasHeight) {
-            posHeartY = 0
             posHeartX = random.nextInt(canvasWidth)
             if (gameEventListener != null) {
                 gameEventListener!!.onNewHeartGenerated()
@@ -263,7 +262,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
 
     private fun onHeartCollected() {
         if (RectF.intersects(rectForPikachu, rectForHeart)) {
-            posHeartY = 0
+            posHeartY = -1000
             posHeartX = random.nextInt(canvasWidth)
             if (gameEventListener != null) {
                 gameEventListener!!.onHeartCollected()
