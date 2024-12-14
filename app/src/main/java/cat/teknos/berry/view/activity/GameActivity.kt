@@ -4,6 +4,7 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -24,7 +25,7 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
     private var numLives = 3
     private val maxLives = 3
     private var game: GameCanvas? = null
-    private val handler = Handler()
+    private val handler = Handler(Looper.getMainLooper())
     private var playlistManager: PlaylistManager? = null
     private var live1: ImageView? = null
     private var live2: ImageView? = null
@@ -81,7 +82,7 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
             }
             val points = textView.text.toString().toInt()
             score = points + berryPoints
-            textView.text = score.toString()
+            textView.text = String.format(score.toString())
             playSound(R.raw.berry_collected)
         }
     }
@@ -207,9 +208,9 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
     }
 
     private fun delayedHeartTimer() {
-        val handler = Handler()
+        val handler = Handler(Looper.getMainLooper())
         val random = Random()
-        val randomDelay = random.nextInt(30000) + 30000
+        val randomDelay = random.nextInt(15000) + 30000
         handler.postDelayed({
             heartTimer()
             delayedHeartTimer()
