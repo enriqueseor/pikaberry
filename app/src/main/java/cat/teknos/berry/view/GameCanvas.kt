@@ -61,7 +61,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
         berriesDrawable[2] = ResourcesCompat.getDrawable(resources, R.drawable.nanap_berry, null)
         berriesDrawable[3] = ResourcesCompat.getDrawable(resources, R.drawable.pinap_berry_silver, null)
         berriesDrawable[4] = ResourcesCompat.getDrawable(resources, R.drawable.razz_berry_golden, null)
-        rockDrawable = ResourcesCompat.getDrawable(resources, R.drawable.rock, null)
+        rockDrawable = ResourcesCompat.getDrawable(resources, R.drawable.golem, null)
         heartDrawable = ResourcesCompat.getDrawable(resources, R.drawable.heart, null)
     }
 
