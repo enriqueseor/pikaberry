@@ -200,16 +200,14 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
     }
 
     private fun timer() {
-        val timer = Timer()
-        timer.schedule(object : TimerTask() {
+        handler.post(object : Runnable {
             override fun run() {
-                handler.post {
-                    game!!.posBerryY += level * 10
-                    game!!.posRockY += level * 10
-                    game!!.invalidate()
-                }
+                game!!.posBerryY += level * 10
+                game!!.posRockY += level * 10
+                game!!.invalidate()
+                handler.postDelayed(this, 16)
             }
-        }, 0, 20)
+        })
     }
 
     private fun heartTimer() {
