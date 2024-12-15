@@ -33,6 +33,7 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
     private var playerName: String? = null
     private var heartTimer: Timer? = null
     private var mediaPlayer: MediaPlayer? = null
+    private var currentPlayingSound: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,15 +60,30 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
         delayedHeartTimer()
     }
 
-    private fun playSound(soundResource: Int) {
-        if (this.soundResource != soundResource) {
-            mediaPlayer!!.release()
-            mediaPlayer = MediaPlayer.create(this, soundResource)
-            this.soundResource = soundResource
+    private fun playSound(soundResource: Int, priority: Int) {
+        if (currentPlayingSound != null && currentPlayingSound != soundResource) {
+            val currentPriority = getSoundPriority(currentPlayingSound!!)
+            if (currentPriority > priority) {
+                return
+            }
         }
-        mediaPlayer!!.start()
+        mediaPlayer?.release()
+        mediaPlayer = MediaPlayer.create(this, soundResource)
+        currentPlayingSound = soundResource
+        mediaPlayer?.start()
+        mediaPlayer?.setOnCompletionListener {
+            currentPlayingSound = null
+        }
     }
 
+    private fun getSoundPriority(soundResource: Int): Int {
+        return when (soundResource) {
+            R.raw.rock_collision -> 2
+            R.raw.heart_collected -> 2
+            R.raw.berry_collected -> 1
+            else -> 0
+        }
+    }
 
     override fun onBerryCollected(berryType: Int) {
         runOnUiThread {
@@ -83,7 +99,7 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
             val points = textView.text.toString().toInt()
             score = points + berryPoints
             textView.text = String.format(score.toString())
-            playSound(R.raw.berry_collected)
+            playSound(R.raw.berry_collected, 1)
         }
     }
 
@@ -91,7 +107,7 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
         if (numLives > 0) {
             numLives--
             updateLifeIconsVisibility()
-            playSound(R.raw.rock_collision)
+            playSound(R.raw.rock_collision, 2)
         }
         if (numLives == 0) {
             onGameFinished()
@@ -109,7 +125,7 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
                 updateLifeIconsVisibility()
             }
         }
-        playSound(R.raw.heart_collected)
+        playSound(R.raw.heart_collected, 2)
         stopHeartTimer()
     }
 
