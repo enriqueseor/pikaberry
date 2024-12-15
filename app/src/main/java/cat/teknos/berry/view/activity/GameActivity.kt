@@ -2,6 +2,7 @@ package cat.teknos.berry.view.activity
 
 import android.content.Intent
 import android.media.MediaPlayer
+import android.media.SoundPool
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -20,7 +21,6 @@ import java.util.TimerTask
 
 class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedListener {
     private var level = 0
-    private var soundResource = 0
     private var score = 0
     private var numLives = 3
     private val maxLives = 3
@@ -33,7 +33,10 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
     private var playerName: String? = null
     private var heartTimer: Timer? = null
     private var mediaPlayer: MediaPlayer? = null
+    private lateinit var soundPool: SoundPool
+    private var soundMap: Map<Int, Int> = mapOf()
     private var currentPlayingSound: Int? = null
+    private var currentPriority: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +54,12 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
         live2 = findViewById(R.id.live2)
         live3 = findViewById(R.id.live3)
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.berry_collected)
-        soundResource = R.raw.berry_collected
+        soundPool = SoundPool.Builder().setMaxStreams(5).build()
+        soundMap = mapOf(
+            R.raw.rock_collision to soundPool.load(this, R.raw.rock_collision, 1),
+            R.raw.heart_collected to soundPool.load(this, R.raw.heart_collected, 1),
+            R.raw.berry_collected to soundPool.load(this, R.raw.berry_collected, 1)
+        )
 
         playList()
         obs()
@@ -61,18 +68,15 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
     }
 
     private fun playSound(soundResource: Int, priority: Int) {
+        val priority = getSoundPriority(soundResource)
         if (currentPlayingSound != null) {
-            val currentPriority = getSoundPriority(currentPlayingSound!!)
             if (currentPriority > priority) {
                 return
             }
         }
-        mediaPlayer?.release()
-        mediaPlayer = MediaPlayer.create(this, soundResource)
-        currentPlayingSound = soundResource
-        mediaPlayer?.start()
-        mediaPlayer?.setOnCompletionListener {
-            currentPlayingSound = null
+        soundMap[soundResource]?.let { soundId ->
+            soundPool.play(soundId, 1f, 1f, 1, 0, 1f)
+            currentPlayingSound = soundResource
         }
     }
 
