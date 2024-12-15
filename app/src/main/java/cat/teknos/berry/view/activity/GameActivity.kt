@@ -61,7 +61,7 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
     }
 
     private fun playSound(soundResource: Int, priority: Int) {
-        if (currentPlayingSound != null && currentPlayingSound != soundResource) {
+        if (currentPlayingSound != null) {
             val currentPriority = getSoundPriority(currentPlayingSound!!)
             if (currentPriority > priority) {
                 return
