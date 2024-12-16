@@ -22,22 +22,16 @@ class ResultsActivity : AppCompatActivity() {
 
         dbHelper = PlayerDatabaseHelper(this)
 
-        // Inicializar vistas
         resultTextView = findViewById(R.id.resultTextView)
         val scoreRecyclerView: RecyclerView = findViewById(R.id.scoreRecyclerView)
-
-        // Configurar RecyclerView
         scoreRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Obtener datos del intent
         val intent = intent
         playerName = intent.getStringExtra("playerName") ?: "PLAYER"
         playerScore = intent.getIntExtra("playerScore", 0)
 
-        // Mostrar puntaje actual
         yourScore()
 
-        // Leer y mostrar los resultados en la lista
         val scores = getAllScores()
         val adapter = ScoreAdapter(scores)
         scoreRecyclerView.adapter = adapter
