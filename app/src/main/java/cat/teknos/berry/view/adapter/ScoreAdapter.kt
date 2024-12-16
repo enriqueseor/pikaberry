@@ -24,7 +24,7 @@ class ScoreAdapter(private val scores: List<Pair<String, Int>>) :
     override fun onBindViewHolder(holder: ScoreViewHolder, position: Int) {
         val (name, score) = scores[position]
         holder.playerNameTextView.text = name
-        holder.playerScoreTextView.text = score.toString()
+        holder.playerScoreTextView.text = String.format(score.toString())
     }
 
     override fun getItemCount(): Int = scores.size
