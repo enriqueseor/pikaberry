@@ -20,7 +20,7 @@ import java.util.Timer
 import java.util.TimerTask
 
 class GameActivity : AppCompatActivity(), GameEventListener, GameEventListenerInt {
-    private var level = 0
+    private var levelNumber = 0
     private var score = 0
     private var numLives = 3
     private val maxLives = 3
@@ -46,8 +46,8 @@ class GameActivity : AppCompatActivity(), GameEventListener, GameEventListenerIn
         game?.setGameEventListenerInt(this)
 
         val intent = intent
-        level = intent.getIntExtra("level", 2)
-        game?.setDifficultyLevel(level)
+        levelNumber = intent.getIntExtra("levelNumber", 2)
+        game?.setDifficultyLevel(levelNumber)
         playerName = getIntent().getStringExtra("playerName")
 
         live1 = findViewById(R.id.live1)
@@ -206,8 +206,8 @@ class GameActivity : AppCompatActivity(), GameEventListener, GameEventListenerIn
     private fun timer() {
         handler.post(object : Runnable {
             override fun run() {
-                game!!.posBerryY += level * 10
-                game!!.posRockY += level * 10
+                game!!.posBerryY += levelNumber * 10
+                game!!.posRockY += levelNumber * 10
                 game!!.invalidate()
                 handler.postDelayed(this, 16)
             }
@@ -222,7 +222,7 @@ class GameActivity : AppCompatActivity(), GameEventListener, GameEventListenerIn
         heartTimer!!.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 handler.post {
-                    game!!.posHeartY += level * 10
+                    game!!.posHeartY += levelNumber * 10
                     game!!.invalidate()
                 }
             }

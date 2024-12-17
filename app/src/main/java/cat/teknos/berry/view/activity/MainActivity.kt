@@ -51,8 +51,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         val intent = Intent(this, GameActivity::class.java)
-        intent.putExtra("levelNumber", levelNumber) // Número
-        intent.putExtra("levelName", levelName)    // Texto
+        intent.putExtra("levelNumber", levelNumber)
+        intent.putExtra("levelName", levelName)
         intent.putExtra("playerName", playerName)
         startActivity(intent)
     }
