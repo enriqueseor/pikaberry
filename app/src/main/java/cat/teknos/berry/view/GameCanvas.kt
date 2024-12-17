@@ -10,7 +10,6 @@ import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import cat.teknos.berry.R
 import cat.teknos.berry.view.util.GameEventListener
-import cat.teknos.berry.view.util.GameEventListenerInt
 import java.util.Random
 
 class GameCanvas(context: Context?, attrs: AttributeSet?) :
@@ -46,7 +45,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
     private lateinit var berriesDrawable: Array<Drawable?>
 
     private var gameEventListener: GameEventListener? = null
-    private var gameEventListenerInt: GameEventListenerInt? = null
     private val random = Random()
 
     init {
@@ -217,7 +215,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
             val berryType = berriesTypes[index]
             berriesPositions[index] = Pair(random.nextInt(canvasWidth), 0)
             berriesTypes[index] = customRandomBerryType()
-            gameEventListenerInt?.onBerryCollected(berryType)
+            gameEventListener?.onBerryCollected(berryType)
         }
     }
 
@@ -240,10 +238,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
 
     fun setGameEventListener(listener: GameEventListener?) {
         this.gameEventListener = listener
-    }
-
-    fun setGameEventListenerInt(listener: GameEventListenerInt?) {
-        this.gameEventListenerInt = listener
     }
 
     private fun customRandomBerryType(): Int {

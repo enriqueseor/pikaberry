@@ -4,4 +4,5 @@ interface GameEventListener {
     fun onRockCollision()
     fun onNewHeartGenerated()
     fun onHeartCollected()
+    fun onBerryCollected(berryType: Int)
 }

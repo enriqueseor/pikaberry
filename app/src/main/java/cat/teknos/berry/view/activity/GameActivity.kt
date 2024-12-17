@@ -14,12 +14,11 @@ import cat.teknos.berry.R
 import cat.teknos.berry.model.PlaylistManager
 import cat.teknos.berry.view.GameCanvas
 import cat.teknos.berry.view.util.GameEventListener
-import cat.teknos.berry.view.util.GameEventListenerInt
 import java.util.Random
 import java.util.Timer
 import java.util.TimerTask
 
-class GameActivity : AppCompatActivity(), GameEventListener, GameEventListenerInt {
+class GameActivity : AppCompatActivity(), GameEventListener {
     private var levelNumber = 0
     private var score = 0
     private var numLives = 3
@@ -43,7 +42,6 @@ class GameActivity : AppCompatActivity(), GameEventListener, GameEventListenerIn
         setContentView(R.layout.activity_game)
         game = findViewById(R.id.Screen)
         game?.setGameEventListener(this)
-        game?.setGameEventListenerInt(this)
 
         val intent = intent
         levelNumber = intent.getIntExtra("levelNumber", 2)
