@@ -56,8 +56,8 @@ class GameActivity : AppCompatActivity(), GameEventListener, GameEventListenerIn
 
         soundPool = SoundPool.Builder().setMaxStreams(5).build()
         soundMap = mapOf(
-            R.raw.geodude to soundPool.load(this, R.raw.geodude, 1),
-            R.raw.heart to soundPool.load(this, R.raw.heart, 1),
+            R.raw.geodude to soundPool.load(this, R.raw.geodude, 2),
+            R.raw.heart to soundPool.load(this, R.raw.heart, 3),
             R.raw.berry to soundPool.load(this, R.raw.berry, 1)
         )
 
@@ -68,7 +68,6 @@ class GameActivity : AppCompatActivity(), GameEventListener, GameEventListenerIn
     }
 
     private fun playSound(soundResource: Int, priority: Int) {
-        val priority = getSoundPriority(soundResource)
         if (currentPlayingSound != null) {
             if (currentPriority > priority) {
                 return
@@ -77,15 +76,6 @@ class GameActivity : AppCompatActivity(), GameEventListener, GameEventListenerIn
         soundMap[soundResource]?.let { soundId ->
             soundPool.play(soundId, 1f, 1f, 1, 0, 1f)
             currentPlayingSound = soundResource
-        }
-    }
-
-    private fun getSoundPriority(soundResource: Int): Int {
-        return when (soundResource) {
-            R.raw.geodude -> 2
-            R.raw.heart -> 2
-            R.raw.berry -> 1
-            else -> 0
         }
     }
 
