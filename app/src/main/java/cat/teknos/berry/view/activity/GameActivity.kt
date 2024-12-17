@@ -174,9 +174,13 @@ class GameActivity : AppCompatActivity(), GameEventListener, GameEventListenerIn
     }
 
     private fun onGameFinished() {
+        val levelNumber = intent.getIntExtra("levelNumber", 2)
+        val levelName = intent.getStringExtra("levelName") ?: "medium"
         val intent = Intent(this, ResultsActivity::class.java)
-        intent.putExtra("playerScore", score)
+        intent.putExtra("levelNumber", levelNumber)
+        intent.putExtra("levelName", levelName)
         intent.putExtra("playerName", playerName)
+        intent.putExtra("playerScore", score)
         startActivity(intent)
         finish()
     }

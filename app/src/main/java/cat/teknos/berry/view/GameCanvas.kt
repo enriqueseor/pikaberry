@@ -138,8 +138,8 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
             (posPikachuY + radius).toFloat()
 
         /******************************************************
-        *                       BERRIES                       *
-        *******************************************************/
+         *                       BERRIES                      *
+         ******************************************************/
         for (i in berriesPositions.indices) {
             val (x, y) = berriesPositions[i]
             berriesDrawable[berriesTypes[i]]!!.setBounds(
@@ -160,8 +160,8 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
         }
 
         /*****************************************************
-        *                        ROCKS                       *
-        ******************************************************/
+         *                        ROCKS                      *
+         *****************************************************/
         for (i in rocksPositions.indices) {
             val (x, y) = rocksPositions[i]
             rockDrawable!!.setBounds(
@@ -182,8 +182,8 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
         }
 
         /*****************************************************
-        *                        HEART                       *
-        ******************************************************/
+         *                        HEART                      *
+         *****************************************************/
         heartDrawable!!.setBounds(
             posHeartX - radius,
             posHeartY - radius,

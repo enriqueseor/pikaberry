@@ -27,11 +27,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun play() {
-        var level = 2
-        if (rbEasy!!.isChecked) {
-            level = 1
-        } else if (rbHard!!.isChecked) {
-            level = 3
+        val levelNumber: Int
+        val levelName: String
+
+        when {
+            rbEasy!!.isChecked -> {
+                levelNumber = 1
+                levelName = "easy"
+            }
+            rbHard!!.isChecked -> {
+                levelNumber = 3
+                levelName = "hard"
+            }
+            else -> {
+                levelNumber = 2
+                levelName = "medium"
+            }
         }
 
         var playerName = etName!!.text.toString()
@@ -40,7 +51,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         val intent = Intent(this, GameActivity::class.java)
-        intent.putExtra("level", level)
+        intent.putExtra("levelNumber", levelNumber) // Número
+        intent.putExtra("levelName", levelName)    // Texto
         intent.putExtra("playerName", playerName)
         startActivity(intent)
     }

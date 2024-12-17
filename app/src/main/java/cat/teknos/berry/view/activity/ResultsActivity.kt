@@ -20,47 +20,54 @@ class ResultsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_results)
 
+        // Obtener la referencia a la base de datos
         dbHelper = PlayerDatabaseHelper(this)
 
+        // Obtener las vistas
         resultTextView = findViewById(R.id.resultTextView)
         val scoreRecyclerView: RecyclerView = findViewById(R.id.scoreRecyclerView)
         scoreRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        val intent = intent
+        // Obtener los datos del Intent
+        val levelNumber = intent.getIntExtra("levelNumber", 2)
+        val levelName = intent.getStringExtra("levelName") ?: "medium"
         playerName = intent.getStringExtra("playerName") ?: "PLAYER"
         playerScore = intent.getIntExtra("playerScore", 0)
 
-        yourScore()
+        yourScore(levelName)
 
-        val scores = getAllScores()
+        val scores = getScoresByLevel(levelName)
         val adapter = ScoreAdapter(scores)
         scoreRecyclerView.adapter = adapter
     }
 
-    private fun yourScore() {
-        val resultText = "PLAYER: $playerName\nSCORE: $playerScore"
+    private fun yourScore(levelName: String) {
+        val resultText = "PLAYER: $playerName\nSCORE: $playerScore\nLEVEL: $levelName"
         resultTextView.text = resultText
-        savePlayerScore(playerName!!, playerScore)
+        savePlayerScore(playerName!!, playerScore, levelName)
     }
 
-    private fun savePlayerScore(name: String, score: Int) {
+    private fun savePlayerScore(name: String, score: Int, level: String) {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             put(PlayerDatabaseHelper.COLUMN_NAME, name)
             put(PlayerDatabaseHelper.COLUMN_SCORE, score)
+            put(PlayerDatabaseHelper.COLUMN_LEVEL, level)
         }
         db.insert(PlayerDatabaseHelper.TABLE_NAME, null, values)
         db.close()
     }
 
-    private fun getAllScores(): List<Pair<String, Int>> {
+    private fun getScoresByLevel(level: String): List<Pair<String, Int>> {
         val db = dbHelper.readableDatabase
         val scores = mutableListOf<Pair<String, Int>>()
 
         val cursor = db.query(
             PlayerDatabaseHelper.TABLE_NAME,
             arrayOf(PlayerDatabaseHelper.COLUMN_NAME, PlayerDatabaseHelper.COLUMN_SCORE),
-            null, null, null, null,
+            "${PlayerDatabaseHelper.COLUMN_LEVEL} = ?",
+            arrayOf(level),
+            null, null,
             "${PlayerDatabaseHelper.COLUMN_SCORE} DESC",
             "10"
         )
