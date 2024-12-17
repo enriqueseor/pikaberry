@@ -14,12 +14,12 @@ import cat.teknos.berry.R
 import cat.teknos.berry.model.PlaylistManager
 import cat.teknos.berry.view.GameCanvas
 import cat.teknos.berry.view.util.GameEventListener
-import cat.teknos.berry.view.util.OnBerryCollectedListener
+import cat.teknos.berry.view.util.GameEventListenerInt
 import java.util.Random
 import java.util.Timer
 import java.util.TimerTask
 
-class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedListener {
+class GameActivity : AppCompatActivity(), GameEventListener, GameEventListenerInt {
     private var level = 0
     private var score = 0
     private var numLives = 3
@@ -43,7 +43,7 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
         setContentView(R.layout.activity_game)
         game = findViewById(R.id.Screen)
         game?.setGameEventListener(this)
-        game?.setOnBerryCollectedListener(this)
+        game?.setGameEventListenerInt(this)
 
         val intent = intent
         level = intent.getIntExtra("level", 2)
@@ -62,7 +62,7 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
         )
 
         playList()
-        obs()
+        observer()
         timer()
         delayedHeartTimer()
     }
@@ -194,7 +194,7 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
         playlistManager!!.start()
     }
 
-    private fun obs() {
+    private fun observer() {
         val obs = game!!.viewTreeObserver
         obs.addOnGlobalLayoutListener {}
     }

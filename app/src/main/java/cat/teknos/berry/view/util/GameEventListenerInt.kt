@@ -1,5 +1,5 @@
 package cat.teknos.berry.view.util
 
-interface OnBerryCollectedListener {
+interface GameEventListenerInt {
     fun onBerryCollected(berryType: Int)
 }

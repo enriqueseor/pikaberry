@@ -10,7 +10,7 @@ import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import cat.teknos.berry.R
 import cat.teknos.berry.view.util.GameEventListener
-import cat.teknos.berry.view.util.OnBerryCollectedListener
+import cat.teknos.berry.view.util.GameEventListenerInt
 import java.util.Random
 
 class GameCanvas(context: Context?, attrs: AttributeSet?) :
@@ -46,7 +46,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
     private lateinit var berriesDrawable: Array<Drawable?>
 
     private var gameEventListener: GameEventListener? = null
-    private var onBerryCollectedListener: OnBerryCollectedListener? = null
+    private var gameEventListenerInt: GameEventListenerInt? = null
     private val random = Random()
 
     init {
@@ -124,7 +124,9 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        //PIKACHU
+        /******************************************************
+        *                       PIKACHU                       *
+        *******************************************************/
         pikachuDrawable!!.setBounds(
             posPikachuX - radius,
             posPikachuY - radius,
@@ -135,7 +137,9 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
         rectForPikachu[(posPikachuX - radius).toFloat(), (posPikachuY - radius).toFloat(), (posPikachuX + radius).toFloat()] =
             (posPikachuY + radius).toFloat()
 
-        // BERRIES
+        /******************************************************
+        *                       BERRIES                       *
+        *******************************************************/
         for (i in berriesPositions.indices) {
             val (x, y) = berriesPositions[i]
             berriesDrawable[berriesTypes[i]]!!.setBounds(
@@ -155,7 +159,9 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
             checkBerryCollision(i)
         }
 
-        // ROCKS
+        /*****************************************************
+        *                        ROCKS                       *
+        ******************************************************/
         for (i in rocksPositions.indices) {
             val (x, y) = rocksPositions[i]
             rockDrawable!!.setBounds(
@@ -175,7 +181,9 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
             checkRockCollision(i)
         }
 
-        //HEART
+        /*****************************************************
+        *                        HEART                       *
+        ******************************************************/
         heartDrawable!!.setBounds(
             posHeartX - radius,
             posHeartY - radius,
@@ -209,7 +217,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
             val berryType = berriesTypes[index]
             berriesPositions[index] = Pair(random.nextInt(canvasWidth), 0)
             berriesTypes[index] = customRandomBerryType()
-            onBerryCollectedListener?.onBerryCollected(berryType)
+            gameEventListenerInt?.onBerryCollected(berryType)
         }
     }
 
@@ -234,8 +242,8 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
         this.gameEventListener = listener
     }
 
-    fun setOnBerryCollectedListener(listener: OnBerryCollectedListener?) {
-        this.onBerryCollectedListener = listener
+    fun setGameEventListenerInt(listener: GameEventListenerInt?) {
+        this.gameEventListenerInt = listener
     }
 
     private fun customRandomBerryType(): Int {
