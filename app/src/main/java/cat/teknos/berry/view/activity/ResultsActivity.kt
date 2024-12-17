@@ -61,7 +61,8 @@ class ResultsActivity : AppCompatActivity() {
             PlayerDatabaseHelper.TABLE_NAME,
             arrayOf(PlayerDatabaseHelper.COLUMN_NAME, PlayerDatabaseHelper.COLUMN_SCORE),
             null, null, null, null,
-            "${PlayerDatabaseHelper.COLUMN_SCORE} DESC"
+            "${PlayerDatabaseHelper.COLUMN_SCORE} DESC",
+            "10"
         )
 
         with(cursor) {
