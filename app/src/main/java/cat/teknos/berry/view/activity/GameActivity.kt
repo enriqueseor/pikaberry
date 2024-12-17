@@ -56,9 +56,9 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
 
         soundPool = SoundPool.Builder().setMaxStreams(5).build()
         soundMap = mapOf(
-            R.raw.rock_collision to soundPool.load(this, R.raw.rock_collision, 1),
-            R.raw.heart_collected to soundPool.load(this, R.raw.heart_collected, 1),
-            R.raw.berry_collected to soundPool.load(this, R.raw.berry_collected, 1)
+            R.raw.geodude to soundPool.load(this, R.raw.geodude, 1),
+            R.raw.heart to soundPool.load(this, R.raw.heart, 1),
+            R.raw.berry to soundPool.load(this, R.raw.berry, 1)
         )
 
         playList()
@@ -82,9 +82,9 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
 
     private fun getSoundPriority(soundResource: Int): Int {
         return when (soundResource) {
-            R.raw.rock_collision -> 2
-            R.raw.heart_collected -> 2
-            R.raw.berry_collected -> 1
+            R.raw.geodude -> 2
+            R.raw.heart -> 2
+            R.raw.berry -> 1
             else -> 0
         }
     }
@@ -103,7 +103,7 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
             val points = textView.text.toString().toInt()
             score = points + berryPoints
             textView.text = String.format(score.toString())
-            playSound(R.raw.berry_collected, 1)
+            playSound(R.raw.berry, 1)
         }
     }
 
@@ -111,7 +111,7 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
         if (numLives > 0) {
             numLives--
             updateLifeIconsVisibility()
-            playSound(R.raw.rock_collision, 2)
+            playSound(R.raw.geodude, 2)
         }
         if (numLives == 0) {
             onGameFinished()
@@ -129,7 +129,7 @@ class GameActivity : AppCompatActivity(), GameEventListener, OnBerryCollectedLis
                 updateLifeIconsVisibility()
             }
         }
-        playSound(R.raw.heart_collected, 2)
+        playSound(R.raw.heart, 2)
         stopHeartTimer()
     }
 
