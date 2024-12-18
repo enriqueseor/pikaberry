@@ -238,9 +238,12 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
     }
 
     private fun updateHeart() {
+        val speed = 10 * level
         if (posHeartY > canvasHeight) {
             posHeartY = 0
             posHeartX = random.nextInt(canvasWidth)
+        } else {
+            posHeartY += speed
         }
     }
 

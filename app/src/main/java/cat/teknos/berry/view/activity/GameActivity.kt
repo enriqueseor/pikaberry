@@ -184,9 +184,6 @@ class GameActivity : AppCompatActivity(), GameEventListener {
     private fun timer() {
         handler.post(object : Runnable {
             override fun run() {
-                game!!.posBerryY += levelNumber * 10
-                game!!.posRockY += levelNumber * 10
-                game!!.posHeartY += levelNumber * 10
                 game!!.invalidate()
                 handler.postDelayed(this, 16)
             }
