@@ -196,8 +196,8 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
             (posHeartX + radius).toFloat(),
             (posHeartY + radius).toFloat()
         )
-        onNewHeartGenerated()
-        onHeartCollected()
+        updateHeart()
+        checkHeartCollision()
     }
 
     private fun updateBerry(index: Int) {
@@ -237,22 +237,18 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
         }
     }
 
-    private fun onNewHeartGenerated() {
+    private fun updateHeart() {
         if (posHeartY > canvasHeight) {
+            posHeartY = 0
             posHeartX = random.nextInt(canvasWidth)
-            if (gameEventListener != null) {
-                gameEventListener!!.onNewHeartGenerated()
-            }
         }
     }
 
-    private fun onHeartCollected() {
+    private fun checkHeartCollision() {
         if (RectF.intersects(rectForPikachu, rectForHeart)) {
             posHeartY = -1000
             posHeartX = random.nextInt(canvasWidth)
-            if (gameEventListener != null) {
-                gameEventListener!!.onHeartCollected()
-            }
+            gameEventListener?.onHeartCollected()
         }
     }
 

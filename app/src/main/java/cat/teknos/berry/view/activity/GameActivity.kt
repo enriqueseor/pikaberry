@@ -62,7 +62,6 @@ class GameActivity : AppCompatActivity(), GameEventListener {
         playList()
         observer()
         timer()
-        delayedHeartTimer()
     }
 
     private fun playSound(soundResource: Int, priority: Int) {
@@ -106,10 +105,6 @@ class GameActivity : AppCompatActivity(), GameEventListener {
         }
     }
 
-    override fun onNewHeartGenerated() {
-        stopHeartTimer()
-    }
-
     override fun onHeartCollected() {
         runOnUiThread {
             if (numLives < maxLives) {
@@ -118,39 +113,6 @@ class GameActivity : AppCompatActivity(), GameEventListener {
             }
         }
         playSound(R.raw.heart, 2)
-        stopHeartTimer()
-    }
-
-    private fun stopHeartTimer() {
-        if (heartTimer != null) {
-            heartTimer!!.cancel()
-            heartTimer = null
-        }
-    }
-
-    private fun heartTimer() {
-        if (heartTimer != null) {
-            heartTimer!!.cancel()
-        }
-        heartTimer = Timer()
-        heartTimer!!.scheduleAtFixedRate(object : TimerTask() {
-            override fun run() {
-                handler.post {
-                    game!!.posHeartY += levelNumber * 10
-                    game!!.invalidate()
-                }
-            }
-        }, 0, 20)
-    }
-
-    private fun delayedHeartTimer() {
-        val handler = Handler(Looper.getMainLooper())
-        val random = Random()
-        val randomDelay = random.nextInt(15000) + 25000
-        handler.postDelayed({
-            heartTimer()
-            delayedHeartTimer()
-        }, randomDelay.toLong())
     }
 
     private fun updateLifeIconsVisibility() {
@@ -224,6 +186,7 @@ class GameActivity : AppCompatActivity(), GameEventListener {
             override fun run() {
                 game!!.posBerryY += levelNumber * 10
                 game!!.posRockY += levelNumber * 10
+                game!!.posHeartY += levelNumber * 10
                 game!!.invalidate()
                 handler.postDelayed(this, 16)
             }
