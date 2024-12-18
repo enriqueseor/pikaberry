@@ -14,9 +14,6 @@ import cat.teknos.berry.R
 import cat.teknos.berry.model.PlaylistManager
 import cat.teknos.berry.view.GameCanvas
 import cat.teknos.berry.view.util.GameEventListener
-import java.util.Random
-import java.util.Timer
-import java.util.TimerTask
 
 class GameActivity : AppCompatActivity(), GameEventListener {
     private var levelNumber = 0
@@ -30,7 +27,6 @@ class GameActivity : AppCompatActivity(), GameEventListener {
     private var live2: ImageView? = null
     private var live3: ImageView? = null
     private var playerName: String? = null
-    private var heartTimer: Timer? = null
     private var mediaPlayer: MediaPlayer? = null
     private lateinit var soundPool: SoundPool
     private var soundMap: Map<Int, Int> = mapOf()
@@ -106,11 +102,9 @@ class GameActivity : AppCompatActivity(), GameEventListener {
     }
 
     override fun onHeartCollected() {
-        runOnUiThread {
-            if (numLives < maxLives) {
-                numLives++
-                updateLifeIconsVisibility()
-            }
+        if (numLives < maxLives) {
+            numLives++
+            updateLifeIconsVisibility()
         }
         playSound(R.raw.heart, 2)
     }
@@ -177,8 +171,8 @@ class GameActivity : AppCompatActivity(), GameEventListener {
     }
 
     private fun observer() {
-        val obs = game!!.viewTreeObserver
-        obs.addOnGlobalLayoutListener {}
+        val observer = game!!.viewTreeObserver
+        observer.addOnGlobalLayoutListener {}
     }
 
     private fun timer() {
