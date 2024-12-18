@@ -182,7 +182,10 @@ class GameActivity : AppCompatActivity(), GameEventListener {
             R.raw.route_119,
             R.raw.route_120,
         )
-        playlistManager = PlaylistManager(this, songResources)
+        val randomIndex = (songResources.indices).random()
+        val shuffledSongs = songResources.toMutableList()
+        shuffledSongs.add(0, shuffledSongs.removeAt(randomIndex))
+        playlistManager = PlaylistManager(this, shuffledSongs.toIntArray())
         playlistManager!!.start()
     }
 
