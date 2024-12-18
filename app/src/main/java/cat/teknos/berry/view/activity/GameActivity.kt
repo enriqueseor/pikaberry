@@ -128,6 +128,31 @@ class GameActivity : AppCompatActivity(), GameEventListener {
         }
     }
 
+    private fun heartTimer() {
+        if (heartTimer != null) {
+            heartTimer!!.cancel()
+        }
+        heartTimer = Timer()
+        heartTimer!!.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                handler.post {
+                    game!!.posHeartY += levelNumber * 10
+                    game!!.invalidate()
+                }
+            }
+        }, 0, 20)
+    }
+
+    private fun delayedHeartTimer() {
+        val handler = Handler(Looper.getMainLooper())
+        val random = Random()
+        val randomDelay = random.nextInt(15000) + 25000
+        handler.postDelayed({
+            heartTimer()
+            delayedHeartTimer()
+        }, randomDelay.toLong())
+    }
+
     private fun updateLifeIconsVisibility() {
         live1!!.visibility =
             if (numLives >= 1) View.VISIBLE else View.INVISIBLE
@@ -203,30 +228,5 @@ class GameActivity : AppCompatActivity(), GameEventListener {
                 handler.postDelayed(this, 16)
             }
         })
-    }
-
-    private fun heartTimer() {
-        if (heartTimer != null) {
-            heartTimer!!.cancel()
-        }
-        heartTimer = Timer()
-        heartTimer!!.scheduleAtFixedRate(object : TimerTask() {
-            override fun run() {
-                handler.post {
-                    game!!.posHeartY += levelNumber * 10
-                    game!!.invalidate()
-                }
-            }
-        }, 0, 20)
-    }
-
-    private fun delayedHeartTimer() {
-        val handler = Handler(Looper.getMainLooper())
-        val random = Random()
-        val randomDelay = random.nextInt(15000) + 25000
-        handler.postDelayed({
-            heartTimer()
-            delayedHeartTimer()
-        }, randomDelay.toLong())
     }
 }

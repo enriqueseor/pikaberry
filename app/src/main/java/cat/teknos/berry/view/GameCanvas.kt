@@ -29,15 +29,12 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
     private var level: Int = 2
 
     private val rectForPikachu = RectF()
-
-    private val berriesPositions = mutableListOf<Pair<Int, Int>>()
+    private val rectForHeart = RectF()
     private val berriesTypes = mutableListOf<Int>()
+    private val berriesPositions = mutableListOf<Pair<Int, Int>>()
     private val rectsForBerries = mutableListOf<RectF>()
-
     private val rocksPositions = mutableListOf<Pair<Int, Int>>()
     private val rectsForRocks = mutableListOf<RectF>()
-
-    private val rectForHeart = RectF()
 
     private var pikachuDrawable: Drawable? = null
     private var rockDrawable: Drawable? = null
@@ -132,8 +129,12 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
             posPikachuY + radius
         )
         pikachuDrawable!!.draw(canvas)
-        rectForPikachu[(posPikachuX - radius).toFloat(), (posPikachuY - radius).toFloat(), (posPikachuX + radius).toFloat()] =
+        rectForPikachu.set(
+            (posPikachuX - radius).toFloat(),
+            (posPikachuY - radius).toFloat(),
+            (posPikachuX + radius).toFloat(),
             (posPikachuY + radius).toFloat()
+        )
 
         /******************************************************
          *                       BERRIES                      *
@@ -189,14 +190,14 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
             posHeartY + radius
         )
         heartDrawable!!.draw(canvas)
-        rectForHeart[(posHeartX - radius).toFloat(), (posHeartY - radius).toFloat(), (posHeartX + radius).toFloat()] =
+        rectForHeart.set(
+            (posHeartX - radius).toFloat(),
+            (posHeartY - radius).toFloat(),
+            (posHeartX + radius).toFloat(),
             (posHeartY + radius).toFloat()
+        )
         onNewHeartGenerated()
         onHeartCollected()
-    }
-
-    fun setDifficultyLevel(level: Int) {
-        this.level = level
     }
 
     private fun updateBerry(index: Int) {
@@ -236,23 +237,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
         }
     }
 
-    fun setGameEventListener(listener: GameEventListener?) {
-        this.gameEventListener = listener
-    }
-
-    private fun customRandomBerryType(): Int {
-        val probabilities = doubleArrayOf(0.60, 0.20, 0.10, 0.050, 0.025)
-        val rand = random.nextDouble()
-        var cumulativeProbability = 0.0
-        for (i in probabilities.indices) {
-            cumulativeProbability += probabilities[i]
-            if (rand <= cumulativeProbability) {
-                return i
-            }
-        }
-        return 0
-    }
-
     private fun onNewHeartGenerated() {
         if (posHeartY > canvasHeight) {
             posHeartX = random.nextInt(canvasWidth)
@@ -270,5 +254,26 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
                 gameEventListener!!.onHeartCollected()
             }
         }
+    }
+
+    fun setGameEventListener(listener: GameEventListener?) {
+        this.gameEventListener = listener
+    }
+
+    fun setDifficultyLevel(level: Int) {
+        this.level = level
+    }
+
+    private fun customRandomBerryType(): Int {
+        val probabilities = doubleArrayOf(0.60, 0.20, 0.10, 0.050, 0.025)
+        val rand = random.nextDouble()
+        var cumulativeProbability = 0.0
+        for (i in probabilities.indices) {
+            cumulativeProbability += probabilities[i]
+            if (rand <= cumulativeProbability) {
+                return i
+            }
+        }
+        return 0
     }
 }
