@@ -155,7 +155,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
                 (y + radius).toFloat()
             )
             updateBerry(i)
-            checkBerryCollision(i)
         }
 
         /*****************************************************
@@ -177,7 +176,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
                 (y + radius).toFloat()
             )
             updateRock(i)
-            checkRockCollision(i)
         }
 
         /*****************************************************
@@ -197,7 +195,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
             (posHeartY + radius).toFloat()
         )
         updateHeart()
-        checkHeartCollision()
     }
 
     private fun updateBerry(index: Int) {
@@ -209,9 +206,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
         } else {
             berriesPositions[index] = Pair(x, y + speed)
         }
-    }
-
-    private fun checkBerryCollision(index: Int) {
         if (RectF.intersects(rectForPikachu, rectsForBerries[index])) {
             val berryType = berriesTypes[index]
             berriesPositions[index] = Pair(random.nextInt(canvasWidth), 0)
@@ -228,9 +222,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
         } else {
             rocksPositions[index] = Pair(x, y + speed)
         }
-    }
-
-    private fun checkRockCollision(index: Int) {
         if (RectF.intersects(rectForPikachu, rectsForRocks[index])) {
             rocksPositions[index] = Pair(random.nextInt(canvasWidth), 0)
             gameEventListener?.onRockCollision()
@@ -240,16 +231,13 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) :
     private fun updateHeart() {
         val speed = 10 * level
         if (posHeartY > canvasHeight) {
-            posHeartY = 0
+            posHeartY = (-17500..-12500).random()
             posHeartX = random.nextInt(canvasWidth)
         } else {
             posHeartY += speed
         }
-    }
-
-    private fun checkHeartCollision() {
         if (RectF.intersects(rectForPikachu, rectForHeart)) {
-            posHeartY = -1000
+            posHeartY = (-17500..-12500).random()
             posHeartX = random.nextInt(canvasWidth)
             gameEventListener?.onHeartCollected()
         }

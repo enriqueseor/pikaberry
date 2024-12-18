@@ -73,21 +73,19 @@ class GameActivity : AppCompatActivity(), GameEventListener {
     }
 
     override fun onBerryCollected(berryType: Int) {
-        runOnUiThread {
-            val textView = findViewById<TextView>(R.id.points)
-            var berryPoints = 0
-            when (berryType) {
-                0 -> berryPoints = 1
-                1 -> berryPoints = 2
-                2 -> berryPoints = 3
-                3 -> berryPoints = 5
-                4 -> berryPoints = 10
-            }
-            val points = textView.text.toString().toInt()
-            score = points + berryPoints
-            textView.text = String.format(score.toString())
-            playSound(R.raw.berry, 1)
+        val textView = findViewById<TextView>(R.id.points)
+        var berryPoints = 0
+        when (berryType) {
+            0 -> berryPoints = 1
+            1 -> berryPoints = 2
+            2 -> berryPoints = 3
+            3 -> berryPoints = 5
+            4 -> berryPoints = 10
         }
+        val points = textView.text.toString().toInt()
+        score = points + berryPoints
+        textView.text = String.format(score.toString())
+        playSound(R.raw.berry, 1)
     }
 
     override fun onRockCollision() {
