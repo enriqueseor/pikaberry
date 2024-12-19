@@ -21,7 +21,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private var posBerryX: Int = 0
     private var posRockX: Int = 0
     private var posHeartX: Int = 0
-    private var posHeartY: Int = 0
+    private var posHeartY: Int = -15000
     private var level: Int = 2
     private val rectForPikachu = RectF()
     private val rectForHeart = RectF()
