@@ -33,15 +33,15 @@ class MainActivity : AppCompatActivity() {
         when {
             rbEasy!!.isChecked -> {
                 levelNumber = 1
-                levelName = "easy"
+                levelName = "EASY"
             }
             rbHard!!.isChecked -> {
                 levelNumber = 3
-                levelName = "hard"
+                levelName = "HARD"
             }
             else -> {
                 levelNumber = 2
-                levelName = "medium"
+                levelName = "MEDIUM"
             }
         }
 
