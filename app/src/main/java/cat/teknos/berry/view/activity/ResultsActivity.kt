@@ -20,16 +20,12 @@ class ResultsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_results)
 
-        // Obtener la referencia a la base de datos
         dbHelper = PlayerDatabaseHelper(this)
 
-        // Obtener las vistas
         resultTextView = findViewById(R.id.resultTextView)
         val scoreRecyclerView: RecyclerView = findViewById(R.id.scoreRecyclerView)
         scoreRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Obtener los datos del Intent
-        val levelNumber = intent.getIntExtra("levelNumber", 2)
         val levelName = intent.getStringExtra("levelName") ?: "medium"
         playerName = intent.getStringExtra("playerName") ?: "PLAYER"
         playerScore = intent.getIntExtra("playerScore", 0)
