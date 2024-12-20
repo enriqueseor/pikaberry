@@ -1,7 +1,6 @@
 package cat.teknos.berry.view.activity
 
 import android.content.Intent
-import android.media.MediaPlayer
 import android.media.SoundPool
 import android.os.Bundle
 import android.os.Handler
@@ -20,33 +19,35 @@ class GameActivity : AppCompatActivity(), GameEventListener {
     private var score = 0
     private var numLives = 3
     private val maxLives = 3
-    private var game: GameCanvas? = null
+
+    private lateinit var game: GameCanvas
     private val handler = Handler(Looper.getMainLooper())
-    private var playlistManager: PlaylistManager? = null
-    private var live1: ImageView? = null
-    private var live2: ImageView? = null
-    private var live3: ImageView? = null
-    private var playerName: String? = null
-    private var mediaPlayer: MediaPlayer? = null
+    private lateinit var liveIcons: List<ImageView>
+    private lateinit var playerName: String
     private lateinit var soundPool: SoundPool
-    private var soundMap: Map<Int, Int> = mapOf()
+    private lateinit var soundMap: Map<Int, Int>
+
+    private var playlistManager: PlaylistManager? = null
     private var currentPlayingSound: Int? = null
     private var currentPriority: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
+
         game = findViewById(R.id.Screen)
-        game?.setGameEventListener(this)
+        game.setGameEventListener(this)
 
-        val intent = intent
+        // Initialize variables
         levelNumber = intent.getIntExtra("levelNumber", 2)
-        game?.setDifficultyLevel(levelNumber)
-        playerName = getIntent().getStringExtra("playerName")
+        game.setDifficultyLevel(levelNumber)
+        playerName = intent.getStringExtra("playerName") ?: "Unknown"
 
-        live1 = findViewById(R.id.live1)
-        live2 = findViewById(R.id.live2)
-        live3 = findViewById(R.id.live3)
+        liveIcons = listOf(
+            findViewById(R.id.live1),
+            findViewById(R.id.live2),
+            findViewById(R.id.live3)
+        )
 
         soundPool = SoundPool.Builder().setMaxStreams(5).build()
         soundMap = mapOf(
@@ -108,12 +109,9 @@ class GameActivity : AppCompatActivity(), GameEventListener {
     }
 
     private fun updateLifeIconsVisibility() {
-        live1!!.visibility =
-            if (numLives >= 1) View.VISIBLE else View.INVISIBLE
-        live2!!.visibility =
-            if (numLives >= 2) View.VISIBLE else View.INVISIBLE
-        live3!!.visibility =
-            if (numLives == 3) View.VISIBLE else View.INVISIBLE
+        liveIcons.forEachIndexed { index, icon ->
+            icon.visibility = if (index < numLives) View.VISIBLE else View.INVISIBLE
+        }
     }
 
     override fun onPause() {
@@ -160,14 +158,14 @@ class GameActivity : AppCompatActivity(), GameEventListener {
     }
 
     private fun observer() {
-        val observer = game!!.viewTreeObserver
+        val observer = game.viewTreeObserver
         observer.addOnGlobalLayoutListener {}
     }
 
     private fun timer() {
         handler.post(object : Runnable {
             override fun run() {
-                game!!.invalidate()
+                game.invalidate()
                 handler.postDelayed(this, 16)
             }
         })
