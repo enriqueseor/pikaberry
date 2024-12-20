@@ -161,11 +161,11 @@ class GameActivity : AppCompatActivity(), GameEventListener {
             R.raw.route_119,
             R.raw.route_120,
         )
-        val randomIndex = (songResources.indices).random()
-        val shuffledSongs = songResources.toMutableList()
-        shuffledSongs.add(0, shuffledSongs.removeAt(randomIndex))
-        playlistManager = PlaylistManager(this, shuffledSongs.toIntArray())
-        playlistManager!!.start()
+        val shuffledSongs = songResources.toMutableList().apply {
+            val randomIndex = indices.random()
+            add(0, removeAt(randomIndex))
+        }
+        playlistManager = PlaylistManager(this, shuffledSongs.toIntArray()).apply { start() }
     }
 
     private fun observer() {
