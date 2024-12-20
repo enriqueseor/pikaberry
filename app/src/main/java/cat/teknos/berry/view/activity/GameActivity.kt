@@ -118,26 +118,18 @@ class GameActivity : AppCompatActivity(), GameEventListener {
 
     override fun onPause() {
         super.onPause()
-        if (playlistManager != null) {
-            playlistManager!!.pause()
-        }
+        playlistManager?.pause()
     }
 
     override fun onResume() {
         super.onResume()
-        if (playlistManager != null) {
-            playlistManager!!.start()
-        }
+        playlistManager?.start()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if (playlistManager != null) {
-            playlistManager!!.release()
-        }
-        if (mediaPlayer != null) {
-            mediaPlayer!!.release()
-        }
+        playlistManager?.release()
+        soundPool.release()
     }
 
     private fun onGameFinished() {
