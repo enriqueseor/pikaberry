@@ -28,8 +28,6 @@ class GameActivity : AppCompatActivity(), GameEventListener {
     private lateinit var soundMap: Map<Int, Int>
 
     private var playlistManager: PlaylistManager? = null
-    private var currentPlayingSound: Int? = null
-    private var currentPriority: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +36,6 @@ class GameActivity : AppCompatActivity(), GameEventListener {
         game = findViewById(R.id.Screen)
         game.setGameEventListener(this)
 
-        // Initialize variables
         levelNumber = intent.getIntExtra("levelNumber", 2)
         game.setDifficultyLevel(levelNumber)
         playerName = intent.getStringExtra("playerName") ?: "Unknown"
@@ -49,55 +46,48 @@ class GameActivity : AppCompatActivity(), GameEventListener {
             findViewById(R.id.live3)
         )
 
+        initializeSoundPool()
+        playList()
+        observer()
+        startGameTimer()
+    }
+
+    private fun initializeSoundPool() {
         soundPool = SoundPool.Builder().setMaxStreams(5).build()
         soundMap = mapOf(
             R.raw.geodude to soundPool.load(this, R.raw.geodude, 2),
             R.raw.heart to soundPool.load(this, R.raw.heart, 3),
             R.raw.berry to soundPool.load(this, R.raw.berry, 1)
         )
-
-        playList()
-        observer()
-        timer()
     }
 
-    private fun playSound(soundResource: Int, priority: Int) {
-        if (currentPlayingSound != null) {
-            if (currentPriority > priority) {
-                return
-            }
-        }
+    private fun playSound(soundResource: Int) {
         soundMap[soundResource]?.let { soundId ->
             soundPool.play(soundId, 1f, 1f, 1, 0, 1f)
-            currentPlayingSound = soundResource
         }
     }
 
     override fun onBerryCollected(berryType: Int) {
-        val textView = findViewById<TextView>(R.id.points)
-        var berryPoints = 0
-        when (berryType) {
-            0 -> berryPoints = 1
-            1 -> berryPoints = 2
-            2 -> berryPoints = 3
-            3 -> berryPoints = 5
-            4 -> berryPoints = 10
+        val berryPoints = when (berryType) {
+            0 -> 1
+            1 -> 2
+            2 -> 3
+            3 -> 5
+            4 -> 10
+            else -> 0
         }
-        val points = textView.text.toString().toInt()
-        score = points + berryPoints
-        textView.text = String.format(score.toString())
-        playSound(R.raw.berry, 1)
+        score += berryPoints
+        findViewById<TextView>(R.id.points).text = String.format(score.toString())
+        playSound(R.raw.berry)
     }
 
     override fun onRockCollision() {
         if (numLives > 0) {
             numLives--
             updateLifeIconsVisibility()
-            playSound(R.raw.geodude, 2)
+            playSound(R.raw.geodude)
         }
-        if (numLives == 0) {
-            onGameFinished()
-        }
+        if (numLives == 0) onGameFinished()
     }
 
     override fun onHeartCollected() {
@@ -105,7 +95,7 @@ class GameActivity : AppCompatActivity(), GameEventListener {
             numLives++
             updateLifeIconsVisibility()
         }
-        playSound(R.raw.heart, 2)
+        playSound(R.raw.heart)
     }
 
     private fun updateLifeIconsVisibility() {
@@ -162,7 +152,7 @@ class GameActivity : AppCompatActivity(), GameEventListener {
         observer.addOnGlobalLayoutListener {}
     }
 
-    private fun timer() {
+    private fun  startGameTimer() {
         handler.post(object : Runnable {
             override fun run() {
                 game.invalidate()
