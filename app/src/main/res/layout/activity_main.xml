@@ -13,10 +13,6 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/berry_basket"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="ContentDescription" />
 
     <LinearLayout
@@ -38,83 +34,76 @@
             android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/etName"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
             android:background="#80FFFFFF"
             android:hint="PLAYER"
             android:inputType="textPersonName"
-            android:layout_marginTop="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
             tools:ignore="Autofill,HardcodedText" />
 
         <RadioGroup
             android:id="@+id/rgDifficulty"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="5dp"
-            android:background="#80FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etName">
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp"
+            android:background="#80FFFFFF">
 
             <RadioButton
                 android:id="@+id/rbEasy"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:text="@string/easy" />
+                android:layout_height="50dp"
+                android:text="@string/easy"
+                android:gravity="center" />
 
             <RadioButton
                 android:id="@+id/rbMedium"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:text="@string/medium" />
+                android:layout_height="50dp"
+                android:text="@string/medium"
+                android:gravity="center" />
 
             <RadioButton
                 android:id="@+id/rbHard"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:text="@string/hard" />
+                android:layout_height="50dp"
+                android:text="@string/hard"
+                android:gravity="center" />
         </RadioGroup>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rgDifficulty">
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp">
 
             <Button
                 android:id="@+id/btnPlay"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:text="@string/play"
-                android:background="@drawable/rounded_button" />
+                android:layout_height="0dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/play_button"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnStats"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <Button
                 android:id="@+id/btnStats"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:text="@string/stats"
-                android:background="@color/pink_200" />
-        </LinearLayout>
+                android:layout_height="0dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/ranking_button"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toEndOf="@+id/btnPlay"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
