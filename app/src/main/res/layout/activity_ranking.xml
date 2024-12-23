@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/berry_basket"
     android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_marginBottom="8dp">
 
         <TextView
             android:id="@+id/easyTitle"
@@ -20,14 +22,26 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@android:color/white"
+            android:background="@drawable/shape"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:padding="12dp"
             android:layout_marginBottom="8dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/easyRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:textColor="@android:color/white" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginBottom="8dp">
 
         <TextView
             android:id="@+id/mediumTitle"
@@ -37,14 +51,25 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@android:color/white"
+            android:background="@drawable/shape"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:padding="12dp"
             android:layout_marginBottom="8dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mediumRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:textColor="@android:color/white" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/hardTitle"
@@ -54,14 +79,19 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@android:color/white"
+            android:background="@drawable/shape"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:padding="12dp"
             android:layout_marginBottom="8dp" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/hardRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white" />
-
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape" />
     </LinearLayout>
 
-</ScrollView>
+</LinearLayout>
