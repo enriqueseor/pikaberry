@@ -5,7 +5,6 @@ import android.media.SoundPool
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import cat.teknos.berry.R
@@ -32,15 +31,15 @@ class GameActivity : AppCompatActivity(), GameEventListener {
 
         game = findViewById(R.id.Screen)
         game.setGameEventListener(this)
+        game.setDifficultyLevel(levelNumber)
 
         levelNumber = intent.getIntExtra("levelNumber", 2)
-        game.setDifficultyLevel(levelNumber)
         playerName = intent.getStringExtra("playerName") ?: "Unknown"
 
         initializeSoundPool()
         playList()
         observer()
-        startGameTimer()
+        gameTimer()
     }
 
     private fun initializeSoundPool() {
@@ -137,7 +136,7 @@ class GameActivity : AppCompatActivity(), GameEventListener {
         observer.addOnGlobalLayoutListener {}
     }
 
-    private fun startGameTimer() {
+    private fun gameTimer() {
         handler.post(object : Runnable {
             override fun run() {
                 game.invalidate()
