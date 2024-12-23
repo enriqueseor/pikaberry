@@ -24,6 +24,9 @@ class MainActivity : AppCompatActivity() {
 
         val btnPlay = findViewById<Button>(R.id.btnPlay)
         btnPlay.setOnClickListener { _: View? -> play() }
+
+        val btnRanking = findViewById<Button>(R.id.btnRanking)
+        btnRanking.setOnClickListener { _: View? -> ranking() }
     }
 
     private fun play() {
@@ -54,6 +57,11 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("levelNumber", levelNumber)
         intent.putExtra("levelName", levelName)
         intent.putExtra("playerName", playerName)
+        startActivity(intent)
+    }
+
+    private fun ranking() {
+        val intent = Intent(this, RankingActivity::class.java)
         startActivity(intent)
     }
 }
