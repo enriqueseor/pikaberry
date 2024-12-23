@@ -25,9 +25,9 @@ class RankingActivity : AppCompatActivity() {
         mediumRecyclerView.layoutManager = LinearLayoutManager(this)
         hardRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        val easyScores = getScoresByLevel("easy")
-        val mediumScores = getScoresByLevel("medium")
-        val hardScores = getScoresByLevel("hard")
+        val easyScores = getScoresByLevel("EASY")
+        val mediumScores = getScoresByLevel("MEDIUM")
+        val hardScores = getScoresByLevel("HARD")
 
         easyRecyclerView.adapter = ScoreAdapter(easyScores)
         mediumRecyclerView.adapter = ScoreAdapter(mediumScores)

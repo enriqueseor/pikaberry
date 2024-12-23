@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/berry_basket"
     android:padding="16dp">
 
     <LinearLayout
@@ -18,13 +19,15 @@
             android:text="@string/easy"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:textColor="@android:color/white"
             android:layout_marginBottom="8dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/easyRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/mediumTitle"
@@ -33,13 +36,15 @@
             android:text="@string/medium"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:textColor="@android:color/white"
             android:layout_marginBottom="8dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mediumRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/hardTitle"
@@ -48,12 +53,14 @@
             android:text="@string/hard"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:textColor="@android:color/white"
             android:layout_marginBottom="8dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/hardRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
