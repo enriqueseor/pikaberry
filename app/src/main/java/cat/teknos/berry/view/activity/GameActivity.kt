@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import cat.teknos.berry.R
 import cat.teknos.berry.model.PlaylistManager
@@ -119,12 +120,14 @@ class GameActivity : AppCompatActivity(), GameEventListener {
 
         playlistManager = PlaylistManager(this, shuffledSongs).apply { start() }
 
-        findViewById<View>(android.R.id.content).setBackgroundResource(shuffledBackgrounds[0])
+        val backgroundImageView = findViewById<ImageView>(R.id.backgroundImageView)
+        backgroundImageView.setImageResource(shuffledBackgrounds[0])
+        backgroundImageView.scaleType = ImageView.ScaleType.CENTER_CROP
 
         playlistManager?.setOnSongChangeListener { index ->
             val backgroundResource = shuffledBackgrounds.getOrNull(index)
             backgroundResource?.let {
-                findViewById<View>(android.R.id.content).setBackgroundResource(it)
+                backgroundImageView.setImageResource(it)
             }
         }
     }
