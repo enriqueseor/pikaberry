@@ -7,6 +7,7 @@ import android.media.MediaPlayer.OnCompletionListener
 class PlaylistManager(context: Context, songResources: IntArray) : OnCompletionListener {
     private lateinit var playlist: Array<MediaPlayer?>
     private var currentSongIndex = 0
+    private var onSongChangeListener: ((Int) -> Unit)? = null
 
     init {
         initPlaylist(context, songResources)
@@ -16,11 +17,15 @@ class PlaylistManager(context: Context, songResources: IntArray) : OnCompletionL
         playlist = arrayOfNulls(songResources.size)
 
         for (i in songResources.indices) {
-            playlist[i] = MediaPlayer.create(context, songResources[i])
-            val volume = 0.5f
-            playlist[i]?.setVolume(volume, volume)
-            playlist[i]?.setOnCompletionListener(this)
+            playlist[i] = MediaPlayer.create(context, songResources[i]).apply {
+                setVolume(0.5f, 0.5f)
+                setOnCompletionListener(this@PlaylistManager)
+            }
         }
+    }
+
+    fun setOnSongChangeListener(listener: (Int) -> Unit) {
+        this.onSongChangeListener = listener
     }
 
     fun start() {
@@ -60,5 +65,6 @@ class PlaylistManager(context: Context, songResources: IntArray) : OnCompletionL
 
     override fun onCompletion(mp: MediaPlayer) {
         playNextSong()
+        onSongChangeListener?.invoke(currentSongIndex)
     }
 }

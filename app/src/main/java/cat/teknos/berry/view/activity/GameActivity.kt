@@ -5,6 +5,7 @@ import android.media.SoundPool
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import cat.teknos.berry.R
 import cat.teknos.berry.model.PlaylistManager
@@ -104,19 +105,28 @@ class GameActivity : AppCompatActivity(), GameEventListener {
     }
 
     private fun playList() {
-        val songResources = intArrayOf(
-            R.raw.route_101,
-            R.raw.route_104,
-            R.raw.route_110,
-            R.raw.route_113,
-            R.raw.route_119,
-            R.raw.route_120,
+        val songsAndBackgrounds = listOf(
+            Pair(R.raw.route_101, R.drawable.route_101),
+            Pair(R.raw.route_104, R.drawable.route_104),
+            Pair(R.raw.route_110, R.drawable.route_110),
+            Pair(R.raw.route_113, R.drawable.route_113),
+            Pair(R.raw.route_119, R.drawable.route_119),
+            Pair(R.raw.route_120, R.drawable.route_120)
         )
-        val shuffledSongs = songResources.toMutableList().apply {
-            val randomIndex = indices.random()
-            add(0, removeAt(randomIndex))
+        val shuffledList = songsAndBackgrounds.shuffled()
+        val shuffledSongs = shuffledList.map { it.first }.toIntArray()
+        val shuffledBackgrounds = shuffledList.map { it.second }.toIntArray()
+
+        playlistManager = PlaylistManager(this, shuffledSongs).apply { start() }
+
+        findViewById<View>(android.R.id.content).setBackgroundResource(shuffledBackgrounds[0])
+
+        playlistManager?.setOnSongChangeListener { index ->
+            val backgroundResource = shuffledBackgrounds.getOrNull(index)
+            backgroundResource?.let {
+                findViewById<View>(android.R.id.content).setBackgroundResource(it)
+            }
         }
-        playlistManager = PlaylistManager(this, shuffledSongs.toIntArray()).apply { start() }
     }
 
     private fun observer() {
