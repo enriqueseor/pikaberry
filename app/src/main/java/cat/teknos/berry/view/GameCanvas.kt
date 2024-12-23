@@ -41,6 +41,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private val random = Random()
     private var score: Int = 0
     private var lives: Int = 3
+    private val berryPointsArray = intArrayOf(1, 2, 3, 5, 10)
     private val textPaint = Paint().apply {
         color = Color.BLACK
         textSize = 175f
@@ -246,14 +247,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             val berryType = berriesTypes[index]
             berriesPositions[index] = Pair(random.nextInt(canvasWidth), 0)
             berriesTypes[index] = customRandomBerryType()
-            val berryPoints = when (berryType) {
-                0 -> 1
-                1 -> 2
-                2 -> 3
-                3 -> 5
-                4 -> 10
-                else -> 0
-            }
+            val berryPoints = berryPointsArray[berryType]
             score += berryPoints
             gameEventListener?.onBerryCollected()
         }
