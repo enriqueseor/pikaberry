@@ -2,6 +2,8 @@ package cat.teknos.berry.view
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
@@ -33,9 +35,21 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private var pikachuDrawable: Drawable? = null
     private var rockDrawable: Drawable? = null
     private var heartDrawable: Drawable? = null
+    private var berryDrawable: Drawable? = null
     private var berriesDrawable: Array<Drawable?>
     private var gameEventListener: GameEventListener? = null
     private val random = Random()
+    private var score: Int = 0
+    private var lives: Int = 3
+    private val textPaint = Paint().apply {
+        color = Color.BLACK
+        textSize = 175f
+        textAlign = Paint.Align.CENTER
+    }
+    private val paintWhite = Paint().apply {
+        color = Color.WHITE
+        style = Paint.Style.FILL
+    }
 
     init {
         pikachuDrawable = ResourcesCompat.getDrawable(resources, R.drawable.pikachu, null)
@@ -47,6 +61,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         berriesDrawable[4] = ResourcesCompat.getDrawable(resources, R.drawable.razz_berry_golden, null)
         rockDrawable = ResourcesCompat.getDrawable(resources, R.drawable.golem, null)
         heartDrawable = ResourcesCompat.getDrawable(resources, R.drawable.heart, null)
+        berryDrawable = ResourcesCompat.getDrawable(resources, R.drawable.berry, null)
     }
 
     private fun initObjects() {
@@ -184,6 +199,38 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             (posHeartY + radius).toFloat()
         )
         updateHeart()
+
+        /*****************************************************
+         *                     SCOREBOARD                    *
+         *****************************************************/
+
+        //SCOREBOARD BACKGROUND
+        val topRectHeight = 200
+        val topRect = RectF(0f, 0f, canvasWidth.toFloat(), topRectHeight.toFloat())
+        canvas.drawRect(topRect, paintWhite)
+
+        //BERRY ICON
+        val sizeIcons = 175
+        val berryX = 100f
+        val berryY = 100f
+        berryDrawable!!.setBounds((berryX - sizeIcons / 2).toInt(),
+            (berryY - sizeIcons / 2).toInt(), (berryX + sizeIcons / 2).toInt(), (berryY + sizeIcons / 2).toInt()
+        )
+        berryDrawable!!.draw(canvas)
+
+        //SCORE
+        canvas.drawText("$score", canvasWidth / 4f, 175f, textPaint)
+
+        //HEARTS ICONS
+        for (i in 0 until lives) {
+            heartDrawable!!.setBounds(
+                canvasWidth - (sizeIcons * (i + 1)) - 20,
+                20,
+                canvasWidth - (sizeIcons * i) - 20,
+                sizeIcons + 20
+            )
+            heartDrawable!!.draw(canvas)
+        }
     }
 
     private fun updateBerry(index: Int) {
@@ -199,7 +246,16 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             val berryType = berriesTypes[index]
             berriesPositions[index] = Pair(random.nextInt(canvasWidth), 0)
             berriesTypes[index] = customRandomBerryType()
-            gameEventListener?.onBerryCollected(berryType)
+            val berryPoints = when (berryType) {
+                0 -> 1
+                1 -> 2
+                2 -> 3
+                3 -> 5
+                4 -> 10
+                else -> 0
+            }
+            score += berryPoints
+            gameEventListener?.onBerryCollected()
         }
     }
 
@@ -214,6 +270,9 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         if (RectF.intersects(rectForPikachu, rectForRocks[index])) {
             rocksPositions[index] = Pair(random.nextInt(canvasWidth), 0)
             gameEventListener?.onRockCollision()
+            if (lives > 0) {
+                lives -= 1
+            }
         }
     }
 
@@ -229,6 +288,9 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             posHeartY = (-17500..-12500).random() * level
             posHeartX = random.nextInt(canvasWidth)
             gameEventListener?.onHeartCollected()
+            if (lives < 4) {
+                lives += 1
+            }
         }
     }
 
