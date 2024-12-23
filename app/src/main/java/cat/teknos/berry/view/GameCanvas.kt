@@ -21,8 +21,8 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private var posBerryX: Int = 0
     private var posRockX: Int = 0
     private var posHeartX: Int = 0
-    private var posHeartY: Int = -15000
     private var level: Int = 2
+    private var posHeartY: Int = -15000 * level
     private val rectForPikachu = RectF()
     private val rectForHeart = RectF()
     private val berriesTypes = mutableListOf<Int>()
@@ -220,13 +220,13 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private fun updateHeart() {
         val speed = 10 * level
         if (posHeartY > canvasHeight) {
-            posHeartY = (-17500..-12500).random()
+            posHeartY = (-15000..-12000).random() * level
             posHeartX = random.nextInt(canvasWidth)
         } else {
             posHeartY += speed
         }
         if (RectF.intersects(rectForPikachu, rectForHeart)) {
-            posHeartY = (-17500..-12500).random()
+            posHeartY = (-17500..-12500).random() * level
             posHeartX = random.nextInt(canvasWidth)
             gameEventListener?.onHeartCollected()
         }
