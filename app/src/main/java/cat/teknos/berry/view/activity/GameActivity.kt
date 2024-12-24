@@ -109,6 +109,7 @@ class GameActivity : AppCompatActivity(), GameEventListener {
             Pair(R.raw.route_101, R.drawable.route_101),
             Pair(R.raw.route_104, R.drawable.route_104),
             Pair(R.raw.route_110, R.drawable.route_110),
+            Pair(R.raw.route_111, R.drawable.route_111),
             Pair(R.raw.route_113, R.drawable.route_113),
             Pair(R.raw.route_119, R.drawable.route_119),
             Pair(R.raw.route_120, R.drawable.route_120)
