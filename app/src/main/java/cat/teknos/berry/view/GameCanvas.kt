@@ -270,6 +270,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             val berryPoints = berryPointsArray[berryType]
             score += berryPoints
             gameEventListener?.onBerryCollected()
+            gameEventListener?.onScoreUpdated(score)
         }
     }
 

@@ -77,6 +77,10 @@ class GameActivity : AppCompatActivity(), GameEventListener {
         }
     }
 
+    override fun onScoreUpdated(newScore: Int) {
+        score = newScore
+    }
+
     override fun onPause() {
         super.onPause()
         playlistManager?.pause()
