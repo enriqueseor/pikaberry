@@ -45,7 +45,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private val scoreboard = RectF()
     private val textPaint = Paint().apply {
         color = Color.BLACK
-        textSize = 175f
         textAlign = Paint.Align.CENTER
     }
     private val paintWhite = Paint().apply {
@@ -209,34 +208,30 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         val canvasWidth = width
         val canvasHeight = height
 
-        // RESPONSIVE DESIGN
-        val scoreboardHeight = canvasHeight * 0.1f
-        val sizeIcons = (canvasHeight * 0.1f).toInt()
-        val padding = canvasWidth * 0.05f
-
         // SCOREBOARD BACKGROUND
         scoreboard.set(
             0f,
             0f,
             canvasWidth.toFloat(),
-            scoreboardHeight
+            canvasHeight * 0.1f
         )
         canvas.drawRect(scoreboard, paintWhite)
 
         // BERRY ICON
-        val berryX = padding
-        val berryY = scoreboardHeight / 2
+        val berryX = canvasWidth * 0.16f / 2
+        val berryY = canvasHeight * 0.1f / 2
         berryDrawable?.setBounds(
-            (berryX - sizeIcons / 2).toInt(),
-            (berryY - sizeIcons / 2).toInt(),
-            (berryX + sizeIcons / 2).toInt(),
-            (berryY + sizeIcons / 2).toInt()
+            (berryX - canvasHeight * 0.1f / 2).toInt(),
+            (berryY - canvasHeight * 0.1f / 2).toInt(),
+            (berryX + canvasHeight * 0.1f / 2).toInt(),
+            (berryY + canvasHeight * 0.1f / 2).toInt()
         )
         berryDrawable?.draw(canvas)
 
         // SCORE
-        val textX = canvasWidth / 4f
-        val textY = scoreboardHeight * 0.8f
+        val textX = canvasWidth * 0.30f
+        val textY = canvasHeight * 0.08f
+        textPaint.textSize = canvasHeight * 0.08f
         canvas.drawText(
             "$score",
             textX,
@@ -245,12 +240,15 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         )
 
         // HEARTS ICONS
+        val heartSize = canvasHeight * 0.07f
+        val heartPadding = canvasWidth * 0.001f
+
         for (i in 0 until lives) {
             heartDrawable?.setBounds(
-                (canvasWidth - padding).toInt() - sizeIcons * (i + 1),
-                (scoreboardHeight * 0.1f).toInt(),
-                (canvasWidth - padding).toInt() - sizeIcons * i,
-                (scoreboardHeight * 0.1f + sizeIcons).toInt()
+                (canvasWidth - canvasWidth * 0.03f).toInt() - (heartSize.toInt() + heartPadding.toInt()) * (i + 1),
+                (canvasHeight * 0.1f * 0.2f).toInt(),
+                (canvasWidth - canvasWidth * 0.03f).toInt() - (heartSize.toInt() + heartPadding.toInt()) * i,
+                (canvasHeight * 0.1f * 0.2f + heartSize).toInt()
             )
             heartDrawable?.draw(canvas)
         }
