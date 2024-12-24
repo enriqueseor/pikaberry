@@ -29,12 +29,12 @@ class GameActivity : AppCompatActivity(), GameEventListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
+        levelNumber = intent.getIntExtra("levelNumber", 2)
+        playerName = intent.getStringExtra("playerName") ?: "Unknown"
+
         game = findViewById(R.id.Screen)
         game.setGameEventListener(this)
         game.setDifficultyLevel(levelNumber)
-
-        levelNumber = intent.getIntExtra("levelNumber", 2)
-        playerName = intent.getStringExtra("playerName") ?: "Unknown"
 
         initializeSoundPool()
         playList()
