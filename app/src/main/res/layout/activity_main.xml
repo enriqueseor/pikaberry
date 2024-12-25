@@ -5,15 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/berry_basket"
     tools:context=".view.activity.MainActivity">
-
-    <ImageView
-        android:id="@+id/backgroundImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/berry_basket"
-        tools:ignore="ContentDescription" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -61,21 +54,21 @@
                 android:id="@+id/rbEasy"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="@string/easy"
+                android:drawableStart="@drawable/star1"
                 android:gravity="center" />
 
             <RadioButton
                 android:id="@+id/rbMedium"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="@string/medium"
+                android:drawableStart="@drawable/star2"
                 android:gravity="center" />
 
             <RadioButton
                 android:id="@+id/rbHard"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="@string/hard"
+                android:drawableStart="@drawable/star3"
                 android:gravity="center" />
         </RadioGroup>
 

@@ -21,19 +21,23 @@
         tools:ignore="ContentDescription" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
         android:background="@drawable/shape"
-        android:padding="16dp"
+        android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_min="200dp"
+        app:layout_constraintHeight_min="300dp"
+        app:layout_constraintWidth_percent="0.9"
+        app:layout_constraintHeight_percent="0.9">
 
         <ImageView
             android:id="@+id/resultImage"
-            android:layout_width="100dp"
+            android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/berry"
@@ -41,7 +45,7 @@
 
         <TextView
             android:id="@+id/resultTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
@@ -49,24 +53,26 @@
             android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:textAlignment="center"
             tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/resultText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:text="You've completed the game!"
             android:textColor="@android:color/white"
             android:textSize="18sp"
+            android:textAlignment="center"
             tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/resultTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PLAYER: PLAYER \n SCORE: 0"
+            android:text="PLAYER: PLAYER \n SCORE: 0 \n LEVEL: EASY"
             android:textAlignment="center"
             android:textSize="24sp"
             android:layout_gravity="center"
