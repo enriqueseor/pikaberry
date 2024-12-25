@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -16,7 +18,7 @@
 
         <TextView
             android:id="@+id/easyTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/easy"
             android:textSize="18sp"
@@ -45,7 +47,7 @@
 
         <TextView
             android:id="@+id/mediumTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/medium"
             android:textSize="18sp"
@@ -73,7 +75,7 @@
 
         <TextView
             android:id="@+id/hardTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/hard"
             android:textSize="18sp"
@@ -84,7 +86,6 @@
             android:layout_gravity="center"
             android:padding="12dp"
             android:layout_marginBottom="8dp" />
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/hardRecyclerView"
