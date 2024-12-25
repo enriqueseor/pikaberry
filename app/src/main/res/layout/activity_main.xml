@@ -36,7 +36,7 @@
         <EditText
             android:id="@+id/etName"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:background="#80FFFFFF"
             android:hint="PLAYER"
@@ -46,36 +46,48 @@
         <RadioGroup
             android:id="@+id/rgDifficulty"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="120dp"
             android:layout_marginTop="10dp"
             android:background="#80FFFFFF">
 
             <RadioButton
                 android:id="@+id/rbEasy"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:drawableStart="@drawable/star1"
                 android:gravity="center" />
 
             <RadioButton
                 android:id="@+id/rbMedium"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:drawableStart="@drawable/star2"
                 android:gravity="center" />
 
             <RadioButton
                 android:id="@+id/rbHard"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:drawableStart="@drawable/star3"
                 android:gravity="center" />
         </RadioGroup>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/btnInfo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/info_button"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnPlay"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <Button
                 android:id="@+id/btnPlay"
@@ -84,7 +96,7 @@
                 android:layout_margin="8dp"
                 android:background="@drawable/play_button"
                 app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnInfo"
                 app:layout_constraintEnd_toStartOf="@+id/btnRanking"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
