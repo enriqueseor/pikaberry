@@ -11,6 +11,8 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import cat.teknos.berry.R
+import cat.teknos.berry.model.Berry
+import cat.teknos.berry.model.Rock
 import cat.teknos.berry.view.util.GameEventListener
 import java.util.Random
 
@@ -27,9 +29,8 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private var posHeartY: Int = -15000 * level
     private val rectForPikachu = RectF()
     private val rectForHeart = RectF()
-    private val berriesTypes = mutableListOf<Int>()
-    private val berriesPositions = mutableListOf<Pair<Int, Int>>()
-    private val rectForBerries = mutableListOf<RectF>()
+    val berries = mutableListOf<Berry>()
+    val rocks = mutableListOf<Rock>()
     private val rocksPositions = mutableListOf<Pair<Int, Int>>()
     private val rectForRocks = mutableListOf<RectF>()
     private var pikachuDrawable: Drawable? = null
@@ -68,15 +69,12 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private fun initObjects() {
         val berryHeights = generateUniqueNegativeHeights(3)
         for (i in 0 until 3) {
-            berriesPositions.add(Pair(random.nextInt(canvasWidth), berryHeights[i]))
-            berriesTypes.add(customRandomBerryType())
-            rectForBerries.add(RectF())
+            berries.add(Berry(random.nextInt(canvasWidth), berryHeights[i], customRandomBerryType()))
         }
 
         val rockHeights = generateUniqueNegativeHeights(3)
         for (i in 0 until 3) {
-            rocksPositions.add(Pair(random.nextInt(canvasWidth), rockHeights[i]))
-            rectForRocks.add(RectF())
+            rocks.add(Rock(random.nextInt(canvasWidth), rockHeights[i]))
         }
     }
 
@@ -144,29 +142,31 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         /******************************************************
          *                       BERRIES                      *
          ******************************************************/
-        for (i in berriesPositions.indices) {
-            val (x, y) = berriesPositions[i]
-            berriesDrawable[berriesTypes[i]]!!.setBounds(
+        for (berry in berries) {
+            val x = berry.x
+            val y = berry.y
+            berriesDrawable[berry.type]!!.setBounds(
                 x - radius,
                 y - radius,
                 x + radius,
                 y + radius
             )
-            berriesDrawable[berriesTypes[i]]!!.draw(canvas)
-            rectForBerries[i].set(
+            berriesDrawable[berry.type]!!.draw(canvas)
+            berry.rect.set(
                 (x - radius).toFloat(),
                 (y - radius).toFloat(),
                 (x + radius).toFloat(),
                 (y + radius).toFloat()
             )
-            updateBerry(i)
+            updateBerry(berry)
         }
 
         /*****************************************************
          *                        ROCKS                      *
          *****************************************************/
-        for (i in rocksPositions.indices) {
-            val (x, y) = rocksPositions[i]
+        for (rock in rocks) {
+            val x = rock.x
+            val y = rock.y
             rockDrawable!!.setBounds(
                 x - radius,
                 y - radius,
@@ -174,13 +174,13 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
                 y + radius
             )
             rockDrawable!!.draw(canvas)
-            rectForRocks[i].set(
+            rock.rect.set(
                 (x - radius).toFloat(),
                 (y - radius).toFloat(),
                 (x + radius).toFloat(),
                 (y + radius).toFloat()
             )
-            updateRock(i)
+            updateRock(rock)
         }
 
         /*****************************************************
@@ -254,36 +254,37 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         }
     }
 
-    private fun updateBerry(index: Int) {
-        val (x, y) = berriesPositions[index]
+    private fun updateBerry(berry: Berry) {
         val speed = 10 * level
-        if (y > canvasHeight) {
-            berriesPositions[index] = Pair(random.nextInt(canvasWidth), 0)
-            berriesTypes[index] = customRandomBerryType()
+        if (berry.y > canvasHeight) {
+            berry.x = random.nextInt(canvasWidth)
+            berry.y = 0
+            berry.type = customRandomBerryType()
         } else {
-            berriesPositions[index] = Pair(x, y + speed)
+            berry.y += speed
         }
-        if (RectF.intersects(rectForPikachu, rectForBerries[index])) {
-            val berryType = berriesTypes[index]
-            berriesPositions[index] = Pair(random.nextInt(canvasWidth), 0)
-            berriesTypes[index] = customRandomBerryType()
-            val berryPoints = berryPointsArray[berryType]
+        if (RectF.intersects(rectForPikachu, berry.rect)) {
+            val berryPoints = berryPointsArray[berry.type]
             score += berryPoints
             gameEventListener?.onBerryCollected()
             gameEventListener?.onScoreUpdated(score)
+            berry.x = random.nextInt(canvasWidth)
+            berry.y = 0
+            berry.type = customRandomBerryType()
         }
     }
 
-    private fun updateRock(index: Int) {
-        val (x, y) = rocksPositions[index]
+    private fun updateRock(rock: Rock) {
         val speed = 10 * level
-        if (y > canvasHeight) {
-            rocksPositions[index] = Pair(random.nextInt(canvasWidth), 0)
+        if (rock.y > canvasHeight) {
+            rock.x = random.nextInt(canvasWidth)
+            rock.y = 0
         } else {
-            rocksPositions[index] = Pair(x, y + speed)
+            rock.y += speed
         }
-        if (RectF.intersects(rectForPikachu, rectForRocks[index])) {
-            rocksPositions[index] = Pair(random.nextInt(canvasWidth), 0)
+        if (RectF.intersects(rectForPikachu, rock.rect)) {
+            rock.x = random.nextInt(canvasWidth)
+            rock.y = 0
             gameEventListener?.onRockCollision()
             if (lives > 0) {
                 lives -= 1
