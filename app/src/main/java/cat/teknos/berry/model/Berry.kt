@@ -57,14 +57,12 @@ class Berry(var x: Int, var y: Int, private val resources: android.content.res.R
         )
     }
 
-    fun updatePosition(canvasWidth: Int, canvasHeight: Int, speed: Int, resetY: Int) {
+    fun updatePosition(canvasWidth: Int, canvasHeight: Int, baseSpeed: Int, level: Int) {
         if (y > canvasHeight) {
             x = (0..canvasWidth).random()
-            y = resetY
-            type = customRandomBerryType()
-            setDrawable()
+            y = 0
         } else {
-            y += speed
+            y += baseSpeed * level
         }
     }
 }

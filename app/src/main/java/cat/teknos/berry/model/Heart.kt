@@ -7,19 +7,23 @@ import androidx.core.content.res.ResourcesCompat
 import android.content.Context
 import cat.teknos.berry.R
 
-class Heart(var x: Int, var y: Int, val radius: Int, context: Context) {
+class Heart(var x: Int, var y: Int, context: Context) {
     val rect = RectF()
-    private var heartDrawable: Drawable? = null
+    var drawable: Drawable? = null
 
     init {
-        heartDrawable = ResourcesCompat.getDrawable(context.resources, R.drawable.heart, null)
+        drawable = ResourcesCompat.getDrawable(context.resources, R.drawable.heart, null)
     }
 
-    fun updatePosition(newX: Int, canvasWidth: Int) {
-        x = newX.coerceIn(radius, canvasWidth - radius)
-    }
+    fun draw(canvas: Canvas, radius: Int) {
+        drawable?.setBounds(
+            x - radius,
+            y - radius,
+            x + radius,
+            y + radius
+        )
+        drawable?.draw(canvas)
 
-    fun setBounds() {
         rect.set(
             (x - radius).toFloat(),
             (y - radius).toFloat(),
@@ -28,13 +32,12 @@ class Heart(var x: Int, var y: Int, val radius: Int, context: Context) {
         )
     }
 
-    fun draw(canvas: Canvas) {
-        heartDrawable?.setBounds(
-            (x - radius),
-            (y - radius),
-            (x + radius),
-            (y + radius)
-        )
-        heartDrawable?.draw(canvas)
+    fun updatePosition(canvasWidth: Int, canvasHeight: Int, baseSpeed: Int, level: Int) {
+        if (y > canvasHeight) {
+            x = (0..canvasWidth).random()
+            y = 0
+        } else {
+            y += baseSpeed * level
+        }
     }
 }

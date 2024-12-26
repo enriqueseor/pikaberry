@@ -18,6 +18,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private var canvasWidth: Int = 0
     private var canvasHeight: Int = 0
     private var radius: Int = 100
+    private var baseSpeed: Int = 10
     private var level: Int = 2
     private var score: Int = 0
     private var lives: Int = 3
@@ -50,7 +51,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         heart = Heart(
             x = random.nextInt(canvasWidth),
             y = (-15000..-12000).random() * level,
-            radius = radius,
             context = context
         )
 
@@ -101,7 +101,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
          ******************************************************/
         for (berry in berries) {
             berry.draw(canvas, radius)
-            berry.updatePosition(canvasWidth, canvasHeight, 10 * level, 0)
+            berry.updatePosition(canvasWidth, canvasHeight, baseSpeed, level)
             onBerryCollision(berry)
         }
 
@@ -110,16 +110,16 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
          *****************************************************/
         for (rock in rocks) {
             rock.draw(canvas, radius)
-            rock.updatePosition(canvasWidth, canvasHeight, 10 * level, 0)
+            rock.updatePosition(canvasWidth, canvasHeight, baseSpeed, level)
             onRockCollision(rock)
         }
 
         /*****************************************************
          *                        HEART                      *
          *****************************************************/
-        heart.setBounds()
-        heart.draw(canvas)
-        updateHeart()
+        heart.draw(canvas, radius)
+        heart.updatePosition(canvasWidth, canvasHeight, baseSpeed, level)
+        onHeartCollision()
 
         /*****************************************************
          *                     SCOREBOARD                    *
@@ -153,19 +153,10 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         }
     }
 
-    private fun updateHeart() {
-        val speed = 10 * level
-        if (heart.y > canvasHeight) {
-            heart.y = (-15000..-12000).random() * level
-            heart.updatePosition(random.nextInt(canvasWidth), canvasWidth)
-        } else {
-            heart.y += speed
-        }
-        heart.setBounds()
-
+    private fun onHeartCollision() {
         if (RectF.intersects(pikachu.rect, heart.rect)) {
+            heart.x = random.nextInt(canvasWidth)
             heart.y = (-17500..-12500).random() * level
-            heart.updatePosition(random.nextInt(canvasWidth), canvasWidth)
             gameEventListener?.onHeartCollected()
             if (lives < 4) {
                 lives += 1
