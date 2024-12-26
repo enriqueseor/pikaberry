@@ -34,10 +34,8 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private var rockDrawable: Drawable? = null
     private var heartDrawable: Drawable? = null
     private var berryDrawable: Drawable? = null
-    private var berriesDrawable: Array<Drawable?>
     private var gameEventListener: GameEventListener? = null
     private val random = Random()
-    private val berryPointsArray = intArrayOf(1, 2, 3, 5, 10)
     private val scoreboard = RectF()
     private val textPaint = Paint().apply {
         color = Color.BLACK
@@ -50,12 +48,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
 
     init {
         pikachuDrawable = ResourcesCompat.getDrawable(resources, R.drawable.pikachu, null)
-        berriesDrawable = arrayOfNulls(5)
-        berriesDrawable[0] = ResourcesCompat.getDrawable(resources, R.drawable.razz_berry, null)
-        berriesDrawable[1] = ResourcesCompat.getDrawable(resources, R.drawable.pinap_berry, null)
-        berriesDrawable[2] = ResourcesCompat.getDrawable(resources, R.drawable.nanap_berry, null)
-        berriesDrawable[3] = ResourcesCompat.getDrawable(resources, R.drawable.pinap_berry_silver, null)
-        berriesDrawable[4] = ResourcesCompat.getDrawable(resources, R.drawable.razz_berry_golden, null)
         rockDrawable = ResourcesCompat.getDrawable(resources, R.drawable.golem, null)
         heartDrawable = ResourcesCompat.getDrawable(resources, R.drawable.heart, null)
         berryDrawable = ResourcesCompat.getDrawable(resources, R.drawable.berry, null)
@@ -67,8 +59,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
 
         val berryHeights = generateUniqueNegativeHeights(3)
         for (i in 0 until 3) {
-            val berry = Berry(random.nextInt(canvasWidth), berryHeights[i], customRandomBerryType())
-            berry.drawable = berriesDrawable[berry.type]
+            val berry = Berry(random.nextInt(canvasWidth), berryHeights[i], resources)
             berries.add(berry)
         }
 
@@ -138,7 +129,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         for (berry in berries) {
             berry.draw(canvas, radius)
             berry.updatePosition(canvasWidth, canvasHeight, 10 * level, 0)
-            updateBerry(berry)
+            onBerryCollision(berry)
         }
 
         /*****************************************************
@@ -210,7 +201,8 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         }
     }
 
-    private fun updateBerry(berry: Berry) {
+    private fun onBerryCollision(berry: Berry) {
+        val berryPointsArray = intArrayOf(1, 2, 3, 5, 10)
         if (RectF.intersects(pikachu.rect, berry.rect)) {
             val berryPoints = berryPointsArray[berry.type]
             score += berryPoints
@@ -218,7 +210,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             gameEventListener?.onScoreUpdated(score)
             berry.x = random.nextInt(canvasWidth)
             berry.y = 0
-            berry.type = customRandomBerryType()
         }
     }
 
@@ -259,18 +250,5 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
 
     fun setDifficultyLevel(level: Int) {
         this.level = level
-    }
-
-    private fun customRandomBerryType(): Int {
-        val probabilities = doubleArrayOf(0.60, 0.20, 0.10, 0.050, 0.025)
-        val rand = random.nextDouble()
-        var cumulativeProbability = 0.0
-        for (i in probabilities.indices) {
-            cumulativeProbability += probabilities[i]
-            if (rand <= cumulativeProbability) {
-                return i
-            }
-        }
-        return 0
     }
 }
