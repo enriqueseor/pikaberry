@@ -15,6 +15,7 @@ class ResultsActivity : AppCompatActivity() {
     private var playerScore = 0
     private lateinit var resultTextView: TextView
     private lateinit var dbHelper: PlayerDatabaseHelper
+    private var isScoreSaved = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +31,10 @@ class ResultsActivity : AppCompatActivity() {
         playerName = intent.getStringExtra("playerName") ?: "PLAYER"
         playerScore = intent.getIntExtra("playerScore", 0)
 
+        if (savedInstanceState != null) {
+            isScoreSaved = savedInstanceState.getBoolean("isScoreSaved", false)
+        }
+
         yourScore(levelName)
 
         val scores = getScoresByLevel(levelName)
@@ -40,7 +45,10 @@ class ResultsActivity : AppCompatActivity() {
     private fun yourScore(levelName: String) {
         val resultText = "PLAYER: $playerName\nSCORE: $playerScore\nLEVEL: $levelName"
         resultTextView.text = resultText
-        savePlayerScore(playerName!!, playerScore, levelName)
+        if (!isScoreSaved) {
+            savePlayerScore(playerName!!, playerScore, levelName)
+            isScoreSaved = true
+        }
     }
 
     private fun savePlayerScore(name: String, score: Int, level: String) {
@@ -79,5 +87,10 @@ class ResultsActivity : AppCompatActivity() {
         db.close()
 
         return scores
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("isScoreSaved", isScoreSaved)
     }
 }
