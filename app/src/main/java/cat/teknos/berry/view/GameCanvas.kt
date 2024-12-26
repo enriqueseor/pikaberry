@@ -12,6 +12,7 @@ import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import cat.teknos.berry.R
 import cat.teknos.berry.model.Berry
+import cat.teknos.berry.model.Pikachu
 import cat.teknos.berry.model.Rock
 import cat.teknos.berry.view.util.GameEventListener
 import java.util.Random
@@ -19,20 +20,14 @@ import java.util.Random
 class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     private var canvasWidth: Int = 0
     private var canvasHeight: Int = 0
-    private var radius: Int = 0
-    private var posPikachuX: Int = 0
-    private var posPikachuY: Int = 0
-    private var posBerryX: Int = 0
-    private var posRockX: Int = 0
+    private var radius: Int = 100
     private var posHeartX: Int = 0
     private var level: Int = 2
     private var posHeartY: Int = -15000 * level
-    private val rectForPikachu = RectF()
     private val rectForHeart = RectF()
+    private lateinit var pikachu: Pikachu
     val berries = mutableListOf<Berry>()
     val rocks = mutableListOf<Rock>()
-    private val rocksPositions = mutableListOf<Pair<Int, Int>>()
-    private val rectForRocks = mutableListOf<RectF>()
     private var pikachuDrawable: Drawable? = null
     private var rockDrawable: Drawable? = null
     private var heartDrawable: Drawable? = null
@@ -93,24 +88,16 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         canvasWidth = w
         canvasHeight = h
 
-        posPikachuX = canvasWidth / 2
-        posPikachuY = canvasHeight - 100
+        val pikachuRadius = 100
+        pikachu = Pikachu(canvasWidth / 2, canvasHeight - 100, pikachuRadius)
 
-        radius = 100
-        posBerryX = random.nextInt(canvasWidth)
-        posRockX = random.nextInt(canvasWidth)
-        posHeartX = random.nextInt(canvasWidth)
         initObjects()
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        if (event.action == MotionEvent.ACTION_MOVE) {
-            posPikachuX = event.x.toInt()
+        if (event.action == MotionEvent.ACTION_MOVE || event.action == MotionEvent.ACTION_UP) {
+            pikachu.updatePosition(event.x.toInt(), canvasWidth)
             this.invalidate()
-        } else if (event.action == MotionEvent.ACTION_UP) {
-            posPikachuX = event.x.toInt()
-            this.invalidate()
-            performClick()
         }
         return true
     }
@@ -125,19 +112,14 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         /******************************************************
         *                       PIKACHU                       *
         *******************************************************/
+        pikachu.setBounds()
         pikachuDrawable!!.setBounds(
-            posPikachuX - radius,
-            posPikachuY - radius,
-            posPikachuX + radius,
-            posPikachuY + radius
+            pikachu.rect.left.toInt(),
+            pikachu.rect.top.toInt(),
+            pikachu.rect.right.toInt(),
+            pikachu.rect.bottom.toInt()
         )
         pikachuDrawable!!.draw(canvas)
-        rectForPikachu.set(
-            (posPikachuX - radius).toFloat(),
-            (posPikachuY - radius).toFloat(),
-            (posPikachuX + radius).toFloat(),
-            (posPikachuY + radius).toFloat()
-        )
 
         /******************************************************
          *                       BERRIES                      *
@@ -263,7 +245,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         } else {
             berry.y += speed
         }
-        if (RectF.intersects(rectForPikachu, berry.rect)) {
+        if (RectF.intersects(pikachu.rect, berry.rect)) {
             val berryPoints = berryPointsArray[berry.type]
             score += berryPoints
             gameEventListener?.onBerryCollected()
@@ -282,7 +264,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         } else {
             rock.y += speed
         }
-        if (RectF.intersects(rectForPikachu, rock.rect)) {
+        if (RectF.intersects(pikachu.rect, rock.rect)) {
             rock.x = random.nextInt(canvasWidth)
             rock.y = 0
             gameEventListener?.onRockCollision()
@@ -300,7 +282,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         } else {
             posHeartY += speed
         }
-        if (RectF.intersects(rectForPikachu, rectForHeart)) {
+        if (RectF.intersects(pikachu.rect, rectForHeart)) {
             posHeartY = (-17500..-12500).random() * level
             posHeartX = random.nextInt(canvasWidth)
             gameEventListener?.onHeartCollected()
