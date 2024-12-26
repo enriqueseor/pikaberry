@@ -3,12 +3,9 @@ package cat.teknos.berry.view
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.RectF
-import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.core.content.res.ResourcesCompat
-import cat.teknos.berry.R
 import cat.teknos.berry.model.Berry
 import cat.teknos.berry.model.Heart
 import cat.teknos.berry.model.Pikachu
@@ -29,25 +26,14 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private lateinit var heart: Heart
     private val berries = mutableListOf<Berry>()
     private val rocks = mutableListOf<Rock>()
-    
-    private var pikachuDrawable: Drawable? = null
-    private var rockDrawable: Drawable? = null
-    private var heartDrawable: Drawable? = null
-    private var icon: Drawable? = null
+
     private var gameEventListener: GameEventListener? = null
     private val random = Random()
     private lateinit var scoreboard: Scoreboard
 
-    init {
-        pikachuDrawable = ResourcesCompat.getDrawable(resources, R.drawable.pikachu, null)
-        rockDrawable = ResourcesCompat.getDrawable(resources, R.drawable.golem, null)
-        heartDrawable = ResourcesCompat.getDrawable(resources, R.drawable.heart, null)
-        icon = ResourcesCompat.getDrawable(resources, R.drawable.berry, null)
-    }
-
     private fun initObjects() {
         val pikachuRadius = 100
-        pikachu = Pikachu(canvasWidth / 2, canvasHeight - 100, pikachuRadius)
+        pikachu = Pikachu(canvasWidth / 2, canvasHeight - 100, pikachuRadius, context)
 
         val berryHeights = generateUniqueNegativeHeights(3)
         for (i in 0 until 3) {
@@ -57,8 +43,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
 
         val rockHeights = generateUniqueNegativeHeights(3)
         for (i in 0 until 3) {
-            val rock = Rock(random.nextInt(canvasWidth), rockHeights[i])
-            rock.drawable = rockDrawable
+            val rock = Rock(random.nextInt(canvasWidth), rockHeights[i], context)
             rocks.add(rock)
         }
 
@@ -69,7 +54,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             context = context
         )
 
-        scoreboard = Scoreboard(canvasWidth, canvasHeight, score, lives, icon, heartDrawable)
+        scoreboard = Scoreboard(canvasWidth, canvasHeight, score, lives, context)
     }
 
     private fun generateUniqueNegativeHeights(count: Int): List<Int> {
@@ -109,13 +94,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         *                       PIKACHU                       *
         *******************************************************/
         pikachu.setBounds()
-        pikachuDrawable!!.setBounds(
-            pikachu.rect.left.toInt(),
-            pikachu.rect.top.toInt(),
-            pikachu.rect.right.toInt(),
-            pikachu.rect.bottom.toInt()
-        )
-        pikachuDrawable!!.draw(canvas)
+        pikachu.draw(canvas)
 
         /******************************************************
          *                       BERRIES                      *
@@ -132,7 +111,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         for (rock in rocks) {
             rock.draw(canvas, radius)
             rock.updatePosition(canvasWidth, canvasHeight, 10 * level, 0)
-            updateRock(rock)
+            onRockCollision(rock)
         }
 
         /*****************************************************
@@ -147,7 +126,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
          *****************************************************/
         scoreboard.draw(canvas)
         scoreboard.updateScore(score, lives)
-        invalidate()
     }
 
     private fun onBerryCollision(berry: Berry) {
@@ -164,7 +142,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         }
     }
 
-    private fun updateRock(rock: Rock) {
+    private fun onRockCollision(rock: Rock) {
         if (RectF.intersects(pikachu.rect, rock.rect)) {
             rock.x = random.nextInt(canvasWidth)
             rock.y = 0

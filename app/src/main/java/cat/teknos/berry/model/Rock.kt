@@ -1,12 +1,19 @@
 package cat.teknos.berry.model
 
+import android.content.Context
 import android.graphics.Canvas
 import android.graphics.RectF
 import android.graphics.drawable.Drawable
+import androidx.core.content.res.ResourcesCompat
+import cat.teknos.berry.R
 
-class Rock(var x: Int, var y: Int) {
+class Rock(var x: Int, var y: Int, context: Context) {
     val rect = RectF()
     var drawable: Drawable? = null
+
+    init {
+        drawable = ResourcesCompat.getDrawable(context.resources, R.drawable.golem, null)
+    }
 
     fun draw(canvas: Canvas, radius: Int) {
         drawable?.setBounds(

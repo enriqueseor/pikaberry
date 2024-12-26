@@ -1,18 +1,20 @@
 package cat.teknos.berry.model
 
+import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.drawable.Drawable
+import androidx.core.content.res.ResourcesCompat
+import cat.teknos.berry.R
 
 class Scoreboard(
     private val canvasWidth: Int,
     private val canvasHeight: Int,
     private var score: Int,
     private var lives: Int,
-    private val icon: Drawable?,
-    private val heartDrawable: Drawable?,
+    context: Context?,
 ) {
     private val scoreboard = RectF()
     private val textPaint = Paint().apply {
@@ -23,6 +25,9 @@ class Scoreboard(
         color = Color.WHITE
         style = Paint.Style.FILL
     }
+
+    private val berryDrawable: Drawable? = ResourcesCompat.getDrawable(context!!.resources, R.drawable.berry, null)
+    private val heartDrawable: Drawable? = ResourcesCompat.getDrawable(context!!.resources, R.drawable.heart, null)
 
     fun updateScore(score: Int, lives: Int) {
         this.score = score
@@ -44,15 +49,18 @@ class Scoreboard(
         /*****************************************************
          *                     BERRY ICON                    *
          *****************************************************/
-        val iconX = canvasWidth * 0.16f / 2
-        val iconY = canvasHeight * 0.1f / 2
-        icon?.setBounds(
-            (iconX - canvasHeight * 0.1f / 2).toInt(),
-            (iconY - canvasHeight * 0.1f / 2).toInt(),
-            (iconX + canvasHeight * 0.1f / 2).toInt(),
-            (iconY + canvasHeight * 0.1f / 2).toInt()
-        )
-        icon?.draw(canvas)
+        berryDrawable?.let {
+            val iconSize = canvasHeight * 0.07f
+            val iconX = canvasWidth * 0.05f
+            val iconY = canvasHeight * 0.05f
+            it.setBounds(
+                (iconX - iconSize / 2).toInt(),
+                (iconY - iconSize / 2).toInt(),
+                (iconX + iconSize / 2).toInt(),
+                (iconY + iconSize / 2).toInt()
+            )
+            it.draw(canvas)
+        }
 
         /*****************************************************
          *                       SCORE                       *
