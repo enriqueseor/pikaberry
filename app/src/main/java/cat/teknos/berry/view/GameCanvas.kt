@@ -2,8 +2,6 @@ package cat.teknos.berry.view
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
@@ -15,6 +13,7 @@ import cat.teknos.berry.model.Berry
 import cat.teknos.berry.model.Heart
 import cat.teknos.berry.model.Pikachu
 import cat.teknos.berry.model.Rock
+import cat.teknos.berry.model.Scoreboard
 import cat.teknos.berry.view.util.GameEventListener
 import java.util.Random
 
@@ -30,27 +29,20 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private lateinit var heart: Heart
     private val berries = mutableListOf<Berry>()
     private val rocks = mutableListOf<Rock>()
+    
     private var pikachuDrawable: Drawable? = null
     private var rockDrawable: Drawable? = null
     private var heartDrawable: Drawable? = null
-    private var berryDrawable: Drawable? = null
+    private var icon: Drawable? = null
     private var gameEventListener: GameEventListener? = null
     private val random = Random()
-    private val scoreboard = RectF()
-    private val textPaint = Paint().apply {
-        color = Color.BLACK
-        textAlign = Paint.Align.CENTER
-    }
-    private val paintWhite = Paint().apply {
-        color = Color.WHITE
-        style = Paint.Style.FILL
-    }
+    private lateinit var scoreboard: Scoreboard
 
     init {
         pikachuDrawable = ResourcesCompat.getDrawable(resources, R.drawable.pikachu, null)
         rockDrawable = ResourcesCompat.getDrawable(resources, R.drawable.golem, null)
         heartDrawable = ResourcesCompat.getDrawable(resources, R.drawable.heart, null)
-        berryDrawable = ResourcesCompat.getDrawable(resources, R.drawable.berry, null)
+        icon = ResourcesCompat.getDrawable(resources, R.drawable.berry, null)
     }
 
     private fun initObjects() {
@@ -76,6 +68,8 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             radius = radius,
             context = context
         )
+
+        scoreboard = Scoreboard(canvasWidth, canvasHeight, score, lives, icon, heartDrawable)
     }
 
     private fun generateUniqueNegativeHeights(count: Int): List<Int> {
@@ -151,54 +145,9 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         /*****************************************************
          *                     SCOREBOARD                    *
          *****************************************************/
-
-        val canvasWidth = width
-        val canvasHeight = height
-
-        // SCOREBOARD BACKGROUND
-        scoreboard.set(
-            0f,
-            0f,
-            canvasWidth.toFloat(),
-            canvasHeight * 0.1f
-        )
-        canvas.drawRect(scoreboard, paintWhite)
-
-        // BERRY ICON
-        val berryX = canvasWidth * 0.16f / 2
-        val berryY = canvasHeight * 0.1f / 2
-        berryDrawable?.setBounds(
-            (berryX - canvasHeight * 0.1f / 2).toInt(),
-            (berryY - canvasHeight * 0.1f / 2).toInt(),
-            (berryX + canvasHeight * 0.1f / 2).toInt(),
-            (berryY + canvasHeight * 0.1f / 2).toInt()
-        )
-        berryDrawable?.draw(canvas)
-
-        // SCORE
-        val textX = canvasWidth * 0.30f
-        val textY = canvasHeight * 0.08f
-        textPaint.textSize = canvasHeight * 0.08f
-        canvas.drawText(
-            "$score",
-            textX,
-            textY,
-            textPaint
-        )
-
-        // HEARTS ICONS
-        val heartSize = canvasHeight * 0.07f
-        val heartPadding = canvasWidth * 0.001f
-
-        for (i in 0 until lives) {
-            heartDrawable?.setBounds(
-                (canvasWidth - canvasWidth * 0.03f).toInt() - (heartSize.toInt() + heartPadding.toInt()) * (i + 1),
-                (canvasHeight * 0.1f * 0.2f).toInt(),
-                (canvasWidth - canvasWidth * 0.03f).toInt() - (heartSize.toInt() + heartPadding.toInt()) * i,
-                (canvasHeight * 0.1f * 0.2f + heartSize).toInt()
-            )
-            heartDrawable?.draw(canvas)
-        }
+        scoreboard.draw(canvas)
+        scoreboard.updateScore(score, lives)
+        invalidate()
     }
 
     private fun onBerryCollision(berry: Berry) {
@@ -210,6 +159,8 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             gameEventListener?.onScoreUpdated(score)
             berry.x = random.nextInt(canvasWidth)
             berry.y = 0
+            berry.type = berry.customRandomBerryType()
+            berry.setDrawable()
         }
     }
 

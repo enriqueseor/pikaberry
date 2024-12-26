@@ -16,7 +16,7 @@ class Berry(var x: Int, var y: Int, private val resources: android.content.res.R
         setDrawable()
     }
 
-    private fun customRandomBerryType(): Int {
+    fun customRandomBerryType(): Int {
         val probabilities = doubleArrayOf(0.60, 0.20, 0.10, 0.050, 0.025)
         val rand = Random().nextDouble()
         var cumulativeProbability = 0.0
@@ -29,7 +29,7 @@ class Berry(var x: Int, var y: Int, private val resources: android.content.res.R
         return 0
     }
 
-    private fun setDrawable() {
+    fun setDrawable() {
         val berriesDrawable = arrayOf(
             ResourcesCompat.getDrawable(resources, R.drawable.razz_berry, null),
             ResourcesCompat.getDrawable(resources, R.drawable.pinap_berry, null),
