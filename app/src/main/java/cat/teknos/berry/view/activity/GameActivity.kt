@@ -8,7 +8,7 @@ import android.os.Looper
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import cat.teknos.berry.R
-import cat.teknos.berry.model.PlaylistManager
+import cat.teknos.berry.media.PlaylistManager
 import cat.teknos.berry.view.GameCanvas
 import cat.teknos.berry.view.util.GameEventListener
 

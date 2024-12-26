@@ -1,4 +1,4 @@
-package cat.teknos.berry.model
+package cat.teknos.berry.media
 
 import android.content.Context
 import android.media.MediaPlayer

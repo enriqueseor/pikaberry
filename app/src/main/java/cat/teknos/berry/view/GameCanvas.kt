@@ -12,6 +12,7 @@ import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import cat.teknos.berry.R
 import cat.teknos.berry.model.Berry
+import cat.teknos.berry.model.Heart
 import cat.teknos.berry.model.Pikachu
 import cat.teknos.berry.model.Rock
 import cat.teknos.berry.view.util.GameEventListener
@@ -26,6 +27,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private var posHeartY: Int = -15000 * level
     private val rectForHeart = RectF()
     private lateinit var pikachu: Pikachu
+    private lateinit var heart: Heart
     val berries = mutableListOf<Berry>()
     val rocks = mutableListOf<Rock>()
     private var pikachuDrawable: Drawable? = null
@@ -62,6 +64,9 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     }
 
     private fun initObjects() {
+        val pikachuRadius = 100
+        pikachu = Pikachu(canvasWidth / 2, canvasHeight - 100, pikachuRadius)
+
         val berryHeights = generateUniqueNegativeHeights(3)
         for (i in 0 until 3) {
             berries.add(Berry(random.nextInt(canvasWidth), berryHeights[i], customRandomBerryType()))
@@ -71,6 +76,12 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         for (i in 0 until 3) {
             rocks.add(Rock(random.nextInt(canvasWidth), rockHeights[i]))
         }
+
+        heart = Heart(
+            x = random.nextInt(canvasWidth),
+            y = (-15000..-12000).random() * level,
+            radius = radius
+        )
     }
 
     private fun generateUniqueNegativeHeights(count: Int): List<Int> {
@@ -87,9 +98,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
 
         canvasWidth = w
         canvasHeight = h
-
-        val pikachuRadius = 100
-        pikachu = Pikachu(canvasWidth / 2, canvasHeight - 100, pikachuRadius)
 
         initObjects()
     }
@@ -169,18 +177,12 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
          *                        HEART                      *
          *****************************************************/
         heartDrawable!!.setBounds(
-            posHeartX - radius,
-            posHeartY - radius,
-            posHeartX + radius,
-            posHeartY + radius
+            heart.x - heart.radius,
+            heart.y - heart.radius,
+            heart.x + heart.radius,
+            heart.y + heart.radius
         )
         heartDrawable!!.draw(canvas)
-        rectForHeart.set(
-            (posHeartX - radius).toFloat(),
-            (posHeartY - radius).toFloat(),
-            (posHeartX + radius).toFloat(),
-            (posHeartY + radius).toFloat()
-        )
         updateHeart()
 
         /*****************************************************
@@ -276,15 +278,17 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
 
     private fun updateHeart() {
         val speed = 10 * level
-        if (posHeartY > canvasHeight) {
-            posHeartY = (-15000..-12000).random() * level
-            posHeartX = random.nextInt(canvasWidth)
+        if (heart.y > canvasHeight) {
+            heart.y = (-15000..-12000).random() * level
+            heart.updatePosition(random.nextInt(canvasWidth), canvasWidth)
         } else {
-            posHeartY += speed
+            heart.y += speed
         }
-        if (RectF.intersects(pikachu.rect, rectForHeart)) {
-            posHeartY = (-17500..-12500).random() * level
-            posHeartX = random.nextInt(canvasWidth)
+        heart.setBounds()
+
+        if (RectF.intersects(pikachu.rect, heart.rect)) {
+            heart.y = (-17500..-12500).random() * level
+            heart.updatePosition(random.nextInt(canvasWidth), canvasWidth)
             gameEventListener?.onHeartCollected()
             if (lives < 4) {
                 lives += 1
