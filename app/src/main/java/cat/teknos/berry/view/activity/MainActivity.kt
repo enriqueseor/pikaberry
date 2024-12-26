@@ -22,12 +22,21 @@ class MainActivity : AppCompatActivity() {
         rbEasy = findViewById(R.id.rbEasy)
         rbHard = findViewById(R.id.rbHard)
 
+        val btnInfo = findViewById<Button>(R.id.btnInfo)
+        btnInfo.setOnClickListener { _: View? -> info() }
+
         val btnPlay = findViewById<Button>(R.id.btnPlay)
         btnPlay.setOnClickListener { _: View? -> play() }
 
         val btnRanking = findViewById<Button>(R.id.btnRanking)
         btnRanking.setOnClickListener { _: View? -> ranking() }
     }
+
+    private fun info() {
+        val intent = Intent(this, InfoActivity::class.java)
+        startActivity(intent)
+    }
+
 
     private fun play() {
         val levelNumber: Int

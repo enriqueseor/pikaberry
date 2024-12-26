@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Berry">
         <activity
+            android:name=".view.activity.InfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.RankingActivity"
             android:exported="false" />
         <activity
