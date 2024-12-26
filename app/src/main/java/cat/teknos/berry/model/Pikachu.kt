@@ -2,7 +2,7 @@ package cat.teknos.berry.model
 
 import android.graphics.RectF
 
-class Pikachu(var x: Int, var y: Int, val radius: Int) {
+class Pikachu(private var x: Int, private var y: Int, private val radius: Int) {
     val rect = RectF()
 
     fun updatePosition(newX: Int, canvasWidth: Int) {

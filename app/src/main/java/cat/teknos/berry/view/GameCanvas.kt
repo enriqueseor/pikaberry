@@ -22,14 +22,14 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private var canvasWidth: Int = 0
     private var canvasHeight: Int = 0
     private var radius: Int = 100
-    private var posHeartX: Int = 0
     private var level: Int = 2
-    private var posHeartY: Int = -15000 * level
-    private val rectForHeart = RectF()
+    private var score: Int = 0
+    private var lives: Int = 3
+
     private lateinit var pikachu: Pikachu
     private lateinit var heart: Heart
-    val berries = mutableListOf<Berry>()
-    val rocks = mutableListOf<Rock>()
+    private val berries = mutableListOf<Berry>()
+    private val rocks = mutableListOf<Rock>()
     private var pikachuDrawable: Drawable? = null
     private var rockDrawable: Drawable? = null
     private var heartDrawable: Drawable? = null
@@ -37,8 +37,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private var berriesDrawable: Array<Drawable?>
     private var gameEventListener: GameEventListener? = null
     private val random = Random()
-    private var score: Int = 0
-    private var lives: Int = 3
     private val berryPointsArray = intArrayOf(1, 2, 3, 5, 10)
     private val scoreboard = RectF()
     private val textPaint = Paint().apply {
@@ -69,18 +67,23 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
 
         val berryHeights = generateUniqueNegativeHeights(3)
         for (i in 0 until 3) {
-            berries.add(Berry(random.nextInt(canvasWidth), berryHeights[i], customRandomBerryType()))
+            val berry = Berry(random.nextInt(canvasWidth), berryHeights[i], customRandomBerryType())
+            berry.drawable = berriesDrawable[berry.type]
+            berries.add(berry)
         }
 
         val rockHeights = generateUniqueNegativeHeights(3)
         for (i in 0 until 3) {
-            rocks.add(Rock(random.nextInt(canvasWidth), rockHeights[i]))
+            val rock = Rock(random.nextInt(canvasWidth), rockHeights[i])
+            rock.drawable = rockDrawable
+            rocks.add(rock)
         }
 
         heart = Heart(
             x = random.nextInt(canvasWidth),
             y = (-15000..-12000).random() * level,
-            radius = radius
+            radius = radius,
+            context = context
         )
     }
 
@@ -133,21 +136,8 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
          *                       BERRIES                      *
          ******************************************************/
         for (berry in berries) {
-            val x = berry.x
-            val y = berry.y
-            berriesDrawable[berry.type]!!.setBounds(
-                x - radius,
-                y - radius,
-                x + radius,
-                y + radius
-            )
-            berriesDrawable[berry.type]!!.draw(canvas)
-            berry.rect.set(
-                (x - radius).toFloat(),
-                (y - radius).toFloat(),
-                (x + radius).toFloat(),
-                (y + radius).toFloat()
-            )
+            berry.draw(canvas, radius)
+            berry.updatePosition(canvasWidth, canvasHeight, 10 * level, 0)
             updateBerry(berry)
         }
 
@@ -155,34 +145,16 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
          *                        ROCKS                      *
          *****************************************************/
         for (rock in rocks) {
-            val x = rock.x
-            val y = rock.y
-            rockDrawable!!.setBounds(
-                x - radius,
-                y - radius,
-                x + radius,
-                y + radius
-            )
-            rockDrawable!!.draw(canvas)
-            rock.rect.set(
-                (x - radius).toFloat(),
-                (y - radius).toFloat(),
-                (x + radius).toFloat(),
-                (y + radius).toFloat()
-            )
+            rock.draw(canvas, radius)
+            rock.updatePosition(canvasWidth, canvasHeight, 10 * level, 0)
             updateRock(rock)
         }
 
         /*****************************************************
          *                        HEART                      *
          *****************************************************/
-        heartDrawable!!.setBounds(
-            heart.x - heart.radius,
-            heart.y - heart.radius,
-            heart.x + heart.radius,
-            heart.y + heart.radius
-        )
-        heartDrawable!!.draw(canvas)
+        heart.setBounds()
+        heart.draw(canvas)
         updateHeart()
 
         /*****************************************************
@@ -239,14 +211,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     }
 
     private fun updateBerry(berry: Berry) {
-        val speed = 10 * level
-        if (berry.y > canvasHeight) {
-            berry.x = random.nextInt(canvasWidth)
-            berry.y = 0
-            berry.type = customRandomBerryType()
-        } else {
-            berry.y += speed
-        }
         if (RectF.intersects(pikachu.rect, berry.rect)) {
             val berryPoints = berryPointsArray[berry.type]
             score += berryPoints
@@ -259,13 +223,6 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     }
 
     private fun updateRock(rock: Rock) {
-        val speed = 10 * level
-        if (rock.y > canvasHeight) {
-            rock.x = random.nextInt(canvasWidth)
-            rock.y = 0
-        } else {
-            rock.y += speed
-        }
         if (RectF.intersects(pikachu.rect, rock.rect)) {
             rock.x = random.nextInt(canvasWidth)
             rock.y = 0
