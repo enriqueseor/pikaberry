@@ -74,15 +74,18 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        if (event.action == MotionEvent.ACTION_MOVE || event.action == MotionEvent.ACTION_UP) {
-            pikachu.updatePosition(event.x.toInt(), canvasWidth)
-            this.invalidate()
+        when (event.action) {
+            MotionEvent.ACTION_MOVE -> {
+                pikachu.updatePosition(event.x.toInt(), canvasWidth)
+                this.invalidate()
+            }
+            MotionEvent.ACTION_UP -> {
+                pikachu.updatePosition(event.x.toInt(), canvasWidth)
+                this.invalidate()
+                performClick()
+            }
         }
         return true
-    }
-
-    override fun performClick(): Boolean {
-        return super.performClick()
     }
 
     override fun onDraw(canvas: Canvas) {
