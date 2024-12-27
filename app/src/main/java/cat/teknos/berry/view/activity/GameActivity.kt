@@ -1,6 +1,7 @@
 package cat.teknos.berry.view.activity
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.media.SoundPool
 import android.os.Bundle
 import android.os.Handler
@@ -109,29 +110,63 @@ class GameActivity : AppCompatActivity(), GameEventListener {
     }
 
     private fun playList() {
-        val songsAndBackgrounds = listOf(
-            Pair(R.raw.route_101, R.drawable.route_101),
-            Pair(R.raw.route_104, R.drawable.route_104),
-            Pair(R.raw.route_110, R.drawable.route_110),
-            Pair(R.raw.route_111, R.drawable.route_111),
-            Pair(R.raw.route_113, R.drawable.route_113),
-            Pair(R.raw.route_119, R.drawable.route_119),
-            Pair(R.raw.route_120, R.drawable.route_120)
+        // Listas con música y fondos asociados para portrait
+        val songsAndPortraitBackgrounds = listOf(
+            Pair(R.raw.route_101, R.drawable.route_101_portrait),
+            Pair(R.raw.route_104, R.drawable.route_104_portrait),
+            Pair(R.raw.route_110, R.drawable.route_110_portrait),
+            Pair(R.raw.route_111, R.drawable.route_111_portrait),
+            Pair(R.raw.route_113, R.drawable.route_114_portrait),
+            Pair(R.raw.route_119, R.drawable.route_119_portrait),
+            Pair(R.raw.route_120, R.drawable.route_120_portrait)
         )
-        val shuffledList = songsAndBackgrounds.shuffled()
-        val shuffledSongs = shuffledList.map { it.first }.toIntArray()
-        val shuffledBackgrounds = shuffledList.map { it.second }.toIntArray()
 
-        playlistManager = PlaylistManager(this, shuffledSongs).apply { start() }
+        // Listas con música y fondos asociados para landscape
+        val songsAndLandscapeBackgrounds = listOf(
+            Pair(R.raw.route_101, R.drawable.route_102_landscape),
+            Pair(R.raw.route_104, R.drawable.route_116_landscape),
+            Pair(R.raw.route_110, R.drawable.route_117_landscape),
+            Pair(R.raw.route_111, R.drawable.route_112_landscape),
+            Pair(R.raw.route_113, R.drawable.route_113_landscape),
+            Pair(R.raw.route_119, R.drawable.route_123_landscape),
+            Pair(R.raw.route_120, R.drawable.route_121_landscape)
+        )
 
+        // Mezcla las listas para aleatorizar las canciones y los fondos
+        val shuffledPortraitList = songsAndPortraitBackgrounds.shuffled()
+        val shuffledLandscapeList = songsAndLandscapeBackgrounds.shuffled()
+
+        // Extrae las canciones y fondos para cada orientación
+        val shuffledPortraitSongs = shuffledPortraitList.map { it.first }.toIntArray()
+        val shuffledPortraitBackgrounds = shuffledPortraitList.map { it.second }.toIntArray()
+        val shuffledLandscapeSongs = shuffledLandscapeList.map { it.first }.toIntArray()
+        val shuffledLandscapeBackgrounds = shuffledLandscapeList.map { it.second }.toIntArray()
+
+        // Inicializa el PlaylistManager con las canciones de portrait por defecto
+        playlistManager = PlaylistManager(this, shuffledPortraitSongs).apply { start() }
+
+        // Encuentra el ImageView del fondo
         val backgroundImageView = findViewById<ImageView>(R.id.backgroundImageView)
-        backgroundImageView.setImageResource(shuffledBackgrounds[0])
-        backgroundImageView.scaleType = ImageView.ScaleType.CENTER_CROP
 
+        // Establece el fondo y la música según la orientación
+        val orientation = resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            playlistManager?.updatePlaylist(shuffledLandscapeSongs)
+            backgroundImageView.setImageResource(shuffledLandscapeBackgrounds.getOrNull(0) ?: 0)
+        } else {
+            playlistManager?.updatePlaylist(shuffledPortraitSongs)
+            backgroundImageView.setImageResource(shuffledPortraitBackgrounds.getOrNull(0) ?: 0)
+        }
+
+        // Cambia el fondo y la música cuando la canción cambie
         playlistManager?.setOnSongChangeListener { index ->
-            val backgroundResource = shuffledBackgrounds.getOrNull(index)
+            val backgroundResource = when (orientation) {
+                Configuration.ORIENTATION_LANDSCAPE -> shuffledLandscapeBackgrounds.getOrNull(index)
+                else -> shuffledPortraitBackgrounds.getOrNull(index)
+            }
             backgroundResource?.let {
                 backgroundImageView.setImageResource(it)
+                backgroundImageView.scaleType = ImageView.ScaleType.CENTER_CROP
             }
         }
     }
