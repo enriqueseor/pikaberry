@@ -159,7 +159,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             heart.x = (0..canvasWidth).random()
             heart.y = (-17500..-12500).random() * level
             gameEventListener?.onHeartCollected()
-            if (lives < 4) {
+            if (lives < 3) {
                 lives += 1
             }
         }

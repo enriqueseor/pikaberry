@@ -5,7 +5,6 @@ import android.media.MediaPlayer
 import android.media.MediaPlayer.OnCompletionListener
 
 class PlaylistManager(context: Context, songResources: IntArray) : OnCompletionListener {
-    private lateinit var songs: IntArray
     private lateinit var playlist: Array<MediaPlayer?>
     private var currentSongIndex = 0
     private var onSongChangeListener: ((Int) -> Unit)? = null
@@ -62,11 +61,6 @@ class PlaylistManager(context: Context, songResources: IntArray) : OnCompletionL
     private fun playNextSong() {
         currentSongIndex = (currentSongIndex + 1) % playlist.size
         playCurrentSong()
-    }
-
-    fun updatePlaylist(newSongs: IntArray) {
-        this.songs = newSongs
-        start()
     }
 
     override fun onCompletion(mp: MediaPlayer) {
