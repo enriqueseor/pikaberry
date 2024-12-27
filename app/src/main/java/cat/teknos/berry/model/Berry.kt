@@ -61,6 +61,8 @@ class Berry(var x: Int, var y: Int, private val resources: android.content.res.R
         if (y > canvasHeight) {
             x = (0..canvasWidth).random()
             y = 0
+            type = customRandomBerryType()
+            setDrawable()
         } else {
             y += baseSpeed * level
         }

@@ -12,7 +12,6 @@ import cat.teknos.berry.model.Pikachu
 import cat.teknos.berry.model.Rock
 import cat.teknos.berry.model.Scoreboard
 import cat.teknos.berry.view.util.GameEventListener
-import java.util.Random
 
 class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     private var canvasWidth: Int = 0
@@ -24,13 +23,12 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private var lives: Int = 3
 
     private lateinit var pikachu: Pikachu
-    private lateinit var heart: Heart
     private val berries = mutableListOf<Berry>()
     private val rocks = mutableListOf<Rock>()
+    private lateinit var heart: Heart
+    private lateinit var scoreboard: Scoreboard
 
     private var gameEventListener: GameEventListener? = null
-    private val random = Random()
-    private lateinit var scoreboard: Scoreboard
 
     private fun initObjects() {
         val pikachuRadius = 100
@@ -38,18 +36,18 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
 
         val berryHeights = generateUniqueNegativeHeights(3)
         for (i in 0 until 3) {
-            val berry = Berry(random.nextInt(canvasWidth), berryHeights[i], resources)
+            val berry = Berry((0..canvasWidth).random(), berryHeights[i], resources)
             berries.add(berry)
         }
 
         val rockHeights = generateUniqueNegativeHeights(3)
         for (i in 0 until 3) {
-            val rock = Rock(random.nextInt(canvasWidth), rockHeights[i], context)
+            val rock = Rock((0..canvasWidth).random(), rockHeights[i], context)
             rocks.add(rock)
         }
 
         heart = Heart(
-            x = random.nextInt(canvasWidth),
+            x = (0..canvasWidth).random(),
             y = (-15000..-12000).random() * level,
             context = context
         )
@@ -60,7 +58,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private fun generateUniqueNegativeHeights(count: Int): List<Int> {
         val uniqueHeights = mutableSetOf<Int>()
         while (uniqueHeights.size < count) {
-            val randomHeight = -random.nextInt(1500)
+            val randomHeight = -(0 until 1500).random()
             uniqueHeights.add(randomHeight)
         }
         return uniqueHeights.toList()
@@ -135,7 +133,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             score += berryPoints
             gameEventListener?.onBerryCollected()
             gameEventListener?.onScoreUpdated(score)
-            berry.x = random.nextInt(canvasWidth)
+            berry.x = (0..canvasWidth).random()
             berry.y = 0
             berry.type = berry.customRandomBerryType()
             berry.setDrawable()
@@ -144,7 +142,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
 
     private fun onRockCollision(rock: Rock) {
         if (RectF.intersects(pikachu.rect, rock.rect)) {
-            rock.x = random.nextInt(canvasWidth)
+            rock.x = (0..canvasWidth).random()
             rock.y = 0
             gameEventListener?.onRockCollision()
             if (lives > 0) {
@@ -155,7 +153,7 @@ class GameCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
 
     private fun onHeartCollision() {
         if (RectF.intersects(pikachu.rect, heart.rect)) {
-            heart.x = random.nextInt(canvasWidth)
+            heart.x = (0..canvasWidth).random()
             heart.y = (-17500..-12500).random() * level
             gameEventListener?.onHeartCollected()
             if (lives < 4) {

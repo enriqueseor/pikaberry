@@ -35,7 +35,7 @@ class Heart(var x: Int, var y: Int, context: Context) {
     fun updatePosition(canvasWidth: Int, canvasHeight: Int, baseSpeed: Int, level: Int) {
         if (y > canvasHeight) {
             x = (0..canvasWidth).random()
-            y = 0
+            y = (-17500..-12500).random() * level
         } else {
             y += baseSpeed * level
         }
