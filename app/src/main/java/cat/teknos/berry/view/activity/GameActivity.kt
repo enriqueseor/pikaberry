@@ -17,6 +17,7 @@ class GameActivity : AppCompatActivity(), GameEventListener {
     private var levelNumber = 2
     private var score = 0
     private var numLives = 3
+    private var isGameFinished = false
 
     private lateinit var game: GameCanvas
     private val handler = Handler(Looper.getMainLooper())
@@ -99,6 +100,9 @@ class GameActivity : AppCompatActivity(), GameEventListener {
     }
 
     private fun onGameFinished() {
+        if (isGameFinished) return
+        isGameFinished = true
+        game.setGameEventListener(null)
         Intent(this, ResultsActivity::class.java).apply {
             putExtra("levelNumber", levelNumber)
             putExtra("levelName", intent.getStringExtra("levelName") ?: "MEDIUM")
