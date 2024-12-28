@@ -5,13 +5,10 @@
     <!-- Info Layout -->
     <string name="berry_game_info">Berry Game Info</string>
     <string name="gameplay">Gameplay</string>
-    <string name="gameplay_description">- Touch the screen to move your character.\n- Collect as many berries as you can to earn points.\n- There are five types of berries in the game, and each type gives you a different number of points. The rarer the berry, the more points it awards.\n- Collect hearts to gain extra lives and extend your gameplay.\n- Avoid colliding with obstacles, as they will reduce your health.\n- The game ends when your health reaches zero.</string>
-    <string name="berry_types">Berry Types</string>
     <string name="berry1">Razz Berry: 1 point</string>
     <string name="berry2">Pinap Berry: 2 points</string>
     <string name="berry3">Nanap Berry: 3 points</string>
     <string name="berry5">Pinap Berry: 5 points</string>
     <string name="berry10">Razz Berry: 10 point</string>
     <string name="obstacles">Obstacles</string>
-    <string name="golem">Avoid rocks (Golem) to stay alive!</string>
 </resources>

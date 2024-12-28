@@ -24,7 +24,7 @@
             android:layout_gravity="center_horizontal"
             android:padding="16dp"/>
 
-        <!-- Gameplay Section -->
+        <!-- Pikachu Section -->
         <TextView
             android:id="@+id/featuresTitle"
             android:layout_width="wrap_content"
@@ -36,24 +36,80 @@
             android:paddingBottom="8dp" />
 
         <TextView
-            android:id="@+id/featuresContent"
+            android:id="@+id/featuresContent1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/gameplay_description"
+            android:text="- Touch the screen to move your character."
             android:textSize="16sp"
             android:textColor="#FFFFFF"
             android:paddingBottom="16dp" />
 
-        <!-- Berry Types Section -->
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/pikachu" />
+
+        <!-- Berries Section -->
         <TextView
-            android:id="@+id/berriesTitle"
+            android:id="@+id/featuresContent2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/berry_types"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:text="- Collect as many berries as you can to earn points."
+            android:textSize="16sp"
             android:textColor="#FFFFFF"
-            android:paddingBottom="8dp" />
+            android:paddingBottom="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/razz_berry"
+                android:contentDescription="@string/berry1" />
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/pinap_berry"
+                android:contentDescription="@string/berry2"
+                android:layout_marginStart="8dp" />
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/nanap_berry"
+                android:contentDescription="@string/berry3"
+                android:layout_marginStart="8dp" />
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/pinap_berry_silver"
+                android:contentDescription="@string/berry5"
+                android:layout_marginStart="8dp" />
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/razz_berry_golden"
+                android:contentDescription="@string/berry10"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/featuresContent3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="- There are five types of berries in the game, and each type gives you a different number of points. The rarer the berry, the more points it awards."
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:paddingBottom="16dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -167,7 +223,22 @@
 
         </LinearLayout>
 
-        <!-- Obstacles Section -->
+        <!-- Heart -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="- Collect hearts to gain extra lives and extend your gameplay.\n- The game ends when your health reaches zero."
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp" />
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/heart" />
+
+        <!-- Golem -->
         <TextView
             android:id="@+id/obstaclesTitle"
             android:layout_width="wrap_content"
@@ -193,7 +264,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="@string/golem"
+                android:text="- Avoid colliding with obstacles (golem), as they will reduce your health."
                 android:textSize="16sp"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
