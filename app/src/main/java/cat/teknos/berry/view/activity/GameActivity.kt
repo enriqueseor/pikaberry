@@ -119,7 +119,6 @@ class GameActivity : AppCompatActivity(), GameEventListener {
             Pair(R.raw.route_104, R.drawable.route_104_portrait),
             Pair(R.raw.route_110, R.drawable.route_110_portrait),
             Pair(R.raw.route_111, R.drawable.route_111_portrait),
-            Pair(R.raw.route_113, R.drawable.route_114_portrait),
             Pair(R.raw.route_119, R.drawable.route_119_portrait),
             Pair(R.raw.route_120, R.drawable.route_120_portrait)
         )
@@ -127,7 +126,6 @@ class GameActivity : AppCompatActivity(), GameEventListener {
             Pair(R.raw.route_101, R.drawable.route_102_landscape),
             Pair(R.raw.route_104, R.drawable.route_116_landscape),
             Pair(R.raw.route_110, R.drawable.route_117_landscape),
-            Pair(R.raw.route_111, R.drawable.route_112_landscape),
             Pair(R.raw.route_113, R.drawable.route_113_landscape),
             Pair(R.raw.route_119, R.drawable.route_123_landscape),
             Pair(R.raw.route_120, R.drawable.route_121_landscape)
