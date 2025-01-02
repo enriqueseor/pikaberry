@@ -1,4 +1,4 @@
-package cat.teknos.berry.view.activity
+package cat.teknos.pikaberry.view.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
-import cat.teknos.berry.R
+import cat.teknos.pikaberry.R
 
 class MainActivity : AppCompatActivity() {
     private var etName: EditText? = null

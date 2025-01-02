@@ -1,11 +1,11 @@
-package cat.teknos.berry.model
+package cat.teknos.pikaberry.model
 
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.RectF
 import android.graphics.drawable.Drawable
 import androidx.core.content.res.ResourcesCompat
-import cat.teknos.berry.R
+import cat.teknos.pikaberry.R
 
 class Pikachu(private var x: Int, private var y: Int, private val radius: Int, context: Context) {
     val rect = RectF()

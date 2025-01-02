@@ -1,10 +1,10 @@
-package cat.teknos.berry.model
+package cat.teknos.pikaberry.model
 
 import android.graphics.Canvas
 import android.graphics.RectF
 import android.graphics.drawable.Drawable
 import androidx.core.content.res.ResourcesCompat
-import cat.teknos.berry.R
+import cat.teknos.pikaberry.R
 import java.util.Random
 
 class Berry(var x: Int, var y: Int, private val resources: android.content.res.Resources) {

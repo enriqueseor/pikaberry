@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Berry Game</string>
-    <string name="berry_game">BERRY GAME</string>
+    <string name="app_name">PikaBerry</string>
+    <string name="berry_game">PIKABERRY</string>
 
     <!-- Info Layout -->
-    <string name="berry_game_info">Berry Game Info</string>
+    <string name="berry_game_info">PikaBerry Info</string>
     <string name="gameplay">Gameplay</string>
     <string name="berry1">Razz Berry: 1 point</string>
     <string name="berry2">Pinap Berry: 2 points</string>

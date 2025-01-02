@@ -1,18 +1,18 @@
-package cat.teknos.berry.model
+package cat.teknos.pikaberry.model
 
+import android.content.Context
 import android.graphics.Canvas
 import android.graphics.RectF
 import android.graphics.drawable.Drawable
 import androidx.core.content.res.ResourcesCompat
-import android.content.Context
-import cat.teknos.berry.R
+import cat.teknos.pikaberry.R
 
-class Heart(var x: Int, var y: Int, context: Context) {
+class Rock(var x: Int, var y: Int, context: Context) {
     val rect = RectF()
     var drawable: Drawable? = null
 
     init {
-        drawable = ResourcesCompat.getDrawable(context.resources, R.drawable.heart, null)
+        drawable = ResourcesCompat.getDrawable(context.resources, R.drawable.golem, null)
     }
 
     fun draw(canvas: Canvas, radius: Int) {
@@ -35,7 +35,7 @@ class Heart(var x: Int, var y: Int, context: Context) {
     fun updatePosition(canvasWidth: Int, canvasHeight: Int, baseSpeed: Int, level: Int) {
         if (y > canvasHeight) {
             x = (0..canvasWidth).random()
-            y = (-17500..-12500).random() * level
+            y = 0
         } else {
             y += baseSpeed * level
         }

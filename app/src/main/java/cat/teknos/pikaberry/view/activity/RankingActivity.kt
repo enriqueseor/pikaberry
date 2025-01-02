@@ -1,12 +1,12 @@
-package cat.teknos.berry.view.activity
+package cat.teknos.pikaberry.view.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import cat.teknos.berry.R
-import cat.teknos.berry.database.PlayerDatabaseHelper
-import cat.teknos.berry.view.adapter.ScoreAdapter
+import cat.teknos.pikaberry.R
+import cat.teknos.pikaberry.database.PlayerDatabaseHelper
+import cat.teknos.pikaberry.view.adapter.ScoreAdapter
 
 class RankingActivity : AppCompatActivity() {
     private lateinit var dbHelper: PlayerDatabaseHelper

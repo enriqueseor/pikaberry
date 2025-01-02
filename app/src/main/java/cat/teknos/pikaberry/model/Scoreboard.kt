@@ -1,4 +1,4 @@
-package cat.teknos.berry.model
+package cat.teknos.pikaberry.model
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,7 +7,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.drawable.Drawable
 import androidx.core.content.res.ResourcesCompat
-import cat.teknos.berry.R
+import cat.teknos.pikaberry.R
 
 class Scoreboard(
     private val canvasWidth: Int,

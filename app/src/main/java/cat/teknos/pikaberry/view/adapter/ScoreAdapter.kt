@@ -1,11 +1,11 @@
-package cat.teknos.berry.view.adapter
+package cat.teknos.pikaberry.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import cat.teknos.berry.R
+import cat.teknos.pikaberry.R
 
 class ScoreAdapter(private val scores: List<Pair<String, Int>>) :
     RecyclerView.Adapter<ScoreAdapter.ScoreViewHolder>() {

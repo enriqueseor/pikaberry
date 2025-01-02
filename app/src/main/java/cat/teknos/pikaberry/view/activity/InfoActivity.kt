@@ -1,8 +1,8 @@
-package cat.teknos.berry.view.activity
+package cat.teknos.pikaberry.view.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import cat.teknos.berry.R
+import cat.teknos.pikaberry.R
 
 class InfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

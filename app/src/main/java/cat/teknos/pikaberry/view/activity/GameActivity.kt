@@ -1,4 +1,4 @@
-package cat.teknos.berry.view.activity
+package cat.teknos.pikaberry.view.activity
 
 import android.content.Intent
 import android.content.res.Configuration
@@ -8,10 +8,10 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import cat.teknos.berry.R
-import cat.teknos.berry.media.PlaylistManager
-import cat.teknos.berry.view.GameCanvas
-import cat.teknos.berry.view.util.GameEventListener
+import cat.teknos.pikaberry.R
+import cat.teknos.pikaberry.media.PlaylistManager
+import cat.teknos.pikaberry.view.GameCanvas
+import cat.teknos.pikaberry.view.util.GameEventListener
 
 class GameActivity : AppCompatActivity(), GameEventListener {
     private var levelNumber = 2

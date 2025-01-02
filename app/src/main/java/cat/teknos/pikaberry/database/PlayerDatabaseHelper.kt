@@ -1,4 +1,4 @@
-package cat.teknos.berry.database
+package cat.teknos.pikaberry.database
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase

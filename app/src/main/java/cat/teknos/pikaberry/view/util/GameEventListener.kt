@@ -1,4 +1,4 @@
-package cat.teknos.berry.view.util
+package cat.teknos.pikaberry.view.util
 
 interface GameEventListener {
     fun onBerryCollected()
