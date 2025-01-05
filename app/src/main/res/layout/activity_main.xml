@@ -1,120 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@drawable/berry_basket"
-    tools:context=".view.activity.MainActivity">
+    android:padding="20dp">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:padding="20dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/shape"
+        android:padding="20dp"
+        android:gravity="center">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/shape"
-            android:padding="20dp"
-            android:gravity="center">
+            android:text="@string/berry_game"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="48sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/berry_game"
-                android:textColor="@color/white"
-                android:textAlignment="center"
-                android:textSize="48sp"
-                android:textStyle="bold" />
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
+            android:background="#80FFFFFF"
+            android:hint="PLAYER"
+            android:inputType="textPersonName"
+            tools:ignore="Autofill,HardcodedText" />
 
-            <EditText
-                android:id="@+id/etName"
+        <RadioGroup
+            android:id="@+id/rgDifficulty"
+            android:layout_width="match_parent"
+            android:layout_height="144dp"
+            android:layout_marginTop="10dp"
+            android:background="#80FFFFFF">
+
+            <RadioButton
+                android:id="@+id/rbEasy"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="5dp"
-                android:background="#80FFFFFF"
-                android:hint="PLAYER"
-                android:inputType="textPersonName"
-                tools:ignore="Autofill,HardcodedText" />
+                android:drawableStart="@drawable/star1"
+                android:gravity="center" />
 
-            <RadioGroup
-                android:id="@+id/rgDifficulty"
+            <RadioButton
+                android:id="@+id/rbMedium"
                 android:layout_width="match_parent"
-                android:layout_height="144dp"
-                android:layout_marginTop="10dp"
-                android:background="#80FFFFFF">
+                android:layout_height="48dp"
+                android:drawableStart="@drawable/star2"
+                android:gravity="center" />
 
-                <RadioButton
-                    android:id="@+id/rbEasy"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:drawableStart="@drawable/star1"
-                    android:gravity="center" />
-
-                <RadioButton
-                    android:id="@+id/rbMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:drawableStart="@drawable/star2"
-                    android:gravity="center" />
-
-                <RadioButton
-                    android:id="@+id/rbHard"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:drawableStart="@drawable/star3"
-                    android:gravity="center" />
-            </RadioGroup>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RadioButton
+                android:id="@+id/rbHard"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="10dp">
+                android:layout_height="48dp"
+                android:drawableStart="@drawable/star3"
+                android:gravity="center" />
+        </RadioGroup>
 
-                <Button
-                    android:id="@+id/btnInfo"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/info_button"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/btnPlay"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp">
 
-                <Button
-                    android:id="@+id/btnPlay"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/play_button"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintStart_toEndOf="@+id/btnInfo"
-                    app:layout_constraintEnd_toStartOf="@+id/btnRanking"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+            <Button
+                android:id="@+id/btnInfo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/info_button"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnPlay"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
-                <Button
-                    android:id="@+id/btnRanking"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/ranking_button"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintStart_toEndOf="@+id/btnPlay"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/btnPlay"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/play_button"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toEndOf="@+id/btnInfo"
+                app:layout_constraintEnd_toStartOf="@+id/btnRanking"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/btnRanking"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/ranking_button"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toEndOf="@+id/btnPlay"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
