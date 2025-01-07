@@ -26,7 +26,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    namespace 'cat.teknos.pikaberry'
+    namespace 'dev.enriqueseor.pikaberry'
     kotlinOptions {
         jvmTarget = '1.8'
     }

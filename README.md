@@ -4,7 +4,7 @@ This is an [Android](https://www.android.com/) game where players collect berrie
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
     alt="Get it on F-Droid"
-    height="80">](https://f-droid.org/packages/cat.teknos.pikaberry/)
+    height="80">](https://f-droid.org/packages/dev.enriqueseor.pikaberry/)
 
 ## License
 

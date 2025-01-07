@@ -1,4 +1,4 @@
-package cat.teknos.pikaberry.media
+package dev.enriqueseor.pikaberry.media
 
 import android.content.Context
 import android.media.MediaPlayer

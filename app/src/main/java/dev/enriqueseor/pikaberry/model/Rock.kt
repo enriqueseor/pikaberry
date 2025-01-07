@@ -1,11 +1,11 @@
-package cat.teknos.pikaberry.model
+package dev.enriqueseor.pikaberry.model
 
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.RectF
 import android.graphics.drawable.Drawable
 import androidx.core.content.res.ResourcesCompat
-import cat.teknos.pikaberry.R
+import dev.enriqueseor.pikaberry.R
 
 class Rock(var x: Int, var y: Int, context: Context) {
     val rect = RectF()
