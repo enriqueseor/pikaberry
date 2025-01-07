@@ -1,4 +1,4 @@
-# PokeBerry
+# PikaBerry
 
 This is an [Android](https://www.android.com/) game where players collect berries and avoid obstacles.
 
