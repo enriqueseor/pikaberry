@@ -13,7 +13,7 @@
         android:scaleType="centerCrop"
         android:background="@color/black" />
 
-    <cat.teknos.pikaberry.view.GameCanvas
+    <dev.enriqueseor.pikaberry.view.GameCanvas
         android:id="@+id/Screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
