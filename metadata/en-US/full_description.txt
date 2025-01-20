@@ -1,0 +1,4 @@
+PikaBerry is a fun and simple game where you collect berries and avoid obstacles to score points.
+Tap the screen to move your character, gather five unique types of berries with different point values, and collect hearts to gain extra lives.
+Watch out for golems, as they will reduce your health.
+Challenge yourself to achieve the highest score!
